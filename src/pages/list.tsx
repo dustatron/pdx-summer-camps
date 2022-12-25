@@ -1,4 +1,3 @@
-import * as React from "react";
 import Map, { useMap } from "react-map-gl";
 import Marker from "../components/Marker";
 import Button from "../components/Styled/Button";
@@ -19,10 +18,10 @@ type CampData = {
 
 const campList: CampData[] = [];
 tempData.forEach((camp) => {
-  if (camp.lat) {
+  if (camp.location) {
     campList.push({
-      lat: camp.lat,
-      long: camp.long,
+      lat: camp.location.lat,
+      long: camp.location.lng,
       title: camp.title,
     });
   }
@@ -59,7 +58,7 @@ function List() {
               key={camp.title}
               lat={camp.lat}
               long={camp.long}
-              name={camp.name}
+              name={camp.title}
               onSelect={selectCamp}
             />
           ))}
