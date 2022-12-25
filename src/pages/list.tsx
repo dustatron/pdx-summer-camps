@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Map, { useMap } from "react-map-gl";
 import Marker from "../components/Marker";
 import tempData from "../temp-data.json";
 import CampCard from "../components/CampCard";
 import type { CardDetails } from "../components/CampCard";
+import Button from "../components/Styled/Button";
 
 type CampData = {
   lat: number;
@@ -23,7 +25,7 @@ tempData.forEach((camp) => {
 
 function List() {
   const { portlandMap } = useMap();
-
+  const [campFilter, setCampFilter] = useState("");
   const onClick = (lat: number, lng: number) => {
     if (portlandMap) {
       portlandMap.flyTo({ center: [lng, lat], zoom: 14 });
@@ -31,6 +33,14 @@ function List() {
   };
 
   const selectCamp = (camp: string) => console.log("selectCamp", camp);
+
+  const filteredCampList = tempData.filter((camp) => {
+    if (campFilter) {
+      return !!camp.title.toLowerCase().includes(campFilter.toLowerCase());
+    } else {
+      return true;
+    }
+  });
 
   return (
     <div className="flex h-screen w-screen border-red-200">
@@ -60,7 +70,17 @@ function List() {
       </div>
 
       <div className="flex w-6/12 flex-wrap overflow-scroll p-3">
-        {tempData.map((camp) => (
+        <div className="w-full p-2">
+          <input
+            value={campFilter}
+            onChange={(e) => setCampFilter(e.target.value)}
+            type="text"
+            className="focus:shadow-outline mr-2 h-12 w-3/6 appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+            placeholder="camp name"
+          />
+          <Button onClick={() => setCampFilter("")}>Clear</Button>
+        </div>
+        {filteredCampList.map((camp) => (
           <CampCard
             details={camp as unknown as CardDetails}
             key={`${camp.title}-btn`}
