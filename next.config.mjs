@@ -13,5 +13,15 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pdxparent.com',
+        port: '',
+        // pathname: '/account123/**',
+      },
+    ],
+  },
 };
 export default config;

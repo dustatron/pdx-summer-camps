@@ -1,20 +1,14 @@
 import Map, { useMap } from "react-map-gl";
 import Marker from "../components/Marker";
-import Button from "../components/Styled/Button";
 import tempData from "../temp-data.json";
+import CampCard from "../components/CampCard";
+import type { CardDetails } from "../components/CampCard";
 
 type CampData = {
   lat: number;
   long: number;
   title: string;
 };
-
-// const campList: CampData[] = [
-//   { lat: 45.56627, long: -122.68294, name: "north" },
-//   { lat: 45.52, long: -122.68, name: "south" },
-//   { lat: 45.5773382284855, long: -122.69765181806113, name: "walgreens" },
-//   { lat: 45.53569308208691, long: -122.70055419214097, name: "food fight" },
-// ];
 
 const campList: CampData[] = [];
 tempData.forEach((camp) => {
@@ -30,16 +24,16 @@ tempData.forEach((camp) => {
 function List() {
   const { portlandMap } = useMap();
 
-  const onClick = (lat: number, long: number) => {
+  const onClick = (lat: number, lng: number) => {
     if (portlandMap) {
-      portlandMap.flyTo({ center: [long, lat], zoom: 14 });
+      portlandMap.flyTo({ center: [lng, lat], zoom: 14 });
     }
   };
 
   const selectCamp = (camp: string) => console.log("selectCamp", camp);
 
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex h-screen w-screen border-red-200">
       <div className="w-6/12">
         <Map
           id="portlandMap"
@@ -65,14 +59,13 @@ function List() {
         </Map>
       </div>
 
-      <div className="w-6/12 p-3">
-        {campList.map((camp) => (
-          <Button
+      <div className="flex w-6/12 flex-wrap overflow-scroll p-3">
+        {tempData.map((camp) => (
+          <CampCard
+            details={camp as unknown as CardDetails}
             key={`${camp.title}-btn`}
-            onClick={() => onClick(camp.lat, camp.long)}
-          >
-            {camp.title}
-          </Button>
+            onSelect={onClick}
+          />
         ))}
       </div>
     </div>

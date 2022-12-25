@@ -141,7 +141,7 @@
   },
   {
     "title": "Portland City United (PCU)",
-    "address": "426 NE 12th St",
+    "address": "426 NE 12th St. Portland, OR 97232",
     "link": "https://pdxparent.com/directory/portland-city-united-pcu/",
     "website": "http://www.pcusc@pcusc.org/camps",
     "facebook": "https://www.facebook.com/portlandcityutd/",
@@ -155,8 +155,8 @@
       "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
     ],
     "location": {
-      "lat": 47.6199794,
-      "lng": -122.1750024
+      "lat": 45.5263696,
+      "lng": -122.6523402
     },
     "place_id": "ChIJV7rw_1dskFQR4-RkOrozsZM"
   },
@@ -765,5 +765,520 @@
       "lng": -122.6710194
     },
     "place_id": "ChIJkQcu4foKlVQRG39yM9sjFJg"
+  },
+  {
+    "title": "ONE RIVER SCHOOL OF ART + DESIGN",
+    "address": "15010 SW Bangy Rd,Lake Oswego, OR 97035",
+    "link": "https://pdxparent.com/directory/one-river-school-of-art-design-2/",
+    "website": "https://lakeoswego.oneriverschool.com/",
+    "facebook": "https://www.facebook.com/OneRiverSchoolLakeOswego/",
+    "description": "Welcome to the One River School of Art + Design community! We offer fun Camps, in-studio and online classes, and birthday parties for grades K-12th and adults. We have a unique method for teaching art and design that allows students to have fun, build friendships, be creative, make inspiring artwork, and learn about contemporary art and artists while growing their skills and techniques.  We welcome all skill levels and provide both group and one-on-one support for each student.\n\nCLASSES: Our in-studio and online classes are ongoing and year-round which means you can jump in at any time. We offer focused classes such as Focus on Drawing and Animation as well as general classes like Art Shuffle that span a range of techniques and mediums.\n\nCAMPS: We offer Spring Break Camps, Summer Camps, and Winter Camps. Most of our camps are week-long with morning and afternoon options. Our camps range from Realistic Portrait Drawing and Street Art Painting to Digital Manga.\n\nCURRICULUM: Each lesson for camps and classes is based on contemporary artists and their practice. Students will learn techniques, skills, vocabulary, and knowledge related to and about each artist’s way of creating.\n\nTEACHERS: Teachers at One River School of Art + Design are carefully screened so that our students are provided with the right amount of technical support and individualized attention. Our research shows that when people are learning new creative concepts, it is important to have a teacher who instills trust and also has the skills to provide an inspiring lesson.\n\nMATERIALS: We supply each student with their own bin of materials.\n\nFACILITY: Our innovative facility is equipped with the latest technology which includes flat-screen TVs in each room, iPads for each teacher, and in the digital lab, touch-screen computers with stylist pens. We also have a gallery space to engage and inspire students. Here we exhibit both national and international professional artists as well as our own student-artists.\n\nHEALTH AND SAFETY: We take health and safety very seriously and follow CDC guidelines and other protocols to ensure the well-being of students and staff.",
+    "images": [
+      "https://pdxparent.com/wp-content/uploads/2022/01/KidsArtClasses-.jpg",
+      "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+    ],
+    "location": {
+      "lat": 45.4172003,
+      "lng": -122.7422992
+    },
+    "place_id": "ChIJDfB6ACxzlVQRKKbnlBGXQpY"
+  },
+  {
+    "title": "German International School",
+    "address": "3900 SW Murray Blvd, Beaverton, OR 97005",
+    "link": "https://pdxparent.com/directory/german-international-school/",
+    "description": "As an International Baccalaureate (IB) World School the German International School (GIS) believes in a whole-child approach to learning. ",
+    "images": [],
+    "location": {
+      "lat": 45.4915575,
+      "lng": -122.8255196
+    },
+    "place_id": "ChIJR8JhZ5AOlVQRFxY6QqaM4Do"
+  },
+  {
+    "title": "Band and Vocal Camps at Clackamas Community College",
+    "address": "19600 Molalla Ave, Oregon City, OR 97045",
+    "link": "https://pdxparent.com/directory/band-and-vocal-camps-at-clackamas-community-college/",
+    "description": "Wind ensemble and vocal day camps for high school and college-bound musicians. Registration and details at clackamasmusic.eventbrite.com",
+    "images": [],
+    "location": {
+      "lat": 45.3229406,
+      "lng": -122.5746572
+    },
+    "place_id": "ChIJ-3_ElbBwlVQR8SRWzddQIDY"
+  },
+  {
+    "title": "Youth Music Project",
+    "link": "https://pdxparent.com/directory/youth-music-project/",
+    "address": "2015 8th Avenue, West Linn, OR 97068",
+    "website": "https://www.youthmusicproject.org/summer-camps-workshops/",
+    "description": "Youth Music Project provides year-round music classes and lessons for kids aged 1-18  in guitar, piano, drums, bass, ukulele, violin, voice, and mandolin, in addition to rock band, glee, musical theatre, and other ensemble classes.",
+    "images": [],
+    "location": {
+      "lat": 45.34561069999999,
+      "lng": -122.6523368
+    },
+    "place_id": "ChIJSW7iRQtxlVQRten9bazjx_s"
+  },
+  {
+    "title": "Benson Tech Youth Project Multi-Sport Athlete Camp",
+    "address": "3905 SE 91st Avenue 97266",
+    "link": "https://pdxparent.com/directory/benson-tech-youth-project-multi-sport-athlete-camp/",
+    "description": "This camp is a great opportunity for kids to spend a week being involved in sports, run by our Athletic Director and our coaching staff.  bensonathletics.net",
+    "images": [],
+    "location": {
+      "lat": 45.4936291,
+      "lng": -122.572439
+    },
+    "place_id": "ChIJBTGgwjaglVQR9dZCXLBMQvk"
+  },
+  {
+    "title": "Guardian Games D&D Camp",
+    "link": "https://pdxparent.com/directory/guardian-games-dd-camp/",
+    "address": "345 Southeast Taylor Street, Portland, OR, USA 97214",
+    "description": "Join Guardian Games to explore the world of Dungeons & Dragons 5th Edition – one of the greatest role-playing games of all time!",
+    "images": [],
+    "location": {
+      "lat": 45.5156262,
+      "lng": -122.6623694
+    },
+    "place_id": "ChIJ_VTjFQoKlVQRDsEGjjm0cV8"
+  },
+  {
+    "title": "Tucker Maxon School",
+    "link": "https://pdxparent.com/directory/tucker-maxon-school/",
+    "address": "2860 SE Holgate Blvd 97202",
+    "description": "Tucker Maxon School is a parent's first choice for an outstanding preschool-to-5th grade education with a focus on communication, academics and emotional intelligence. Small classes (1:8 average) allow our dedicated teachers to focus their attention on your child. Every preschool class has two teachers. Highlights include daily PE, art, music, a huge playground and rock-climbing wall, organic garden, goats, and a summer arts camp. Founded in 1947, Tucker Maxon is an OPTION-accredited school “Where Every Child Has a Voice.” Enrollment for fall starts March 1. Come take a virtual tour soon!\n \nTucker Arts Camp travels the world from June 28 - August 20 this summer. Over the course of eight weeks, children explore the art of storytelling through music, movement, visual arts and more from diverse countries around the world at our beautiful SE Portland campus. Our campus offers a large organic garden, tree house, chickens, goats, and plenty of space for children to be inspired by the natural world and enjoy fun in the summer sun. See weekly schedule at https://www.tuckermaxon.org/tuckerartscamp/. Financial Aid available.",
+    "images": [],
+    "location": {
+      "lat": 45.4899916,
+      "lng": -122.6358071
+    },
+    "place_id": "ChIJeZ9lZIMKlVQRrmxdSzL3pMQ"
+  },
+  {
+    "title": "Band and Vocal Camps at Clackamas Community College",
+    "link": "https://pdxparent.com/directory/band-and-vocal-camps-at-clackamas-community-college/",
+    "address": "19600 Molalla Avenue, Niemeyer Center for Performing Arts 97045",
+    "description": "Wind ensemble and vocal day camps for high school and college-bound musicians. Registration and details at clackamasmusic.eventbrite.com",
+    "images": [],
+    "location": {
+      "lat": 45.3245004,
+      "lng": -122.5753082
+    },
+    "place_id": "ChIJ9_GkMbdwlVQRQVc_UX_D9yw"
+  },
+  {
+    "title": "Soulflags Art Lit/Community Center",
+    "link": "https://pdxparent.com/directory/soulflags-art-lit-community-center/",
+    "address": "504 Main Street, Oregon City, OR, USA 97045",
+    "description": "Soulflags Art Lit Community Center is a non-profit organization focused on creating an opportunity for youth and aspiring artists to be exposed to different art styles and media.",
+    "images": [],
+    "location": {
+      "lat": 45.3566902,
+      "lng": -122.6096323
+    },
+    "place_id": "ChIJpUPyJDRxlVQRVezIAoi27mc"
+  },
+  {
+    "title": "SCRAP Creative Reuse PDX",
+    "link": "https://pdxparent.com/directory/scrap-creative-reuse-pdx/",
+    "address": "1736 Southwest Alder Street, Portland, OR, USA 97205",
+    "description": "SCRAP Creative Reuse is a nonprofit organization whose mission is to inspire creative reuse and environmentally sustainable behavior by providing educational programs and affordable materials to the community. Our creative reuse center takes in donations of usable school, office, arts, and craft supplies, and makes them available to the public and through educational programs and outreach. We offer in-person and online opportunities for shopping and educational programs.\n\nMaterial Donations:\n\nInformation on how to donate, what we do and do not accept, and more can be found at:\n\nportland.scrapcreativereuse.org/Material-Donations\n\nOPEN DONATIONS DAYS (Limit 3 Bankers Boxes - 50 lbs)\n2nd & 4th Friday every month from • 11am – 1pm\n\nDONATIONS APPOINTMENTS\nWednesday – Saturday • 10:30am – 3:30pm\n\nEducation Programs:\n\nSCRAP education programs teach the concepts and benefits of creative reuse with the goal of behavior change - combining waste reduction and art education in fun and unique ways. Information on our programs available here:\n\nportland.scrapcreativereuse.org/Education-Programs\n\nEducation programs include SCRAP at School, Field Trips, Camp SCRAP, Birthday Parties, After School events, Teacher Training, Crafternoons, Workshops, and Virtual Education.\n\nCreative Reuse Center Hours\n\nWe are open to the public. Store information available here:\n\nportland.scrapcreativereuse.org\n\n1736 SW Alder Street\nPortland, OR 97205\n503-294-0769\n\nStore Hours\n\nWednesday-Monday, 11am - 7pm",
+    "images": [],
+    "location": {
+      "lat": 45.52252259999999,
+      "lng": -122.6895852
+    },
+    "place_id": "ChIJfWFpQh0KlVQRmKD0kex_b4w"
+  },
+  {
+    "title": "Band and Vocal Camps at Clackamas Community College",
+    "address": "19600 Molalla Avenue, Niemeyer Center for Performing Arts 97045",
+    "link": "https://pdxparent.com/directory/band-and-vocal-camps-at-clackamas-community-college/",
+    "description": "Wind ensemble and vocal day camps for high school and college-bound musicians. Registration and details at clackamasmusic.eventbrite.com",
+    "images": [],
+    "location": {
+      "lat": 45.3245004,
+      "lng": -122.5753082
+    },
+    "place_id": "ChIJ9_GkMbdwlVQRQVc_UX_D9yw"
+  },
+  {
+    "title": "Camp Shazaam PDX",
+    "address": "5441 Southeast Belmont Street, Portland, OR, USA 97215",
+    "link": "https://pdxparent.com/directory/camp-shazaam-pdx/",
+    "description": "Camp Shazaam is offering four special sessions including a middle school Pride camp! We do arts and crafts, get outside, and explore the performing arts.",
+    "images": [],
+    "location": {
+      "lat": 45.51679439999999,
+      "lng": -122.6072291
+    },
+    "place_id": "ChIJ3XVMnvqglVQRCe-6E2vxS0A"
+  },
+  {
+    "title": "Fir Acres Writing Workshop",
+    "address": "615 S Palatine Hill Road, Portland, OR 97219",
+    "link": "https://pdxparent.com/directory/fir-acres-writing-workshop/",
+    "website": "http://go.lclark.edu/firacres",
+    "description": "At Fir Acres Writing Workshop, up to sixty high school students from across the country come together for two weeks to write and join a community of writers on the beautiful, wooded campus of Lewis & Clark College in Portland, Oregon.\n\nIn daily Workshops, participants study great writing and produce their own under the guidance of dynamic, thoughtful, published faculty. At night, participants gather to socialize, meet and hear from distinguished visiting writers, and work on their own poetry, fiction, and creative prose.\n\nOur mission is to provide a high-caliber, pre-collegiate, creative educational experience to bright, inventive, and passionate high school students. Our program appeals to young writers and artistic students who are drawn to the beauty of the Pacific Northwest and the fun, hip mystique of Portland.",
+    "images": [
+      "https://pdxparent.com/wp-content/uploads/2022/02/L_CC_Sig_4cp.jpg"
+    ],
+    "location": {
+      "lat": 45.4503225,
+      "lng": -122.6670662
+    },
+    "place_id": "ChIJ-UEdii0LlVQRU6hmfEcv1UE"
+  },
+  {
+    "title": "Trackers Earth",
+    "address": "4617 Southeast Milwaukie Avenue, Portland, OR , USA 97202",
+    "link": "https://pdxparent.com/directory/trackers-earth/",
+    "description": "Trackers Earth  camps are action-packed, immersive guided quests for youth of all ages with over 20 themes like Archery, Fishing, Wilderness Survival, & Outdoor Sport.",
+    "images": [],
+    "location": {
+      "lat": 45.48932000000001,
+      "lng": -122.6512383
+    },
+    "place_id": "ChIJjQbzOIkKlVQRPwhWgsoiwbk"
+  },
+  {
+    "title": "Concert School of Music",
+    "address": "8261 SW Wilsonville Rd Suite A 97070",
+    "link": "https://pdxparent.com/directory/concert-school-of-music/",
+    "description": "Concert School of Music private lessons for many instruments including piano, guitar, violin and much more. They also offer group lessons including rock band, chamber groups, string orchestra, and more.",
+    "images": [],
+    "location": {
+      "lat": 45.30344239999999,
+      "lng": -122.7641745
+    },
+    "place_id": "EjQ4MjYxIFNXIFdpbHNvbnZpbGxlIFJkIGEsIFdpbHNvbnZpbGxlLCBPUiA5NzA3MCwgVVNBIh0aGwoWChQKEglBsiav8W6VVBFRcqYdtidWIBIBYQ"
+  },
+  {
+    "title": "Child’s Path Farm Preschool Summer Camps",
+    "address": "29495 Southeast Kelso Road, Boring, OR, USA 97009",
+    "link": "https://pdxparent.com/directory/childs-path-farm-preschool-summer-camps/",
+    "description": "In a Child’s Path Farm School offers summer camps to children aged 3 to 6  with a main focus on the farm and a variety of minor focuses each week.",
+    "images": [],
+    "location": {
+      "lat": 45.4185022,
+      "lng": -122.359397
+    },
+    "place_id": "ChIJWTSQe3WblVQRmDOktulwllk"
+  },
+  {
+    "title": "Shantay Legans Kids Basketball Camp",
+    "address": "5000 N Willamette Blvd 97203",
+    "link": "https://pdxparent.com/directory/shantay-legans-kids-basketball-camp/",
+    "description": "Shantay Legan's Kids Camp:\n\nKids play basketball with their friends and are around the University of Portland players and coaches\nKids tour the beautiful campus",
+    "images": [],
+    "location": {
+      "lat": 45.5735801,
+      "lng": -122.7238071
+    },
+    "place_id": "ChIJA9Ww6oynlVQRdxkfTWuZe_o"
+  },
+  {
+    "title": "Acting for Kids and Teens",
+    "address": "1633 NW Glisan 97209",
+    "link": "https://pdxparent.com/directory/acting-for-kids-and-teens/",
+    "description": "Acting for Kids & Teens is the Northwest’s Premiere TV and Film Acting Studio offering classes, workshops, voiceover lessons, audition assistance and private coaching. ",
+    "images": [],
+    "location": {
+      "lat": 45.526672,
+      "lng": -122.688015
+    },
+    "place_id": "ChIJ1UajAfkJlVQRBUN11Jhx-vQ"
+  },
+  {
+    "title": "Cedarwood Waldorf School",
+    "address": "3030 SW 2nd Ave 97201",
+    "link": "https://pdxparent.com/directory/cedarwood-waldorf-school/",
+    "description": "Cedarwood Waldorf School’s curriculum,  from early childhood through eighth grade, weaves together the arts, academics, and movement to bring learning to life.",
+    "images": [],
+    "location": {
+      "lat": 45.5010589,
+      "lng": -122.6794884
+    },
+    "place_id": "ChIJ656Q8UEKlVQRV6bWsBfS790"
+  },
+  {
+    "title": "Echo Theater Company Summer Camps",
+    "address": "1515 SE 37th AVE 97214",
+    "link": "https://pdxparent.com/directory/echo-theater-company/",
+    "description": "ETC's popular all-day and half-day camps brings together the fun physical challenges of circus with the endless potential of storytelling to make an action-packed week of Circus Theater.",
+    "images": [],
+    "location": {
+      "lat": 45.5117379,
+      "lng": -122.6261165
+    },
+    "place_id": "ChIJTfB98o2glVQR1yYDxdcwmDg"
+  },
+  {
+    "title": "Youth Music Project",
+    "address": "2015 8th Ave, West Linn, OR 97068",
+    "link": "https://pdxparent.com/directory/youth-music-project/",
+    "description": "Youth Music Project provides year-round music classes and lessons for kids aged 1-18  in guitar, piano, drums, bass, ukulele, violin, voice, and mandolin, in addition to rock band, glee, musical theatre, and other ensemble classes.",
+    "images": [],
+    "location": {
+      "lat": 45.34561069999999,
+      "lng": -122.6523368
+    },
+    "place_id": "ChIJSW7iRQtxlVQRten9bazjx_s"
+  },
+  {
+    "title": "Triskelee Farm",
+    "address": "29700 SW Mountain RD, West Linn, OR 97068",
+    "link": "https://pdxparent.com/directory/triskelee-farm/",
+    "website": "https://triskeleefarm.com/",
+    "facebook": "https://www.facebook.com/Triskeleefarm",
+    "instagram": "https://www.instagram.com/triskeleefarm/",
+    "description": "Triskelee Farm is a small working farm that offers summer camps, farm tours, parties, a preschool, and more!\n\nDuring select weeks in July, we'll be offering summer camps for kids of all ages! They will focus on our farm animals like our goats, alpacas, and birds, we'll be going into the garden and taking lots of nature walks. Camps will include nature crafts, learning about farming, and where our food comes from.\n\nCome experience farm life by reserving a guided educational farm tour that takes you up close and personal with our lovely farm animals. Our working farm raises animals for eggs, milk, fiber, and meat. We have alpacas, goats, ostriches, peacocks, and more. You'll even get a chance to feed some! Adults can make it a Tipsy Tour! We offer beer and wine from local vineyards and breweries to take with you on the tour.  See our website to book a tour. https://triskeleefarm.com/farm-experiences\n\nWe are here to share our farm with you and teach you where our food comes from. Because food doesn't come from the store, it comes from a farmer! Triskelee Farm began as a mere wish and then it came to fruition in 2018. The name Triskelee is derived from the ancient Celtic symbol Triskele meaning things of three. Such as past, present, and future. For us, it represents the three generations of our family that all came together to learn how to farm and live together. We had no farming experience when we started this journey we just knew we wanted our children to be close to their extended family and have an outdoor environment to grow up in.\n\nCheck out our new Triskelee Sprouts Farm School at triskeleesprouts.com ",
+    "images": [],
+    "location": {
+      "lat": 45.305248,
+      "lng": -122.690345
+    },
+    "place_id": "ChIJGTPm2dBvlVQRbrlvggjPZYI"
+  },
+  {
+    "title": "Sunset Church Kids Camp: Making Waves!",
+    "address": "14986 NW Cornell Rd, Portland, OR 97229, USA",
+    "link": "https://pdxparent.com/directory/sunset-church-kids-camp-making-waves/",
+    "description": "Everyone is welcome to Sunset Church's 2022 Kids Camp. Join us as we discover how following Jesus makes waves that changes the world around us.",
+    "images": [],
+    "location": {
+      "lat": 45.5302657,
+      "lng": -122.8332152
+    },
+    "place_id": "ChIJJwEFBzIPlVQRsu4ONkW_i08"
+  },
+  {
+    "title": "PNCA",
+    "address": "511 NW Broadway, Portland, OR 97209",
+    "link": "https://pdxparent.com/directory/__trashed-2/",
+    "description": "Pre-College Week-Long Summer Session (For Ages 15-18)\n\nMon Jul 18, 2022  9:00 AM - Fri Jul 22, 2022  5:00 PM\n\nIn this in-person class at PNCA, you’ll learn fundamentals of visual storytelling in the medium of comics, with an emphasis on process and experimentation. We will explore how to develop a strong story, strategies for sharing that story, and learn methods of creative problem solving.",
+    "images": [],
+    "location": {
+      "lat": 45.5267606,
+      "lng": -122.6779851
+    },
+    "place_id": "ChIJqdcEJgAKlVQR4_ODHG_aXCE"
+  },
+  {
+    "title": "Camp Shazaam PDX",
+    "address": "5441 Southeast Belmont Street, Portland, OR, USA 97215",
+    "link": "https://pdxparent.com/directory/camp-shazaam-pdx/",
+    "description": "Camp Shazaam is offering four special sessions including a middle school Pride camp! We do arts and crafts, get outside, and explore the performing arts.",
+    "images": [],
+    "location": {
+      "lat": 45.51679439999999,
+      "lng": -122.6072291
+    },
+    "place_id": "ChIJ3XVMnvqglVQRCe-6E2vxS0A"
+  },
+  {
+    "title": "Imagine Theatre",
+    "address": "13203 SE 172nd Ave, Happy Valley, OR 97086",
+    "link": "https://pdxparent.com/directory/imagine-theatre/",
+    "website": "http://www.imaginetheatre.org",
+    "facebook": "https://www.facebook.com/imaginetheatrepdx",
+    "instagram": "https://www.instagram.com/imaginetheatrepdx/",
+    "description": "Originating with virtual-programming in Fall 2020, Imagine Theatre offers intentional programming for students ages 7-18 in the areas of dance, voice, acting, comedy, musical theatre and technical theater. Students explore these themes through our educational offerings (classes, workshops, camps, etc.) and performance opportunities (Mainstage offerings, and education rooted performance opportunities.)\n\nEducation - Classes, Camps, & Leadership\n\n- Classes -\n\nFor students 7-18, Imagine offers educational programming on a quarterly basis. During our Fall, Winter, & Spring terms, students can register for classes based in the the themes of dance, voice/music, acting, musical theatre, comedy, and technical theatre. Classes are an intentional place for students to grow deep in what they love. Our three core classes (Voice Core, Dance Core, and Acting Core) are the root of all other classes. Most of the other classes offered require one or more the Core classes having been already taken.\n\n- Camps  -\n\nFor students 7-18, Imagine offers a wide variety of summer programming that includes Camps, Intensives, and Workshops. Imagine camps are one of the best ways to first engage with the programming, as they are packed with tons of fun, learning, performances, and skilled teachers. With week-long, two-week, and evening-only offerings, there is something for everyone to enjoy!\n\n- Artists Committed to Serve (ACTS)  -\n\nFor High school students, Imagine Theatre offers an intentional leadership program (ACTS) that empowers and guides student leaders in creating a strong community amongst all Imagine students and creating ways to meaningfully engage with the larger community around us. The ACTS team does all of this while engaging in learning about what it means to be good leaders through learning about communication styles, leadership styles, ethical leadership, community-development, organizational strategies, marketing, communications, and more.\n\n- Teaching Artists  -\n\nOur educational offerings are taught by skilled and experienced Teaching Artists. Many of the Imagine Theatre Teaching Artists work in the theatre/art/music field, are professional artists, and/or hold relevant degrees/certificates in theatre, education, music, etc.\n\nPerformance - Mainstage, The Studio\n\nImagine Theatre offers unique and meaningful performance opportunities through our Mainstage & The Studio programs.\n\n- Mainstage -\n\nImagine Theatre's Mainstage program offers a stage experience for larger shows and performers of any level.\n\n- The Studio -\n\nImagine Theatre's The Studio program is an intentional performance based-learning program that offers unique projects for students seeking ways to experiment, grow, and learn as artists.",
+    "images": [
+      "https://pdxparent.com/wp-content/uploads/2021/05/80711647_10156575093906541_784320337452990464_n-2.jpg"
+    ],
+    "location": {
+      "lat": 45.4271356,
+      "lng": -122.4861274
+    },
+    "place_id": "ChIJV2p7lXuelVQRo6ZpDW0fouc"
+  },
+  {
+    "title": "Hipbone Art Studio",
+    "address": "1847 East Burnside Street, Portland, OR, USA 97214",
+    "link": "https://pdxparent.com/directory/hipbone-art-studio/",
+    "description": "Summer art camps  for teens ages 13 to 17 where they will experience and learn traditional drawing and painting methods.\n\nhttps://www.hipboneartstudio.com/summer-camps.html",
+    "images": [],
+    "location": {
+      "lat": 45.5231824,
+      "lng": -122.6468083
+    },
+    "place_id": "ChIJa5r0pruglVQRaCgTarr6-Ew"
+  },
+  {
+    "title": "Tryon Forest Adventures with Friends of Tryon Creek",
+    "address": "11321 S Terwilliger BlvdPortland, OR 97219",
+    "website": "https://www.tryonfriends.org/forest-adventures",
+    "link": "https://pdxparent.com/directory/tryon-forest-adventures-with-friends-of-tryon-creek/",
+    "description": "Tryon Forest Adventures - an active full day outdoor summer experience for ages 7 to 12. Taking place Monday-Thursday from 9 am to 4 pm at Tryon Creek State Natural Area in SW Portland.\n\nYouth explore life in the forest by working together to examine the ecology and people that create an interdependent urban park. They interact on a social level to enhance friendship building, teamwork and learning amongst diverse people in the community. Each day incorporates classic Tryon Creek activities like slug races, gnome homes, fort and stream building, hiking, games, storytelling and nature art.\n\nTryon Forest Adventures is a safe opportunity that will allow your child time outdoors to grow, learn and have fun.\n\nJoin us this summer at tryonfriends.org/forest-adventures\n\nWeekly Themes Include:\n\nFun with Flora: Youth examine plants and their importance to ecology and our lives.  Activities include plant identification and uses, meadow ecology and storytelling.\n\nLiving with Wildlife: Youth explore the forest as a home to a variety of birds, mammals and fish species. Activities include nature observation skills, scavenger hunts and slug races.\n\nWater is Life: Youth study the importance of clean water to the land, people and animals. Activities include water science, stream building and aquatic bugs.\n\nForest Community: Youth identify connections and the role of reciprocity between people, the park and its inhabitants. Activities include ecology games, Park Ranger talks and park safety.",
+    "images": [],
+    "location": {
+      "lat": 45.4430857,
+      "lng": -122.6736048
+    },
+    "place_id": "EjExMTMyMSBTIFRlcndpbGxpZ2VyIEJsdmQsIFBvcnRsYW5kLCBPUiA5NzIxOSwgVVNBIjESLwoUChIJ0Ymh68p0lVQR_sQ39mq7E7QQuVgqFAoSCfkuTPC4dJVUEQt49rP4O80g"
+  },
+  {
+    "title": "Band and Vocal Camps at Clackamas Community College",
+    "address": "Niemeyer Center, 19600 Molalla Ave, Oregon City, OR 97045",
+    "link": "https://pdxparent.com/directory/band-and-vocal-camps-at-clackamas-community-college/",
+    "description": "Wind ensemble and vocal day camps for high school and college-bound musicians. Registration and details at clackamasmusic.eventbrite.com",
+    "images": [],
+    "location": {
+      "lat": 45.3245004,
+      "lng": -122.5753082
+    },
+    "place_id": "ChIJ9_GkMbdwlVQRQVc_UX_D9yw"
+  },
+  {
+    "title": "Guardian Games D&D Camp",
+    "address": "345 Southeast Taylor Street, Portland, OR, USA 97214",
+    "link": "https://pdxparent.com/directory/guardian-games-dd-camp/",
+    "website": "https://ggportland.com/2022-dd-kids-summer-camp/",
+    "description": "Join Guardian Games to explore the world of Dungeons & Dragons 5th Edition – one of the greatest role-playing games of all time!",
+    "images": [],
+    "location": {
+      "lat": 45.5156262,
+      "lng": -122.6623694
+    },
+    "place_id": "ChIJ_VTjFQoKlVQRDsEGjjm0cV8"
+  },
+  {
+    "title": "Vibe of Portland",
+    "link": "https://pdxparent.com/directory/vibe-of-portland/",
+    "website": "https://vibepdx.org/art-camps",
+    "address": "232 SE 80th Ave, Portland, OR 97215",
+    "description": "Vibe of Portland is offering both half-day and full-day camps this summer, held in-person and with COVID-19 safety precautions. Vibe's summer camps encourage imaginative thinking and inspire your child to look at the world from new perspectives, through art! Campers learn a variety of techniques, hone their artistic skills, and develop friendships. Vibe offers a variety of subjects, from mixed media, illustration and drawing, environmental-based art, creating art from the world around us, and more! For music fans, Vibe is offering a musical theater camp for all levels, and a flute and clarinet camp for grades 6-10.\n\nVibe is an Art and Music educational nonprofit committed to ensuring equitable access to quality arts education experiences for long-term positive growth and is currently reimagining their in-person arts education offerings when all emerge from this global pandemic. They are fortunate to be able to offer in-person summer camps on sites with plenty of outdoor, and indoor space. Vibe's instructors are vaccinated, and masks are to be worn by all, teachers and students.",
+    "images": [],
+    "location": {
+      "lat": 45.5204499,
+      "lng": -122.5808875
+    },
+    "place_id": "ChIJjSRSiQahlVQRGNis02gYhL4"
+  },
+  {
+    "title": "Oregon Space Camp Adventures",
+    "address": "22982 SW Hosler WaySherwood, OR 97140",
+    "link": "https://pdxparent.com/directory/oregon-space-camp-adventures/",
+    "description": "Are you looking for a great STEM camp?\n\nOregon Space Camp Adventures organizes week long chaperone led trips to Space Camp in Huntsville, Alabama from Portland OR.\n\nFor more information check out our web page at:\n\nhttps://www.oregonspacecampadventures.org/",
+    "images": [],
+    "location": {
+      "lat": 45.3538043,
+      "lng": -122.8625474
+    },
+    "place_id": "ChIJYeuFlZFslVQRsqso4JoEgv4"
+  },
+  {
+    "title": "Circus Cascadia Summer Camp",
+    "address": "8563 SE 257th AveGresham, OR 97080",
+    "link": "https://pdxparent.com/directory/circus-cascadia-summer-camp/",
+    "description": "Our camp allows children to get creative, move their bodies and have fun outdoors.  Many circus skills will be introduced in our beautiful Big Top.",
+    "images": [],
+    "location": {
+      "lat": 45.4620792,
+      "lng": -122.3990776
+    },
+    "place_id": "ChIJ7Qo6726ZlVQR3oQtyAlrIq4"
+  },
+  {
+    "title": "Summer Youth Camps at Hawthorn Farm Athletic Club",
+    "address": "4800 Northeast Belknap Court, Hillsboro, Oregon 97124, USA 97124",
+    "link": "https://pdxparent.com/directory/summer-youth-camps-at-hawthorn-farm-athletic-club/",
+    "description": "Ages 5-12. Pools, rock wall, bounce house, and more. Weekly themes and high-energy games are balanced with cooperative learning and creative play. Open to non-members.",
+    "images": [],
+    "location": {
+      "lat": 45.52988999999999,
+      "lng": -122.9332826
+    },
+    "place_id": "ChIJ15LZB2AFlVQRZKodGIZfAGY"
+  },
+  {
+    "title": "Catlin Gabel School Summer Camps",
+    "address": "8825 SW Barnes RdPortland, OR 97225",
+    "link": "https://pdxparent.com/directory/catlin-gabel-school-summer-camps/",
+    "description": "Catlin Gabel School Summer Camps offer sports, academics, technology, arts, and more. Different camps are available each week for campers from preschool to high school.  Register at catalin.edu/summer!",
+    "images": [],
+    "location": {
+      "lat": 45.5094905,
+      "lng": -122.765815
+    },
+    "place_id": "ChIJF5V6s1wJlVQRP1vv_Xmjq7s"
+  },
+  {
+    "title": "Larry Steele Overnight Basketball Camp",
+    "address": "18062 Keasey Road, Vernonia, OR 97064",
+    "link": "https://pdxparent.com/directory/larry-steele-overnight-basketball-camp/",
+    "description": "The Larry Steele Basketball Camp is more than a sports camp. It is a great place for any young basketball enthusiast to improve skills, work hard, make new friends and have a great camp experience!\n\nOur overnight camp is committed to helping campers develop and refine their basketball skills in a fun and supportive environment. Campers learn shooting, passing, dribbling, rebounding, defense, teamwork, and sportsmanship from Coach Larry Steele, a 9-year NBA player who was on the Portland Trail Blazer NBA World Championship Team in 1977. Coach Steele and his staff teach these fundamentals in beautiful outdoor surroundings while emphasizing the importance of maintaining a positive and respectful attitude both on and off the court.\n\nWe welcome players of all abilities at our camps from ages 9 to 18 years old. Once at camp, each camper will be personally evaluated and placed into a group with other players of similar age and abilities. This provides a foundation for fundamental skill development for beginning players and a challenge for advanced players.\n\nWhen not playing basketball, campers enjoy swimming in the pool, braving the giant slip and slide, or just hanging out with their new friends.\n\nAs a camper, your player receives:\n\nLarry Steele Basketball Camp T-Shirt\nIndividual Photo\nCamp Photo\nWritten Individual Evaluation\nSkill Competitions\nAward Ceremony\nCertificate of Completion\nAutograph Opportunities\nGuest Speakers\n\n2022 Summer Camp Dates!\n\nBoys Camp: June 23rd through 27th.\n\nGirls Camp: July 13th through 17th.\n\nTo see photos and video of our beautiful location just an hour west of Portland, visit: https://www.larrysteelebasketball.com ",
+    "images": [],
+    "location": {
+      "lat": 45.8800515,
+      "lng": -123.2087947
+    },
+    "place_id": "ChIJGSHckDT0lFQRwL9SN8hTCUQ"
+  },
+  {
+    "title": "Soulflags Art Lit/Community Center",
+    "address": "504 Main StOregon City, OR 97045",
+    "link": "https://pdxparent.com/directory/soulflags-art-lit-community-center/",
+    "description": "Soulflags Art Lit Community Center is a non-profit organization focused on creating an opportunity for youth and aspiring artists to be exposed to different art styles and media.",
+    "images": [],
+    "location": {
+      "lat": 45.3566902,
+      "lng": -122.6096323
+    },
+    "place_id": "ChIJpUPyJDRxlVQRVezIAoi27mc"
+  },
+  {
+    "title": "Sauvie Island Center Farm Camp",
+    "address": "17100 NW Sauvie Island Rd Portland, OR 97231",
+    "link": "https://pdxparent.com/directory/sauvie-island-center-farm-camp/",
+    "description": "Join us on the farm for fun and exploration at Farm Camp.\n\nCome for spring break or spend a whole week exploring the farm in the farm this summer. At the Sauvie Island Center's Farm Camp children spend their days exploring beautiful  Topaz Farm, while soaking up the fresh air and learning about the natural world. Each day at camp is a new adventure as we investigate the science behind how our food grows.\n\nSpring break camp begins Tuesday, 3/22  and runs through Friday, 3/25.  Each day will offer a different theme. Campers can participate in a single day, or register for all four and receive a discount.\n\nDay 1: March 22 – Food Web Through food webs, all living things are interconnected. Students will gain an understanding of the food web (producers, consumers, and decomposers), and recognize that all living things get their energy from the sun.\n\nDay 2: March 23 – Plant Parts and Seed to Harvest Campers will learn about all six parts of the plant, including their function, how to identify each part, and which parts we eat on various plants. Through these lessons campers will learn about the life cycle of plants from seed to harvest!\n\nDay 3: March 24 – Soil and Compost Students investigate the four elements of healthy soil (water, air, organic materials, minerals), and meet the residents of a vermi-compost bin!\n\nDay 4: March 25 (Family Day): Dig in to all SIC curriculum topics and the interconnectedness of nature We will cover pieces of each of our lessons in the morning. After a lunch break we will spend the afternoon exploring the garden and creating garden-themed arts and crafts near by.\n\nSummer camp runs Monday, 7/18 - 7/22 and  again Monday, 7/25 - 7/29.  Through traditional camp activities—like games, camp songs, arts and crafts and more—we’ll focus on different parts of the Sauvie Island Center curriculum including:\n\nSoil Exploration: Dig in and learn about healthy soil.\nSeed to Harvest: Plant, tend and harvest the Grow Lunch Garden.\nPlant Parts Investigation: Explore the farm and plants we can eat.\nWildlife & Food Web: Who else has been foraging on the farm?\nPollination Station: Meet these hard-working farm friends.",
+    "images": [],
+    "location": {
+      "lat": 45.6478097,
+      "lng": -122.8237847
+    },
+    "place_id": "ChIJUS4qa_-plVQRvMhRSig4gtQ"
+  },
+  {
+    "title": "Concert School of Music",
+    "address": "8261 SW Wilsonville Rd Suite A 97070",
+    "link": "https://pdxparent.com/directory/concert-school-of-music/",
+    "description": "Concert School of Music private lessons for many instruments including piano, guitar, violin and much more. They also offer group lessons including rock band, chamber groups, string orchestra, and more.",
+    "images": [],
+    "location": {
+      "lat": 45.30344239999999,
+      "lng": -122.7641745
+    },
+    "place_id": "EjQ4MjYxIFNXIFdpbHNvbnZpbGxlIFJkIGEsIFdpbHNvbnZpbGxlLCBPUiA5NzA3MCwgVVNBIh0aGwoWChQKEglBsiav8W6VVBFRcqYdtidWIBIBYQ"
+  },
+  {
+    "title": "Circus Cascadia Summer Camp",
+    "address": "8563 SE 257th Ave, Gresham OR 97080",
+    "link": "https://pdxparent.com/directory/circus-cascadia-summer-camp/",
+    "description": "Our camp allows children to get creative, move their bodies and have fun outdoors.  Many circus skills will be introduced in our beautiful Big Top.",
+    "images": [],
+    "location": {
+      "lat": 45.4620792,
+      "lng": -122.3990776
+    },
+    "place_id": "ChIJ7Qo6726ZlVQR3oQtyAlrIq4"
+  },
+  {
+    "title": "Summer Chess Camps by Rose City Chess",
+    "address": "2025 Lloyd CenterPortland, OR 97232",
+    "link": "https://pdxparent.com/directory/summer-chess-camps-by-rose-city-chess/",
+    "description": "Rose City Chess presents a series of week-long training camps led by Oregon’s top players and coaches, including 3X Oregon Champion and USCF National Master Matt Zavortink, National Master Wilson Gibbins, and Rose City Chess Founder Chad Lykins, with support from Oregon Chess Project Summer Fellows. Each camp will be led by at least one Senior Coach and one Summer Fellow.\n\nOur training camps are fun, focused, and completely immersive. Spend an entire week playing games, analyzing with coaches, and solving puzzles. We schedule plenty of breaks for fun activities such as chess variants, chess movies, and ice cream parties. We might even throw in an ice-skating session!\n\nDon’t know how to play chess? We will teach you.\n\nStuck at a certain rating class? We will show you how to become stronger.\n\nAll camps will be 100% in-person at the Portland Chess Club. Students will be grouped according to playing strength. Students receive a free Chess Steps workbook suitable for their level.\n\nEach day includes dedicated time for USCF rated games, instruction, tactical puzzles, positional studies, and analysis of games. We typically schedule a less strenuous (and more silly) activity to give us a break in the afternoon, like chess movies, chess variants (such as blitz, bughouse, blindfold, Chessle, Chess960, and lucky chess). And maybe ice skating. Our beginner students usually need this break. Our older students can use this time to get extra rated games or more personalized feedback from one of the coaches.\n\nLocation: Portland Chess Club, Lloyd Center Mall, 2025 Lloyd Center, Portland, OR 97232\n\nEnrollment: Minimum 10 students; Maximum 24\n\nAges: 2nd-8th grade (students should have completed 1st grade prior to camp)\n\nDates\n\nJune 20-July 24\nJune 27-July1\nJuly 25-July 30\nAugust 1-August 5\nAugust 8-August 12\nAugust 15-August 19\nAugust 22-August 26\n\nSample Schedule (Activities may differ depending on player strength)\n\n9:00 Arrival, Open Play\n9:30 Lesson\n10:00 Puzzles / Studies\n10:30 USCF rated game (G/25;+5)\n11:30 Game analysis\n12:00 Lunch (bring your own)\n12:30 Lesson\n1:00 USCF rated game (G/25;+5) / Simul / Tournament\n2:00 Snack + Special Activity (Ice Skating/Movie/Chess Variant)\n3:00 Game analysis / Open Play\n3:30-4:00 Departure\n\nSpecial Activities\n\nMonday: Deep Dive\nTuesday: Simul\nWednesday: Blindfold Chess or Ice Skating\nThursday: Blitz Chess\nFriday: Bughouse + Movie\n\nFAQs\n\nAre the same topics covered every week?\n\nWe introduce 100% new puzzles and positions each week of the camp. We have a curriculum with over 14,000 positions, sorted by playing strength and theme.\n\nWhat are your Covid protocols?\n\nWe follow all protocols set by the Oregon Health Authority. These can change on short notice. We will notify participants of any changes.\n\nAre food and beverage provided?\n\nLunches and snacks are not provided, so please send your own. Rose City Chess pays for the ice cream party.\n\nWhat about ice-skating? What if my child doesn’t want to ice-skate?\n\nIf we go ice-skating, Rose City Chess will pay all fees. We have not confirmed ice-skating will be possible. If you child doesn’t want to ice-skate, we will keep a coach back in the playing room to play chess with them.",
+    "images": [],
+    "location": {
+      "lat": 45.5317386,
+      "lng": -122.6546031
+    },
+    "place_id": "ChIJNyeyhLOglVQR3ZhpsnemTyE"
   }
 ]
