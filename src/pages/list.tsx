@@ -8,8 +8,9 @@ import Button from "../components/Styled/Button";
 
 type CampData = {
   lat: number;
-  long: number;
+  lng: number;
   title: string;
+  place_id: string;
 };
 
 const campList: CampData[] = [];
@@ -17,22 +18,29 @@ tempData.forEach((camp) => {
   if (camp.location) {
     campList.push({
       lat: camp.location.lat,
-      long: camp.location.lng,
+      lng: camp.location.lng,
       title: camp.title,
+      place_id: camp.place_id,
     });
   }
 });
 
 function List() {
   const { portlandMap } = useMap();
+  const [selectedCamp, setSelectedCamp] = useState("");
   const [campFilter, setCampFilter] = useState("");
-  const onClick = (lat: number, lng: number) => {
+  const selectCampFromList = (lat: number, lng: number, place_id: string) => {
+    if (place_id === selectedCamp) {
+      setSelectedCamp("");
+      return;
+    }
+    setSelectedCamp(place_id);
     if (portlandMap) {
       portlandMap.flyTo({ center: [lng, lat], zoom: 14 });
     }
   };
 
-  const selectCamp = (camp: string) => console.log("selectCamp", camp);
+  const selectCamp = (camp: string) => setSelectedCamp(camp);
 
   const filteredCampList = tempData.filter((camp) => {
     if (campFilter) {
@@ -61,8 +69,8 @@ function List() {
             <Marker
               key={camp.title}
               lat={camp.lat}
-              long={camp.long}
-              name={camp.title}
+              lng={camp.lng}
+              placeId={camp.place_id}
               onSelect={selectCamp}
             />
           ))}
@@ -82,9 +90,10 @@ function List() {
         </div>
         {filteredCampList.map((camp) => (
           <CampCard
+            selectedCampId={selectedCamp}
             details={camp as unknown as CardDetails}
             key={`${camp.title}-btn`}
-            onSelect={onClick}
+            onSelect={selectCampFromList}
           />
         ))}
       </div>

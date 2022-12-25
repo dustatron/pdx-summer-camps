@@ -1,19 +1,20 @@
 import React from "react";
 import Image from "next/image";
 import { Marker as MapboxMarker } from "react-map-gl";
+import Link from "next/link";
 
 type Props = {
   lat: number;
-  long: number;
-  name: string;
+  lng: number;
+  placeId: string;
   onSelect: (camp: string) => void;
 };
 
-const Marker = ({ lat, long, onSelect, name }: Props) => {
+const Marker = ({ lat, lng, onSelect, placeId }: Props) => {
   return (
-    <>
-      <MapboxMarker longitude={long} latitude={lat}>
-        <button onClick={() => onSelect(name)}>
+    <Link href={`#${placeId}`} scroll={true}>
+      <MapboxMarker longitude={lng} latitude={lat}>
+        <button onClick={() => onSelect(placeId)}>
           <Image
             src="/marker.png"
             alt="location marker"
@@ -22,7 +23,7 @@ const Marker = ({ lat, long, onSelect, name }: Props) => {
           />
         </button>
       </MapboxMarker>
-    </>
+    </Link>
   );
 };
 
