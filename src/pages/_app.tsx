@@ -7,6 +7,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";
+import PageLayout from "../components/Styled/PageLayout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -15,7 +16,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <MapProvider>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <PageLayout>
+          <Component {...pageProps} />
+        </PageLayout>
       </SessionProvider>
     </MapProvider>
   );

@@ -22,3 +22,14 @@ https://github.com/leighhalliday/house-course
 [This Tutorial course](https://www.youtube.com/watch?v=sZfUXVSor-k&list=PL8fumNHsC-3PNJpiIa6Sm84yEo_Y0c7O_&index=2) by Leigh Halliday
 
 The mapping tool is provided by [mapbox](https://www.mapbox.com)
+
+Using [React Icons](https://react-icons.github.io/) 
+
+## Setup
+[T3 First stets](https://create.t3.gg/en/usage/first-steps)
+Ensure the .env file has the correct keys
+
+Start up your Database
+```
+npx prisma db push
+```
