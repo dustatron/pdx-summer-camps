@@ -67,6 +67,7 @@ function List() {
         >
           {campList.map((camp) => (
             <Marker
+              selectedCamp={selectedCamp}
               key={camp.title}
               lat={camp.lat}
               lng={camp.lng}
