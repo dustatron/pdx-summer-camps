@@ -14,7 +14,7 @@ const PageLayout = ({ children }: Props) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Navbar />
-      <Box as="main" height="100%" bg="#F8F8F8">
+      <Box as="main" height="100%" bg="#FBFBFB">
         {children}
       </Box>
     </Stack>

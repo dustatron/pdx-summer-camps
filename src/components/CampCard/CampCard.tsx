@@ -1,7 +1,6 @@
 import React from "react";
 // import Image from "next/image";
 import {
-  Box,
   Button,
   Stack,
   Heading,
@@ -12,6 +11,7 @@ import {
   Text,
   Badge,
 } from "@chakra-ui/react";
+import type { Camp } from "@prisma/client";
 
 export type CardDetails = {
   title: string;
@@ -21,14 +21,14 @@ export type CardDetails = {
   facebook?: string;
   instagram?: string;
   description: string;
-  images: string[];
-  location: { lat: number; lng: number };
-  place_id: string;
+  image: { src: string }[];
+  location: [{ lat: number; lng: number }];
+  id: string;
 };
 
 type Props = {
   details: CardDetails;
-  onSelect: (lat: number, lng: number, place_id: string) => void;
+  onSelect: (lat: number, lng: number, campId: string, campObj: Camp) => void;
   selectedCampId: string;
   showDetails: () => void;
 };
@@ -42,24 +42,25 @@ const CampCard = ({
   const {
     title,
     description,
-    images,
+    image,
     address,
     website,
     facebook,
     instagram,
-    place_id,
-    location: { lat, lng },
+    id,
+    location,
   } = details;
 
-  const isSelectedCamp = selectedCampId === place_id;
+  const isSelectedCamp = selectedCampId === id;
+  const { lat, lng } = location[0];
 
   return (
-    <Center py={2} id={place_id} w="100%">
+    <Center py={2} id={id} w="100%">
       <Stack
         borderWidth="1px"
         borderRadius="lg"
         w="90%"
-        height={{ sm: "476px", md: "20rem" }}
+        minHeight={{ sm: "476px", md: "20rem" }}
         direction={{ base: "column", md: "row" }}
         bg={useColorModeValue("white", "gray.900")}
         boxShadow={"2xl"}
@@ -71,7 +72,7 @@ const CampCard = ({
           <Image
             objectFit="cover"
             boxSize="100%"
-            src={images[0] || "/img-place-holder.png"}
+            src={(image[0] && image[0].src) || "/img-place-holder.png"}
             alt="camp logo"
           />
         </Flex>
@@ -139,7 +140,7 @@ const CampCard = ({
               fontSize={"sm"}
               rounded={"full"}
               onClick={() => {
-                onSelect(lat, lng, place_id);
+                onSelect(lat, lng, id, details as unknown as Camp);
                 showDetails();
               }}
               _focus={{
@@ -149,7 +150,7 @@ const CampCard = ({
               More Info
             </Button>
             <Button
-              onClick={() => onSelect(lat, lng, place_id)}
+              onClick={() => onSelect(lat, lng, id, details as unknown as Camp)}
               flex={1}
               fontSize={"sm"}
               rounded={"full"}
@@ -173,83 +174,5 @@ const CampCard = ({
     </Center>
   );
 };
-// <Box
-//   w={["80%"]}
-//   maxHeight={!isSelectedCamp ? "30rem" : ""}
-//   id={place_id}
-//   padding="2"
-// >
-//   <Box
-//     h="100%"
-//     w="100%"
-//     border="1px"
-//     borderColor="gray.300"
-//     rounded="md"
-//     cursor="pointer"
-//     bg={isSelectedCamp ? "gray.100" : ""}
-//     onClick={() => onSelect(lat, lng, place_id)}
-//   >
-//     <Center height="150px" overflow="hidden">
-//       <Image
-//         height={300}
-//         width={300}
-//         src={images[0] || "/img-place-holder.png"}
-//         alt="Image provided by camp"
-//       />
-//     </Center>
-//     <Box bg="gray.500" p="2">
-//       <Heading size="sm" color="white">
-//         {title}
-//       </Heading>
-//     </Box>
-//     <Stack p="2" fontSize="sm">
-//       <Box>{address}</Box>
-//       <Box>
-//         <a
-//           className="text-blue-500"
-//           href={website}
-//           target="_blank"
-//           rel="noreferrer"
-//         >
-//           {website?.replace("http://", "").replace("https://", "")}
-//         </a>
-//       </Box>
-//       {isSelectedCamp && <div>{description}</div>}
-
-//       {!isSelectedCamp && (
-//         <div>
-//           {description.slice(0, 255)}{" "}
-//           {description.length > 255 ? "..." : ""}
-//         </div>
-//       )}
-//       <Stack direction="row" spacing={3}>
-//         {facebook && (
-//           <CaLink
-//             color="blue.400"
-//             href={facebook}
-//             target="_blank"
-//             rel="noreferrer"
-//           >
-//             <Button>
-//               <BsFacebook />
-//             </Button>
-//           </CaLink>
-//         )}
-//         {instagram && (
-//           <CaLink
-//             href={instagram}
-//             color="blue.400"
-//             target="_blank"
-//             rel="noreferrer"
-//           >
-//             <Button>
-//               <ImInstagram />
-//             </Button>
-//           </CaLink>
-//         )}
-//       </Stack>
-//     </Stack>
-//   </Box>
-// </Box>
 
 export default CampCard;
