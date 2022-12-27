@@ -7,7 +7,7 @@ import { Input, Button, Box, Stack, Flex } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import CardDetail from "../CardDetail";
 import type { Camp } from "@prisma/client";
-import { CampDetail } from "../CardDetail/CardDetail";
+import type { CampDetail } from "../CardDetail/CardDetail";
 
 function CampListWrapper() {
   const { portlandMap } = useMap();
@@ -28,8 +28,6 @@ function CampListWrapper() {
     campId: string,
     campObj: Camp
   ) => {
-    console.log("select", lat, lng, campId);
-
     if (campId === selectedCampId) {
       setSelectedCampId("");
       return;
