@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 body {
-  font-family: Assistant;
-  font-size: 16px;
+  background: rgb(210, 222, 234);
 }
+

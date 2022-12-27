@@ -64,3 +64,35 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Camp {
+    id           String @id @default(cuid())
+    title        String
+    address      String
+    link         String?
+    website      String
+    email        String?
+    facebook     String?
+    instagram    String?
+    description  String?
+    image        CampImage[]
+    location     Location[]
+    place_id     String?
+    tags         String?
+    quadrant     String?
+}
+
+model Location {
+  id           String   @id @default(cuid())
+  campId       String
+  lat          Float
+  lng          Float
+  camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
+}
+
+model CampImage {
+  id           String   @id @default(cuid())
+  campId       String
+  src          String
+  camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
+}

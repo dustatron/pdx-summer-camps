@@ -33,3 +33,14 @@ Start up your Database
 ```
 npx prisma db push
 ```
+
+run prisma studio
+
+```
+npx prisma studio
+```
+
+Update schema and make a migration
+```
+npx prisma migrate dev --name add_camps
+```

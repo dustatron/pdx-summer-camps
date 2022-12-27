@@ -4,7 +4,7 @@ import Marker from "../components/Marker";
 import tempData from "../temp-data.json";
 import CampCard from "../components/CampCard";
 import type { CardDetails } from "../components/CampCard";
-import Button from "../components/Styled/Button";
+import { Input, Button, Box, Stack, Flex } from "@chakra-ui/react";
 
 type CampData = {
   lat: number;
@@ -29,6 +29,7 @@ function List() {
   const { portlandMap } = useMap();
   const [selectedCamp, setSelectedCamp] = useState("");
   const [campFilter, setCampFilter] = useState("");
+  const [isShowingDetails, setIsShowingDetails] = useState(false);
   const selectCampFromList = (lat: number, lng: number, place_id: string) => {
     if (place_id === selectedCamp) {
       setSelectedCamp("");
@@ -40,7 +41,13 @@ function List() {
     }
   };
 
-  const selectCamp = (camp: string) => setSelectedCamp(camp);
+  const selectCamp = (camp: string) => {
+    if (camp === selectedCamp) {
+      setSelectedCamp("");
+    } else {
+      setSelectedCamp(camp);
+    }
+  };
 
   const filteredCampList = tempData.filter((camp) => {
     if (campFilter) {
@@ -51,8 +58,9 @@ function List() {
   });
 
   return (
-    <div className="flex h-screen w-screen border-red-200">
-      <div className="w-6/12">
+    <Flex h="calc(92vh)">
+      {/* Map */}
+      <Box w="50%">
         <Map
           id="portlandMap"
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
@@ -76,29 +84,41 @@ function List() {
             />
           ))}
         </Map>
-      </div>
-
-      <div className="flex w-6/12 flex-wrap overflow-scroll p-3">
-        <div className="w-full p-2">
-          <input
-            value={campFilter}
-            onChange={(e) => setCampFilter(e.target.value)}
-            type="text"
-            className="focus:shadow-outline mr-2 h-12 w-3/6 appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-            placeholder="camp name"
-          />
-          <Button onClick={() => setCampFilter("")}>Clear</Button>
-        </div>
-        {filteredCampList.map((camp) => (
-          <CampCard
-            selectedCampId={selectedCamp}
-            details={camp as unknown as CardDetails}
-            key={`${camp.title}-btn`}
-            onSelect={selectCampFromList}
-          />
-        ))}
-      </div>
-    </div>
+      </Box>
+      {/* List */}
+      <Stack direction="column" w="50%" h="calc(92vh)">
+        {!isShowingDetails && (
+          <>
+            <Stack direction="row" p="2">
+              <Input
+                value={campFilter}
+                onChange={(e) => setCampFilter(e.target.value)}
+                type="text"
+                placeholder="Camp Name"
+              />
+              <Button onClick={() => setCampFilter("")} colorScheme="blue">
+                Clear
+              </Button>
+            </Stack>
+            <Flex flexWrap="wrap" h="100%" w="100%" overflow="scroll">
+              {filteredCampList.map((camp) => (
+                <CampCard
+                  selectedCampId={selectedCamp}
+                  details={camp as unknown as CardDetails}
+                  key={`${camp.title}-btn`}
+                  showDetails={() => setIsShowingDetails(true)}
+                  onSelect={selectCampFromList}
+                />
+              ))}
+            </Flex>
+          </>
+        )}
+        <Box>
+          Details
+          <Button onClick={() => setIsShowingDetails(false)}> Back</Button>
+        </Box>
+      </Stack>
+    </Flex>
   );
 }
 
