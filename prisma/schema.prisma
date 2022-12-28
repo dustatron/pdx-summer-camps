@@ -23,7 +23,7 @@ model Example {
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            Int
   type              String
   provider          String
   providerAccountId String
@@ -42,19 +42,21 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String
+  userId       Int
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            Int    @id @default(autoincrement())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          String?   
   accounts      Account[]
   sessions      Session[]
+  camps         CampAuthor[]
 }
 
 model VerificationToken {
@@ -80,6 +82,7 @@ model Camp {
     place_id     String?
     tags         String?
     quadrant     String?
+    author   CampAuthor[] 
 }
 
 model Location {
@@ -95,4 +98,13 @@ model CampImage {
   campId       String
   src          String
   camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
+}
+
+model CampAuthor {
+  id           String   @id @default(cuid())
+  campId       String
+  userId       Int
+  authorName   String
+  camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
+  user         User   @relation(fields: [userId], references: [id])
 }

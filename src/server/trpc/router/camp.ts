@@ -1,4 +1,3 @@
-import { BsCartX } from "react-icons/bs";
 import { z } from "zod";
 
 import { router, publicProcedure } from "../trpc";
@@ -18,12 +17,14 @@ export const createCampSchema = z.object({
     lng: z.string()
   }),
   tags: z.string().optional(),
-  quadrant: z.string().optional()
+  quadrant: z.string().optional(),
+  userId: z.number(),
+  authorName: z.string()
 })
 
 export const campRouter = router({
   addCamp: publicProcedure.input(createCampSchema).mutation(({ input, ctx }) => {
-    const { title, address, email, website, link, location, description, facebook, instagram, image, quadrant, tags } = input
+    const { title, address, email, website, link, location, description, facebook, instagram, image, quadrant, tags, userId, authorName } = input
     return ctx.prisma.camp.create({
       data: {
         title,
@@ -45,6 +46,12 @@ export const campRouter = router({
         image: {
           create: {
             src: image || '/img-place-holder.png'
+          }
+        },
+        author: {
+          create: {
+            authorName,
+            userId
           }
         }
       }

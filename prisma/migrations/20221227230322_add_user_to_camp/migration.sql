@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "Camp" ADD COLUMN     "userId" TEXT NOT NULL DEFAULT clc5ly34u0007t45ss7rau0yo;
-
--- AddForeignKey
-ALTER TABLE "Camp" ADD CONSTRAINT "Camp_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

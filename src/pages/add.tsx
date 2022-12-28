@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { trpc } from "../utils/trpc";
 import { z } from "zod";
+import { useSession } from "next-auth/react";
 
 export const createCampSchema = z.object({
   title: z.string().max(150),
@@ -30,6 +31,8 @@ export const createCampSchema = z.object({
   }),
   tags: z.string().optional(),
   quadrant: z.string().optional(),
+  userId: z.number(),
+  authorName: z.string(),
 });
 
 type CreateCampData = z.input<typeof createCampSchema>;
@@ -39,6 +42,8 @@ const initialState: CreateCampData = {
   title: "",
   address: "",
   website: "",
+  userId: 0,
+  authorName: "",
 };
 
 const reducer = (
@@ -61,17 +66,24 @@ const reducer = (
 
 function Add() {
   const [formState, dispatch] = useReducer(reducer, initialState);
+  const { data: session, status: authStatus } = useSession();
   const { mutate: addCamp, status } = trpc.camps.addCamp.useMutation();
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validate = createCampSchema.safeParse(formState);
     console.log("validate", validate);
-    if (validate.success) {
-      addCamp(formState);
+    if (validate.success && session && session.user) {
+      addCamp({
+        ...formState,
+        userId: Number(session.user.id),
+        authorName: session.user.name as string,
+      });
     }
   };
 
   console.log("formState", formState);
+  console.log("session", session);
   return (
     <Container
       marginTop="2rem"
