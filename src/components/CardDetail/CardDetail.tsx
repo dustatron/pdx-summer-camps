@@ -12,12 +12,15 @@ import { BiArrowBack } from "react-icons/bi";
 import { BsFacebook } from "react-icons/bs";
 import { ImInstagram } from "react-icons/im";
 import React from "react";
+import { useRouter } from "next/router";
 
 export type CampDetail = Camp & { image: { src: string; id: string }[] };
 
 type Props = { onBack: () => void; campData: CampDetail };
 
 function CardDetail({ onBack, campData }: Props) {
+  const router = useRouter();
+
   const {
     title,
     image,
@@ -29,7 +32,9 @@ function CardDetail({ onBack, campData }: Props) {
     email,
     quadrant,
     tags,
+    id,
   } = campData;
+
   return (
     <Stack spacing={3} p="3">
       <Box borderBottom="1px" paddingBottom="2" borderColor="gray.300">
@@ -112,6 +117,7 @@ function CardDetail({ onBack, campData }: Props) {
           )}
         </Stack>
       </Box>
+      <Button onClick={() => router.push(`detail/${id}`)}>Edit</Button>
     </Stack>
   );
 }

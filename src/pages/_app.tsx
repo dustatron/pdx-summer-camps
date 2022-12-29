@@ -3,6 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { MapProvider } from "react-map-gl";
 import { ChakraProvider } from "@chakra-ui/react";
+import AlertContextProvider from "../context/AlertContext";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -18,13 +19,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <ChakraProvider>
-      <MapProvider>
-        <SessionProvider session={session}>
-          <PageLayout>
-            <Component {...pageProps} />
-          </PageLayout>
-        </SessionProvider>
-      </MapProvider>
+      <AlertContextProvider>
+        <MapProvider>
+          <SessionProvider session={session}>
+            <PageLayout>
+              <Component {...pageProps} />
+            </PageLayout>
+          </SessionProvider>
+        </MapProvider>
+      </AlertContextProvider>
     </ChakraProvider>
   );
 };

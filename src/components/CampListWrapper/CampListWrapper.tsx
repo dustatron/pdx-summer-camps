@@ -16,9 +16,6 @@ function CampListWrapper() {
   const [campFilter, setCampFilter] = useState("");
   const [isShowingDetails, setIsShowingDetails] = useState(false);
 
-  const { data: locationData, status: locationStatus } =
-    trpc.camps.getAllLocations.useQuery();
-
   const { data: campData, status: campStatus } =
     trpc.camps.getAllCamps.useQuery();
 
@@ -61,7 +58,7 @@ function CampListWrapper() {
   return (
     <Flex h="calc(92vh)">
       {/* Map */}
-      {locationData && locationStatus === "success" && (
+      {campData && campStatus === "success" && (
         <Box w="50%">
           <Map
             id="portlandMap"
@@ -75,13 +72,13 @@ function CampListWrapper() {
             mapStyle="mapbox://styles/mapbox/streets-v9"
             boxZoom
           >
-            {locationData.map((marker) => (
+            {campData.map((marker) => (
               <Marker
                 selectedCamp={selectedCampId}
                 key={marker.id}
                 lat={marker.lat}
                 lng={marker.lng}
-                placeId={marker.campId}
+                placeId={marker.id}
                 onSelect={selectCamp}
               />
             ))}
@@ -89,7 +86,7 @@ function CampListWrapper() {
         </Box>
       )}
       {/* List */}
-      {campStatus === "success" && locationData && (
+      {campStatus === "success" && campData && (
         <Stack direction="column" w="50%" h="calc(92vh)">
           {!isShowingDetails && (
             <>
@@ -105,17 +102,15 @@ function CampListWrapper() {
                 </Button>
               </Stack>
               <Flex flexWrap="wrap" h="100%" w="100%" overflow="scroll">
-                {filteredCampList?.map((camp) => {
-                  return (
-                    <CampCard
-                      selectedCampId={selectedCampId}
-                      details={camp as unknown as CardDetails}
-                      key={`${camp.id}`}
-                      showDetails={() => setIsShowingDetails(true)}
-                      onSelect={selectCampFromList}
-                    />
-                  );
-                })}
+                {filteredCampList?.map((camp) => (
+                  <CampCard
+                    selectedCampId={selectedCampId}
+                    details={camp as unknown as CardDetails}
+                    key={`${camp.id}`}
+                    showDetails={() => setIsShowingDetails(true)}
+                    onSelect={selectCampFromList}
+                  />
+                ))}
               </Flex>
             </>
           )}

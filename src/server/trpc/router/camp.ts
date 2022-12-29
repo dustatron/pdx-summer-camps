@@ -1,30 +1,21 @@
 import { z } from "zod";
+import { createCampSchema } from '../../../types/camp'
 
 import { router, publicProcedure } from "../trpc";
 
-export const createCampSchema = z.object({
-  title: z.string().max(150),
-  address: z.string().max(255),
-  email: z.string().max(100).optional(),
-  website: z.string().max(150),
-  link: z.string().optional(),
-  facebook: z.string().max(150).optional(),
-  instagram: z.string().optional(),
-  description: z.string().max(500).optional(),
-  image: z.string().optional(),
-  location: z.object({
-    lat: z.string(),
-    lng: z.string()
-  }),
-  tags: z.string().optional(),
-  quadrant: z.string().optional(),
-  userId: z.number(),
-  authorName: z.string()
-})
 
 export const campRouter = router({
+  getAllCamps: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.camp.findMany({ include: { image: true } });
+  }),
+  getYourCamps: publicProcedure.input(z.object({ userId: z.number() })).query(({ input, ctx }) => {
+    return ctx.prisma.campAuthor.findMany({ where: { userId: input.userId } })
+  }),
+  getCamp: publicProcedure.input(z.object({ campId: z.string() })).query(({ input, ctx }) => {
+    return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true } })
+  }),
   addCamp: publicProcedure.input(createCampSchema).mutation(({ input, ctx }) => {
-    const { title, address, email, website, link, location, description, facebook, instagram, image, quadrant, tags, userId, authorName } = input
+    const { title, address, email, website, link, lat, lng, description, facebook, instagram, image, quadrant, tags, userId, authorName } = input
     return ctx.prisma.camp.create({
       data: {
         title,
@@ -32,12 +23,8 @@ export const campRouter = router({
         website,
         email,
         link,
-        location: {
-          create: {
-            lat: parseFloat(location.lat),
-            lng: parseFloat(location.lng)
-          }
-        },
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
         description,
         facebook,
         instagram,
@@ -51,19 +38,38 @@ export const campRouter = router({
         author: {
           create: {
             authorName,
+            campName: title,
             userId
           }
         }
       }
     })
   }),
-  getAllCamps: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.camp.findMany({ include: { location: true, image: true } });
+  update: publicProcedure.input(createCampSchema).mutation(({ input, ctx }) => {
+    const { title, address, email, website, link, description, facebook, instagram, image, quadrant, tags, userId, authorName, id, lat, lng } = input
+    return ctx.prisma.camp.update({
+      where: { id: id }, data: {
+        title,
+        address,
+        website,
+        email,
+        link,
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+        description,
+        facebook,
+        instagram,
+        quadrant,
+        tags,
+        image: {
+          create: {
+            src: image || '/img-place-holder.png'
+          }
+        }
+      }
+    })
   }),
-  getAllLocations: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.location.findMany({ include: { camp: true } })
-  }),
-  getYourCamps: publicProcedure.input(z.object({ userId: z.string() })).query(({ input, ctx }) => {
-    return ctx.prisma.camp.findUnique({ where: {} })
+  delete: publicProcedure.input(z.object({ campId: z.string() })).mutation(({ input, ctx }) => {
+    return ctx.prisma.camp.delete({ where: { id: input.campId } })
   })
 })

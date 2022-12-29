@@ -17,12 +17,8 @@ async function main() {
             src: camp.images[0] || '/img-place-holder.png'
           }
         },
-        location: {
-          create: {
-            lat: camp.location.lat,
-            lng: camp.location.lng
-          }
-        }
+        lat: camp.location.lat,
+        lng: camp.location.lng
       }
     })
   }

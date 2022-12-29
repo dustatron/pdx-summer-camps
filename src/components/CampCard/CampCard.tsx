@@ -22,7 +22,8 @@ export type CardDetails = {
   instagram?: string;
   description: string;
   image: { src: string }[];
-  location: [{ lat: number; lng: number }];
+  lat: number;
+  lng: number;
   id: string;
 };
 
@@ -39,20 +40,9 @@ const CampCard = ({
   selectedCampId,
   showDetails,
 }: Props) => {
-  const {
-    title,
-    description,
-    image,
-    address,
-    website,
-    facebook,
-    instagram,
-    id,
-    location,
-  } = details;
+  const { title, description, image, address, website, id, lat, lng } = details;
 
   const isSelectedCamp = selectedCampId === id;
-  const { lat, lng } = location[0];
 
   return (
     <Center py={2} id={id} w="100%">

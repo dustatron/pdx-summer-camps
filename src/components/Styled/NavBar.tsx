@@ -94,10 +94,13 @@ export default function Navbar() {
                 />
               </MenuButton>
               <MenuList>
-                <Link href="add">
+                <Link href="/your-camps">
+                  <MenuItem>Your Camps</MenuItem>
+                </Link>
+                <Link href="/add">
                   <MenuItem>Add Camp</MenuItem>
                 </Link>
-                <Link href="profile">
+                <Link href="/profile">
                   <MenuItem>Profile</MenuItem>
                 </Link>
                 <MenuDivider />
