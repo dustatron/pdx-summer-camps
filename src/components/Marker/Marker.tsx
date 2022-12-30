@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { Marker as MapboxMarker } from "react-map-gl";
 import { GrLocation } from "react-icons/gr";
 import { HiLocationMarker } from "react-icons/hi";

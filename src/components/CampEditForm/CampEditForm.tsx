@@ -49,10 +49,10 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
   const { addAlert } = useAlert();
 
   const router = useRouter();
-  const history = window.history.state.url;
 
   const { mutate: deleteCamp } = trpc.camps.delete.useMutation({
     onSuccess: () => {
+      const history = window.history.state.url;
       addAlert({
         status: "success",
         title: "Success",
@@ -107,6 +107,8 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
   const { mutate: updateCamp, status: updateStatus } =
     trpc.camps.update.useMutation({
       onSuccess: () => {
+        const history = window.history.state.url;
+
         addAlert({
           status: "success",
           title: "Success",

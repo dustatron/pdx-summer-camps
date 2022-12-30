@@ -9,11 +9,11 @@ import {
   Textarea,
   Flex,
   Text,
-  Image,
 } from "@chakra-ui/react";
 import type { CampData } from "../../types/camp";
 import { useRouter } from "next/router";
 import AddImage from "./AddImage";
+import AddressSelector, { Feature } from "./AddressSelector";
 
 type Status = "error" | "success" | "loading" | "idle";
 
@@ -40,6 +40,21 @@ const Form = ({
   updateStatus,
 }: Props) => {
   const { back } = useRouter();
+
+  const onSelectAddress = (location: Feature) => {
+    dispatch({
+      type: "lng",
+      payload: String(location.geometry.coordinates[0]),
+    });
+    dispatch({
+      type: "lat",
+      payload: String(location.geometry.coordinates[1]),
+    });
+    dispatch({
+      type: "address",
+      payload: String(location.place_name),
+    });
+  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -77,27 +92,6 @@ const Form = ({
               }
             />
           </FormControl>
-          <FormControl>
-            <FormLabel>lat</FormLabel>
-            <Input
-              type="text"
-              value={formState.lat}
-              onChange={(e) =>
-                dispatch({ type: "lat", payload: e.target.value })
-              }
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>lng</FormLabel>
-            <Input
-              type="text"
-              value={formState.lng}
-              onChange={(e) =>
-                dispatch({ type: "lng", payload: e.target.value })
-              }
-            />
-          </FormControl>
         </Stack>
         <Stack spacing={3} w="50%">
           <FormControl>
@@ -120,39 +114,35 @@ const Form = ({
               }
             />
           </FormControl>
-          <FormControl>
-            <FormLabel>Facebook</FormLabel>
-            <Input
-              type="text"
-              value={formState.facebook || ""}
-              onChange={(e) =>
-                dispatch({ type: "facebook", payload: e.target.value })
-              }
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Instagram</FormLabel>
-            <Input
-              type="text"
-              value={formState.instagram || ""}
-              onChange={(e) =>
-                dispatch({ type: "instagram", payload: e.target.value })
-              }
-            />
-          </FormControl>
         </Stack>
+      </Stack>
+      <Stack direction="row" py="4">
+        <FormControl>
+          <FormLabel>Facebook</FormLabel>
+          <Input
+            type="text"
+            value={formState.facebook || ""}
+            onChange={(e) =>
+              dispatch({ type: "facebook", payload: e.target.value })
+            }
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Instagram</FormLabel>
+          <Input
+            type="text"
+            value={formState.instagram || ""}
+            onChange={(e) =>
+              dispatch({ type: "instagram", payload: e.target.value })
+            }
+          />
+        </FormControl>
       </Stack>
       <FormControl marginTop="3">
         <FormLabel>Address *</FormLabel>
-        <Input
-          type="text"
-          isRequired
-          value={formState.address}
-          onChange={(e) =>
-            dispatch({ type: "address", payload: e.target.value })
-          }
-        />
+        <Input type="text" isRequired value={formState.address} isDisabled />
       </FormControl>
+      <AddressSelector onSelectAddress={onSelectAddress} />
       <FormControl marginTop="3">
         {formState.description && (
           <>
@@ -203,8 +193,8 @@ const Form = ({
         <Button
           type="submit"
           colorScheme="blue"
-          isDisabled={status === "loading"}
-          isLoading={status === "loading" || updateStatus === "loading"}
+          isDisabled={updateStatus === "loading"}
+          isLoading={updateStatus === "loading"}
         >
           {isEdit ? "Save" : "Add Camp"}
         </Button>

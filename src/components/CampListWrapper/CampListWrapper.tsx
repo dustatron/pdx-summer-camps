@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Map, { useMap } from "react-map-gl";
+import Map, { useMap, NavigationControl } from "react-map-gl";
 import Marker from "../Marker";
 import CampCard from "../CampCard";
 import type { CardDetails } from "../CampCard";
@@ -72,6 +72,7 @@ function CampListWrapper() {
             mapStyle="mapbox://styles/mapbox/streets-v9"
             boxZoom
           >
+            <NavigationControl />
             {campData.map((marker) => (
               <Marker
                 selectedCamp={selectedCampId}

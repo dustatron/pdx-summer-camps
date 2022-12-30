@@ -1,12 +1,9 @@
-import React, { useRef, useEffect, useState, MutableRefObject } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import mapboxgl from "mapbox-gl";
 import CampListWrapper from "../components/CampListWrapper";
 
-// mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN as string;
-
 function CampList() {
-  const [map, setMap] = React.useState<mapboxgl.Map>();
   const [zoom, setZoom] = useState(10);
 
   const mapNode = useRef(null);
@@ -24,12 +21,10 @@ function CampList() {
       zoom,
     });
 
-    // save the map object to React.useState
-    setMap(mapboxMap);
-
     return () => {
       mapboxMap.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
