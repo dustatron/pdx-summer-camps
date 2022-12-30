@@ -2,14 +2,14 @@ import React, { useReducer } from "react";
 import { Container, Box, Heading } from "@chakra-ui/react";
 
 import { trpc } from "../../utils/trpc";
-import type { CreateCampData } from "../../types/camp";
-import { createCampSchema } from "../../types/camp";
+import type { CampData } from "../../types/camp";
+import { campSchema } from "../../types/camp";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Form from "./Form";
 import { useAlert } from "../../context/AlertContext";
 
-let initialState: CreateCampData = {
+const initialState: CampData = {
   lat: "",
   lng: "",
   title: "",
@@ -19,44 +19,80 @@ let initialState: CreateCampData = {
   authorName: "",
   email: "",
   description: "",
+  image: [],
 };
 
 const reducer = (
-  prevState: CreateCampData,
+  prevState: CampData,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: { type: string; payload: any }
 ) => {
   const { type, payload } = action;
-  if (type) {
+  if (type !== "reset") {
     return { ...prevState, [type]: payload };
+  } else if (type === "reset") {
+    return initialState;
   } else {
     return prevState;
   }
 };
 
 type Props = {
-  campData?: CreateCampData;
+  campData?: CampData;
   isEdit?: boolean;
   campId?: string;
 };
 
 function CampEditForm({ campData, isEdit, campId }: Props) {
-  const [formState, dispatch] = useReducer(reducer, initialState);
+  const [formState, dispatch] = useReducer(reducer, campData || initialState);
   const { data: session } = useSession();
   const { addAlert } = useAlert();
 
   const router = useRouter();
-
-  if (campData) initialState = campData;
+  const history = window.history.state.url;
 
   const { mutate: deleteCamp } = trpc.camps.delete.useMutation({
     onSuccess: () => {
-      router.push("/your-camps");
+      addAlert({
+        status: "success",
+        title: "Success",
+        body: "Camp was successfully deleted",
+        autoClose: true,
+      });
+      if (history === "/detail/[id]") {
+        router.push("/");
+      } else {
+        router.push("/your-camps");
+      }
+    },
+  });
+  const { mutate: removeImage } = trpc.camps.removeImage.useMutation({
+    onSuccess: () => {
+      addAlert({
+        status: "success",
+        title: "Success",
+        body: "Removed Image",
+        autoClose: true,
+      });
+    },
+
+    onError: () => {
+      addAlert({
+        status: "error",
+        title: "Error",
+        body: "Unable to delete image",
+      });
     },
   });
 
   const { mutate: addCamp, status } = trpc.camps.addCamp.useMutation({
     onSuccess: () => {
+      addAlert({
+        status: "success",
+        title: "Success",
+        body: "New camp added",
+        autoClose: true,
+      });
       router.push("/your-camps");
     },
     onError: () => {
@@ -71,7 +107,17 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
   const { mutate: updateCamp, status: updateStatus } =
     trpc.camps.update.useMutation({
       onSuccess: () => {
-        router.push("/your-camps");
+        addAlert({
+          status: "success",
+          title: "Success",
+          body: "Camp details updated",
+          autoClose: true,
+        });
+        if (history === "/detail/[id]") {
+          router.push("/");
+        } else {
+          router.push("/your-camps");
+        }
       },
       onError: () => {
         addAlert({
@@ -84,8 +130,17 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validate = createCampSchema.safeParse(formState);
+    const validate = campSchema.safeParse(formState);
     console.log("validate", validate);
+
+    if (!validate.success) {
+      const error = validate.error.issues[0];
+      addAlert({
+        status: "error",
+        title: String(error?.path[0]),
+        body: error?.message || "Form was not filled out correctly",
+      });
+    }
 
     if (isEdit && validate.success && campId) {
       updateCamp({ ...formState, id: campId });
@@ -121,6 +176,7 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
           isEdit={isEdit}
           onSubmit={onSubmit}
           status={status}
+          deleteImage={removeImage}
           updateStatus={updateStatus}
         />
       </Box>

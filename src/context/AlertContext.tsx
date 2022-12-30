@@ -22,6 +22,7 @@ export type Alert = {
   status: "success" | "error";
   title: string;
   body: string;
+  autoClose?: boolean;
 };
 
 type IAlertContext = {
@@ -33,12 +34,18 @@ type IAlertContext = {
 const AlertContextProvider = ({ children }: Props) => {
   const [alert, setAlert] = useState<Alert | null>(null);
 
-  const addAlert = (alert: Alert) => {
-    setAlert(alert);
-  };
-
   const closeAlert = () => {
     setAlert(null);
+  };
+
+  const addAlert = (alert: Alert) => {
+    setAlert(alert);
+
+    if (alert.autoClose) {
+      setTimeout(() => {
+        closeAlert();
+      }, 3000);
+    }
   };
 
   return (

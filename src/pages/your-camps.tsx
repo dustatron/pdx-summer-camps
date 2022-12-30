@@ -19,7 +19,6 @@ const YourCamps = () => {
     userId: Number(sessionData?.user?.id),
   });
 
-  console.log("campData", campData);
   return (
     <Container
       mt="5"

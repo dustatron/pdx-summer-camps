@@ -8,20 +8,25 @@ import {
   Input,
   Textarea,
   Flex,
+  Text,
+  Image,
 } from "@chakra-ui/react";
-import type { CreateCampData } from "../../types/camp";
+import type { CampData } from "../../types/camp";
+import { useRouter } from "next/router";
+import AddImage from "./AddImage";
 
 type Status = "error" | "success" | "loading" | "idle";
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  formState: CreateCampData;
+  formState: CampData;
   dispatch: React.Dispatch<{
     type: string;
     payload: string;
   }>;
   isEdit?: boolean;
   deleteCamp: (value: { campId: string }) => void;
+  deleteImage: (value: { imgId: string }) => void;
   updateStatus: Status;
   status: Status;
 };
@@ -34,6 +39,8 @@ const Form = ({
   deleteCamp,
   updateStatus,
 }: Props) => {
+  const { back } = useRouter();
+
   return (
     <form onSubmit={onSubmit}>
       <Stack direction="row" w="100%" spacing={5}>
@@ -94,16 +101,6 @@ const Form = ({
         </Stack>
         <Stack spacing={3} w="50%">
           <FormControl>
-            <FormLabel>Image</FormLabel>
-            <Input
-              type="text"
-              value={formState.image || ""}
-              onChange={(e) =>
-                dispatch({ type: "image", payload: e.target.value })
-              }
-            />
-          </FormControl>
-          <FormControl>
             <FormLabel>Tag</FormLabel>
             <Input
               type="text"
@@ -157,14 +154,33 @@ const Form = ({
         />
       </FormControl>
       <FormControl marginTop="3">
-        <FormLabel>Description</FormLabel>
-        <Textarea
-          value={formState.description || ""}
-          onChange={(e) =>
-            dispatch({ type: "description", payload: e.target.value })
-          }
-        />
+        {formState.description && (
+          <>
+            <Flex justifyContent="space-between">
+              <FormLabel>Description</FormLabel>
+              <Text color={formState.description.length > 2300 ? "red" : ""}>
+                {formState.description.length}/2500
+              </Text>
+            </Flex>
+            <Textarea
+              height="4rem"
+              value={formState.description || ""}
+              isInvalid={formState.description.length > 2500}
+              maxLength={2500}
+              minH="15rem"
+              onChange={(e) =>
+                dispatch({ type: "description", payload: e.target.value })
+              }
+            />
+          </>
+        )}
       </FormControl>
+      {isEdit && (
+        <FormControl>
+          <AddImage campId={formState.id!} />
+        </FormControl>
+      )}
+
       <Flex
         marginTop="3"
         w="100%"
@@ -181,7 +197,7 @@ const Form = ({
               Delete
             </Button>
 
-            <Button> Cancel </Button>
+            <Button onClick={back}>Cancel</Button>
           </Box>
         )}
         <Button
