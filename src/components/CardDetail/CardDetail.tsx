@@ -11,6 +11,9 @@ import type { Camp } from "@prisma/client";
 import { BiArrowBack } from "react-icons/bi";
 import { BsFacebook } from "react-icons/bs";
 import { ImInstagram } from "react-icons/im";
+import { useSession } from "next-auth/react";
+
+import { trpc } from "../../utils/trpc";
 import React from "react";
 import { useRouter } from "next/router";
 
@@ -20,6 +23,11 @@ type Props = { onBack: () => void; campData: CampDetail };
 
 function CardDetail({ onBack, campData }: Props) {
   const router = useRouter();
+  const { data: sessionData } = useSession();
+
+  const { data: userData } = trpc.auth.getUser.useQuery({
+    id: Number(sessionData?.user?.id),
+  });
 
   const {
     title,
@@ -117,7 +125,9 @@ function CardDetail({ onBack, campData }: Props) {
           )}
         </Stack>
       </Box>
-      <Button onClick={() => router.push(`detail/${id}`)}>Edit</Button>
+      {userData?.role === "ADMIN" && (
+        <Button onClick={() => router.push(`detail/${id}`)}>Edit</Button>
+      )}
     </Stack>
   );
 }

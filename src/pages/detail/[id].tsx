@@ -6,49 +6,45 @@ import CampEditForm from "../../components/CampEditForm";
 import type { CampData } from "../../types/camp";
 import { useSession } from "next-auth/react";
 
+import RenderTree from "../../components/RenderTree";
+
 const Detail = () => {
   const router = useRouter();
   const { id } = router.query;
 
   const { data: sessionData, status: sessionStatus } = useSession();
 
-  const { data: campData } = trpc.camps.getCamp.useQuery({
+  const { data: campData, status } = trpc.camps.getCamp.useQuery({
     campId: id as string,
   });
 
-  console.log("campData", campData);
+  const campEditData = {
+    ...campData,
+    image: campData?.image,
+    lat: String(campData?.lat),
+    lng: String(campData?.lng),
+    email: campData?.email || "",
+    facebook: campData?.facebook || "",
+    instagram: campData?.instagram || "",
+    link: campData?.link || "",
+    place_id: campData?.link || "",
+    userId: Number(sessionData?.user?.id),
+    authorName: sessionData?.user?.name as string,
+  };
 
-  if (sessionData && sessionData.user && campData) {
-    const campEditData = {
-      ...campData,
-      image: campData?.image,
-      lat: String(campData.lat),
-      lng: String(campData.lng),
-      email: campData.email || "",
-      facebook: campData.facebook || "",
-      instagram: campData.instagram || "",
-      link: campData.link || "",
-      place_id: campData.link || "",
-      userId: Number(sessionData.user.id),
-      authorName: sessionData?.user?.name as string,
-    };
-    return (
-      <>
+  return (
+    <RenderTree
+      status={status}
+      session={sessionData}
+      isProtected
+      finalRender={
         <CampEditForm
           campData={campEditData as CampData}
           isEdit
           campId={id as string}
         />
-      </>
-    );
-  }
-  if (sessionStatus === "authenticated") {
-    return <Box>You need to be logged in to see this page</Box>;
-  }
-  return (
-    <Box>
-      <Spinner />
-    </Box>
+      }
+    />
   );
 };
 
