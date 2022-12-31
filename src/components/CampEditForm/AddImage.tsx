@@ -62,7 +62,7 @@ function AddImage({ campId }: Props) {
     <Box>
       <Box padding={3} border="1px" my="3" rounded="md" borderColor="gray.400">
         <FormControl>
-          <FormLabel>Add Image</FormLabel>
+          <FormLabel>Add Image by URL</FormLabel>
           <Stack direction="row">
             <Input value={image} onChange={(e) => setImage(e.target.value)} />
             <Button onClick={onSubmit} isLoading={status === "loading"}>

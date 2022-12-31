@@ -138,11 +138,11 @@ const Form = ({
           />
         </FormControl>
       </Stack>
-      <FormControl marginTop="3">
+      <FormControl my="5" border="1px" rounded="md" p="3">
         <FormLabel>Address *</FormLabel>
+        <AddressSelector onSelectAddress={onSelectAddress} />
         <Input type="text" isRequired value={formState.address} isDisabled />
       </FormControl>
-      <AddressSelector onSelectAddress={onSelectAddress} />
       <FormControl marginTop="3">
         {formState.description && (
           <>
@@ -155,6 +155,7 @@ const Form = ({
             <Textarea
               height="4rem"
               value={formState.description || ""}
+              placeholder="Full Address"
               isInvalid={formState.description.length > 2500}
               maxLength={2500}
               minH="15rem"

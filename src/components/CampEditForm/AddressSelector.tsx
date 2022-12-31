@@ -47,8 +47,7 @@ function AddressSelector({
 
   console.log("results", select);
   return (
-    <Box p={5} border="1px">
-      <Box>Address Selector</Box>
+    <Box p={5}>
       <Box>
         <Stack direction="row">
           <Input
@@ -57,7 +56,7 @@ function AddressSelector({
               setAddress(e.target.value);
             }}
           />
-          <Button onClick={onSearch}>Search</Button>
+          <Button onClick={onSearch}>Find</Button>
         </Stack>
       </Box>
       <Stack py="5" spacing={2}>

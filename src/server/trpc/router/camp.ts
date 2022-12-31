@@ -9,7 +9,7 @@ export const campRouter = router({
     return ctx.prisma.camp.findMany({ include: { image: true } });
   }),
   getYourCamps: publicProcedure.input(z.object({ userId: z.number() })).query(({ input, ctx }) => {
-    return ctx.prisma.campAuthor.findMany({ where: { userId: input.userId } })
+    return ctx.prisma.campAuthor.findMany({ where: { userId: input.userId }, include: { camp: true } })
   }),
   getCamp: publicProcedure.input(z.object({ campId: z.string() })).query(({ input, ctx }) => {
     return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true } })
