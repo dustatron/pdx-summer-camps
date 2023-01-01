@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Input, Button, Stack } from "@chakra-ui/react";
+import { Box, Input, Button, Stack, Center } from "@chakra-ui/react";
 const api = `https://api.mapbox.com/geocoding/v5/mapbox.places/`;
 
 export type Feature = {
@@ -61,6 +61,7 @@ function AddressSelector({
       </Box>
       <Stack py="5" spacing={2}>
         {results &&
+          results.features &&
           results.features.map((local) => (
             <Button
               key={local.id}
@@ -73,6 +74,7 @@ function AddressSelector({
               {local.place_name}
             </Button>
           ))}
+        {results && !results.features && <Center> No Results Found </Center>}
       </Stack>
     </Box>
   );

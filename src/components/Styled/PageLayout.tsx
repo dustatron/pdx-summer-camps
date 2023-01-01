@@ -2,16 +2,7 @@ import Head from "next/head";
 import React from "react";
 import Navbar from "./NavBar";
 import { useAlert } from "../../context/AlertContext";
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  CloseButton,
-  Stack,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import AlertBar from "../AlertBar";
 
 type Props = {
@@ -29,7 +20,7 @@ const PageLayout = ({ children }: Props) => {
       </Head>
       <Navbar />
       {alert && <AlertBar alert={alert} />}
-      <Box as="main" height="100%" bg="#FBFBFB">
+      <Box as="main" height="100%">
         {children}
       </Box>
     </Stack>

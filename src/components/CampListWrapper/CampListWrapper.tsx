@@ -3,15 +3,18 @@ import Map, { useMap, NavigationControl } from "react-map-gl";
 import Marker from "../Marker";
 import CampCard from "../CampCard";
 import type { CardDetails } from "../CampCard";
-import { Input, Button, Box, Stack, Flex } from "@chakra-ui/react";
+import { Input, Button, Box, Stack, Flex, Text } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import CardDetail from "../CardDetail";
 import type { Camp } from "@prisma/client";
 import type { CampDetail } from "../CardDetail/CardDetail";
+import { TriangleDownIcon } from "@chakra-ui/icons";
+import FilterBox from "../FilterBox";
 
 function CampListWrapper() {
   const { portlandMap } = useMap();
   const [selectedCampId, setSelectedCampId] = useState("");
+  const [isShowFilter, setIsShowFilter] = useState(false);
   const [selectedCamp, setSelectedCamp] = useState<Camp>();
   const [campFilter, setCampFilter] = useState("");
   const [isShowingDetails, setIsShowingDetails] = useState(false);
@@ -102,6 +105,28 @@ function CampListWrapper() {
                   Clear
                 </Button>
               </Stack>
+              <Stack
+                direction="row"
+                textAlign="center"
+                justifyContent="space-between"
+                px="10"
+              >
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setIsShowFilter(!isShowFilter);
+                  }}
+                >
+                  Filters{" "}
+                  <TriangleDownIcon
+                    transform={isShowFilter ? "" : "rotate(-90deg)"}
+                  />
+                </Button>
+                <Box border="1px" rounded="md" px="3" py="1">
+                  {filteredCampList?.length} Camps showing
+                </Box>
+              </Stack>
+              {isShowFilter && <FilterBox />}
               <Flex flexWrap="wrap" h="100%" w="100%" overflow="scroll">
                 {filteredCampList?.map((camp) => (
                   <CampCard

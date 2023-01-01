@@ -9,6 +9,7 @@ import {
   Textarea,
   Flex,
   Text,
+  FormHelperText,
 } from "@chakra-ui/react";
 import type { CampData } from "../../types/camp";
 import { useRouter } from "next/router";
@@ -59,7 +60,7 @@ const Form = ({
   return (
     <form onSubmit={onSubmit}>
       <Stack direction="row" w="100%" spacing={5}>
-        <Stack direction="column" spacing={3} w="50%">
+        <Stack direction="column" spacing={5} w="50%">
           <FormControl>
             <FormLabel>Camp Title *</FormLabel>
             <Input
@@ -81,6 +82,7 @@ const Form = ({
                 dispatch({ type: "website", payload: e.target.value })
               }
             />
+            <FormHelperText>Include https:// at the beginning</FormHelperText>
           </FormControl>
           <FormControl>
             <FormLabel>e-mail</FormLabel>
@@ -92,12 +94,23 @@ const Form = ({
               }
             />
           </FormControl>
-        </Stack>
-        <Stack spacing={3} w="50%">
           <FormControl>
-            <FormLabel>Tag</FormLabel>
+            <FormLabel>Phone</FormLabel>
             <Input
               type="text"
+              value={formState.phone || ""}
+              onChange={(e) =>
+                dispatch({ type: "phone", payload: e.target.value })
+              }
+            />
+          </FormControl>
+        </Stack>
+        <Stack spacing={5} w="50%">
+          <FormControl>
+            <FormLabel>Tags</FormLabel>
+            <Input
+              type="text"
+              placeholder="Comma separated list"
               value={formState.tags || ""}
               onChange={(e) =>
                 dispatch({ type: "tags", payload: e.target.value })
@@ -126,6 +139,7 @@ const Form = ({
               dispatch({ type: "facebook", payload: e.target.value })
             }
           />
+          <FormHelperText>Include https:// at the beginning</FormHelperText>
         </FormControl>
         <FormControl>
           <FormLabel>Instagram</FormLabel>
@@ -136,6 +150,7 @@ const Form = ({
               dispatch({ type: "instagram", payload: e.target.value })
             }
           />
+          <FormHelperText>Include https:// at the beginning</FormHelperText>
         </FormControl>
       </Stack>
       <FormControl my="5" border="1px" rounded="md" p="3">

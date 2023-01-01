@@ -83,6 +83,7 @@ model Camp {
     link         String?
     website      String
     email        String?
+    phone        String?
     facebook     String?
     instagram    String?
     description  String?
@@ -90,7 +91,7 @@ model Camp {
     lat          Float
     lng          Float
     place_id     String?
-    tags         String?
+    tags         String[]
     quadrant     String?
     author   CampAuthor[] 
 }
