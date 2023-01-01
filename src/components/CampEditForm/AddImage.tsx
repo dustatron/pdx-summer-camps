@@ -7,6 +7,7 @@ import {
   FormControl,
   Stack,
   Image,
+  Heading,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { useAlert } from "../../context/AlertContext";
@@ -72,7 +73,7 @@ function AddImage({ campId }: Props) {
         </FormControl>
       </Box>
       <FormControl>
-        <FormLabel>Images</FormLabel>
+        <Heading>Images</Heading>
         <Box>
           {imageData && imageData.length === 0 && (
             <Box> No images provided </Box>
@@ -80,7 +81,13 @@ function AddImage({ campId }: Props) {
           {imageData &&
             imageData.map((img) => {
               return (
-                <Box key={img.id}>
+                <Box
+                  key={img.id}
+                  p="5"
+                  border="1px"
+                  borderColor="gray.200"
+                  m="2"
+                >
                   <Image src={img.src} alt="image of camp" />
                   <Button onClick={() => removeImage({ imgId: img.id! })}>
                     Delete Image

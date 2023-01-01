@@ -3,7 +3,7 @@ import Map, { useMap, NavigationControl } from "react-map-gl";
 import Marker from "../Marker";
 import CampCard from "../CampCard";
 import type { CardDetails } from "../CampCard";
-import { Input, Button, Box, Stack, Flex, Text } from "@chakra-ui/react";
+import { Input, Button, Box, Stack, Flex } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import CardDetail from "../CardDetail";
 import type { Camp } from "@prisma/client";
@@ -57,6 +57,20 @@ function CampListWrapper() {
       return true;
     }
   });
+  const cleanTags = (values: string[]) => {
+    return values.map((value) => value.replace(" ", ""));
+  };
+
+  const getTagOptions = () => {
+    let bigList: string[] = [];
+    campData?.forEach(
+      (camp) => (bigList = [...bigList, ...cleanTags(camp.tags)])
+    );
+
+    return new Set(bigList);
+  };
+
+  const tagOptions = getTagOptions();
 
   return (
     <Flex h="calc(92vh)">
@@ -126,7 +140,7 @@ function CampListWrapper() {
                   {filteredCampList?.length} Camps showing
                 </Box>
               </Stack>
-              {isShowFilter && <FilterBox />}
+              {isShowFilter && <FilterBox filterOptions={tagOptions} />}
               <Flex flexWrap="wrap" h="100%" w="100%" overflow="scroll">
                 {filteredCampList?.map((camp) => (
                   <CampCard

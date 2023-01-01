@@ -25,6 +25,7 @@ export type CardDetails = {
   lat: number;
   lng: number;
   id: string;
+  tags: string[];
 };
 
 type Props = {
@@ -40,7 +41,8 @@ const CampCard = ({
   selectedCampId,
   showDetails,
 }: Props) => {
-  const { title, description, image, address, website, id, lat, lng } = details;
+  const { title, description, image, address, website, id, lat, lng, tags } =
+    details;
 
   const isSelectedCamp = selectedCampId === id;
 
@@ -91,30 +93,12 @@ const CampCard = ({
             </a>
           )}
           <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
-            <Badge
-              px={2}
-              py={1}
-              bg={useColorModeValue("gray.50", "gray.800")}
-              fontWeight={"400"}
-            >
-              #art
-            </Badge>
-            <Badge
-              px={2}
-              py={1}
-              bg={useColorModeValue("gray.50", "gray.800")}
-              fontWeight={"400"}
-            >
-              #photography
-            </Badge>
-            <Badge
-              px={2}
-              py={1}
-              bg={useColorModeValue("gray.50", "gray.800")}
-              fontWeight={"400"}
-            >
-              #music
-            </Badge>
+            {tags &&
+              tags.map((tag: string) => (
+                <Badge key={tag} px={2} py={1} bg="gray.50" fontWeight={"400"}>
+                  {tag}
+                </Badge>
+              ))}
           </Stack>
 
           <Stack

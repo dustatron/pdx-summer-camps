@@ -14,7 +14,8 @@ import {
 import type { CampData } from "../../types/camp";
 import { useRouter } from "next/router";
 import AddImage from "./AddImage";
-import AddressSelector, { Feature } from "./AddressSelector";
+import type { Feature } from "./AddressSelector";
+import AddressSelector from "./AddressSelector";
 
 type Status = "error" | "success" | "loading" | "idle";
 
@@ -23,7 +24,7 @@ type Props = {
   formState: CampData;
   dispatch: React.Dispatch<{
     type: string;
-    payload: string;
+    payload: string | string[];
   }>;
   isEdit?: boolean;
   deleteCamp: (value: { campId: string }) => void;
@@ -54,6 +55,14 @@ const Form = ({
     dispatch({
       type: "address",
       payload: String(location.place_name),
+    });
+  };
+
+  const setTags = (values: string) => {
+    const tagsArray = values.toLowerCase().split(",");
+    dispatch({
+      type: "tags",
+      payload: tagsArray,
     });
   };
 
@@ -112,9 +121,7 @@ const Form = ({
               type="text"
               placeholder="Comma separated list"
               value={formState.tags || ""}
-              onChange={(e) =>
-                dispatch({ type: "tags", payload: e.target.value })
-              }
+              onChange={(e) => setTags(e.target.value)}
             />
           </FormControl>
           <FormControl>
@@ -124,6 +131,31 @@ const Form = ({
               value={formState.quadrant || ""}
               onChange={(e) =>
                 dispatch({ type: "quadrant", payload: e.target.value })
+              }
+            />
+            <FormHelperText>select none if not in Portland</FormHelperText>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Age Range</FormLabel>
+            <Input
+              type="text"
+              value={formState.quadrant || ""}
+              onChange={(e) =>
+                dispatch({ type: "age", payload: e.target.value })
+              }
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Price Per Camp</FormLabel>
+            <Input type="number" />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Dates</FormLabel>
+            <Input
+              type="text"
+              value={formState.quadrant || ""}
+              onChange={(e) =>
+                dispatch({ type: "dates", payload: e.target.value })
               }
             />
           </FormControl>

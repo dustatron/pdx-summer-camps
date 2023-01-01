@@ -24,8 +24,7 @@ const initialState: CampData = {
 
 const reducer = (
   prevState: CampData,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  action: { type: string; payload: any }
+  action: { type: string; payload: string | string[] }
 ) => {
   const { type, payload } = action;
   if (type !== "reset") {
