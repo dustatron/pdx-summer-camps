@@ -14,9 +14,14 @@ const Detail = () => {
 
   const { data: sessionData, status: sessionStatus } = useSession();
 
-  const { data: campData, status } = trpc.camps.getCamp.useQuery({
-    campId: id as string,
-  });
+  const { data: campData, status } = trpc.camps.getCamp.useQuery(
+    {
+      campId: id as string,
+    },
+    {
+      cacheTime: 0,
+    }
+  );
 
   const campEditData = {
     ...campData,

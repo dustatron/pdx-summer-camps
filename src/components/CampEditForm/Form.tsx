@@ -12,7 +12,7 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 import makeAnimated from "react-select/animated";
-import Select, { MultiValue } from "react-select";
+import Select from "react-select";
 import {
   quadrantsOptions,
   QuadrantValues,
@@ -93,7 +93,7 @@ const Form = ({
     }
     return [];
   };
-
+  console.log("form", formState);
   const formatQuadrant = getFormattedQuadrant(formState.quadrant);
 
   const formatAges = getFormattedAges(formState.ages);
@@ -192,20 +192,6 @@ const Form = ({
               options={ageOptions}
               value={formatAges}
               onChange={(e) => setAges(e as MultiSelectOption[])}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Price Per Camp</FormLabel>
-            <Input type="number" />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Dates</FormLabel>
-            <Input
-              type="text"
-              value={formState.quadrant || ""}
-              onChange={(e) =>
-                dispatch({ type: "dates", payload: e.target.value })
-              }
             />
           </FormControl>
         </Stack>

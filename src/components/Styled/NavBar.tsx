@@ -15,6 +15,7 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
@@ -62,12 +63,12 @@ export default function Navbar() {
         />
         <HStack spacing={8} alignItems={"center"}>
           <Link href="/">
-            <Box>Portland Kid Camps</Box>
+            <Box fontWeight="black">Portland Kid Camps</Box>
           </Link>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
               <NavLink key={link.title} route={link.route}>
-                {link.title}
+                <Text fontWeight="black">{link.title}</Text>
               </NavLink>
             ))}
           </HStack>
