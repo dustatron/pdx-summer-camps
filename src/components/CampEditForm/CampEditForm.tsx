@@ -160,14 +160,14 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
   return (
     <Container
       marginTop="2rem"
-      marginBottom="10rem"
-      maxW={["100%", "100%", "60%"]}
+      maxW={["100%", "100%", "80%"]}
       bg="white"
       py="10"
       rounded="md"
       centerContent
       border="2px"
-      borderColor="gray.300"
+      borderColor="gray.100"
+      boxShadow="2xl"
     >
       <Heading textAlign="center">
         {isEdit ? "Edit Camp Details" : "New Camp"}

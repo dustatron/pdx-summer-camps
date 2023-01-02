@@ -20,7 +20,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-const Links = [{ title: "About", route: "about" }];
+const Links = [{ title: "About", route: "/about" }];
 
 const NavLink = ({
   children,

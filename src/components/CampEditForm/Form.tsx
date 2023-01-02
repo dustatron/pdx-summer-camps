@@ -234,34 +234,36 @@ const Form = ({
           <FormHelperText>Include https:// at the beginning</FormHelperText>
         </FormControl>
       </Stack>
+
+      <FormControl marginTop="3">
+        <>
+          <Flex justifyContent="space-between">
+            <FormLabel>Description</FormLabel>
+            {formState && formState.description && (
+              <Text color={formState.description.length > 2300 ? "red" : ""}>
+                {formState.description.length}/2500
+              </Text>
+            )}
+          </Flex>
+          <Textarea
+            height="4rem"
+            value={formState.description || ""}
+            placeholder="Full Address"
+            maxLength={2500}
+            minH="15rem"
+            onChange={(e) =>
+              dispatch({ type: "description", payload: e.target.value })
+            }
+          />
+        </>
+      </FormControl>
+
       <FormControl my="5" border="1px" rounded="md" p="3">
         <FormLabel>Address *</FormLabel>
         <AddressSelector onSelectAddress={onSelectAddress} />
         <Input type="text" isRequired value={formState.address} isDisabled />
       </FormControl>
-      <FormControl marginTop="3">
-        {formState.description && (
-          <>
-            <Flex justifyContent="space-between">
-              <FormLabel>Description</FormLabel>
-              <Text color={formState.description.length > 2300 ? "red" : ""}>
-                {formState.description.length}/2500
-              </Text>
-            </Flex>
-            <Textarea
-              height="4rem"
-              value={formState.description || ""}
-              placeholder="Full Address"
-              isInvalid={formState.description.length > 2500}
-              maxLength={2500}
-              minH="15rem"
-              onChange={(e) =>
-                dispatch({ type: "description", payload: e.target.value })
-              }
-            />
-          </>
-        )}
-      </FormControl>
+
       {isEdit && (
         <FormControl>
           <AddImage campId={formState.id!} />
