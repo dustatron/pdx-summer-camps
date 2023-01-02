@@ -21,6 +21,8 @@ const initialState: CampData = {
   description: "",
   image: [],
   tags: [],
+  ages: [],
+  quadrant: [],
 };
 
 const reducer = (
