@@ -45,7 +45,6 @@ function AddressSelector({
     onSelectAddress(item);
   };
 
-  console.log("results", select);
   return (
     <Box p={5}>
       <Box>

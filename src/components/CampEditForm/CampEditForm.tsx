@@ -135,7 +135,6 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validate = campSchema.safeParse(formState);
-    console.log("validate", validate);
 
     if (!validate.success) {
       const error = validate.error.issues[0];

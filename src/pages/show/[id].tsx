@@ -7,8 +7,10 @@ import type { CampData } from "../../types/camp";
 import { useSession } from "next-auth/react";
 
 import RenderTree from "../../components/RenderTree";
+import CardDetail from "../../components/CardDetail";
+import type { CampDetail } from "../../components/CardDetail/CardDetail";
 
-const Detail = () => {
+const Show = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -23,34 +25,19 @@ const Detail = () => {
     }
   );
 
-  const campEditData = {
-    ...campData,
-    image: campData?.image,
-    lat: String(campData?.lat),
-    lng: String(campData?.lng),
-    email: campData?.email || "",
-    facebook: campData?.facebook || "",
-    instagram: campData?.instagram || "",
-    link: campData?.link || "",
-    place_id: campData?.link || "",
-    userId: Number(sessionData?.user?.id),
-    authorName: sessionData?.user?.name as string,
-  };
-
   return (
     <RenderTree
       status={status}
       session={sessionData}
       isProtected
       finalRender={
-        <CampEditForm
-          campData={campEditData as CampData}
-          isEdit
-          campId={id as string}
+        <CardDetail
+          onBack={() => router.back()}
+          campData={campData as unknown as CampDetail}
         />
       }
     />
   );
 };
 
-export default Detail;
+export default Show;

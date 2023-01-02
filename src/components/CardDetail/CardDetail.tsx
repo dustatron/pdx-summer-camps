@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Button,
   Center,
@@ -16,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
 import React from "react";
 import { useRouter } from "next/router";
+import { AgeValues, QuadrantValues } from "../../types/camp";
 
 export type CampDetail = Camp & { image: { src: string; id: string }[] };
 
@@ -41,7 +43,29 @@ function CardDetail({ onBack, campData }: Props) {
     quadrant,
     tags,
     id,
+    ages,
+    phone,
   } = campData;
+  const getFormattedQuadrant = (values: string[]): string[] | [] => {
+    if (values) {
+      return values.map(
+        (val) => QuadrantValues[val as keyof typeof QuadrantValues]
+      );
+    }
+    return [];
+  };
+  const formatQuadrant = getFormattedQuadrant(quadrant);
+
+  const getFormattedAges = (values: string[]): string[] => {
+    if (values) {
+      return values
+        .sort()
+        .map((val) => AgeValues[val as keyof typeof AgeValues]);
+    }
+    return [];
+  };
+
+  const formatAges = getFormattedAges(ages);
 
   return (
     <Stack spacing={3} p="3">
@@ -89,23 +113,55 @@ function CardDetail({ onBack, campData }: Props) {
         {!email && <Text>Not Provided</Text>}
       </Box>
       <Box>
+        <Text fontWeight="bold">Phone:</Text>
+        {phone && (
+          <a href={`mailto:${phone}`} target="_blank" rel="noreferrer">
+            <Text color="blue.600" cursor="pointer">
+              {phone}
+            </Text>
+          </a>
+        )}
+        {!phone && <Text>Not Provided</Text>}
+      </Box>
+      <Box>
         <Text fontWeight="bold">Tags:</Text>
         {tags && (
           <Text color="blue.600" cursor="pointer">
-            {tags}
+            {tags.map((tag) => (
+              <Badge key={`tag-${tag}`}>{tag}</Badge>
+            ))}
           </Text>
         )}
         {!tags && <Text>Not Provided</Text>}
       </Box>
       <Box>
+        <Text fontWeight="bold">Age Range:</Text>
+        {ages && (
+          <Text color="blue.600" cursor="pointer">
+            {formatAges.map((age) => (
+              <Badge mx="3" key={`age-${age}`}>
+                {age}
+              </Badge>
+            ))}
+          </Text>
+        )}
+        {!ages && <Text>Not Provided</Text>}
+      </Box>
+
+      <Box>
         <Text fontWeight="bold">Quadrant:</Text>
         {quadrant && (
           <Text color="blue.600" cursor="pointer">
-            {quadrant}
+            {formatQuadrant.map((quad) => (
+              <Badge mx="3" key={`quad-${quad}`}>
+                {quad}
+              </Badge>
+            ))}
           </Text>
         )}
         {!quadrant && <Text>Not Provided</Text>}
       </Box>
+
       <Box>
         <Text fontWeight="bold">Social Media:</Text>
         <Stack direction="row">
@@ -123,10 +179,11 @@ function CardDetail({ onBack, campData }: Props) {
               </Button>
             </a>
           )}
+          {!facebook && !instagram && <Text>Not Provided</Text>}
         </Stack>
       </Box>
       {userData?.role === "ADMIN" && (
-        <Button onClick={() => router.push(`detail/${id}`)}>Edit</Button>
+        <Button onClick={() => router.push(`/detail/${id}`)}>Edit</Button>
       )}
     </Stack>
   );

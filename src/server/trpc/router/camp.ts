@@ -15,7 +15,7 @@ export const campRouter = router({
     return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true } })
   }),
   addCamp: publicProcedure.input(campSchema).mutation(({ input, ctx }) => {
-    const { title, address, email, website, link, lat, lng, description, facebook, instagram, quadrant, tags, userId, authorName, ages } = input
+    const { title, address, email, website, link, lat, lng, description, facebook, instagram, quadrant, tags, userId, authorName, ages, phone } = input
     return ctx.prisma.camp.create({
       data: {
         title,
@@ -31,6 +31,7 @@ export const campRouter = router({
         instagram,
         quadrant,
         tags,
+        phone,
         author: {
           create: {
             authorName,
@@ -42,13 +43,14 @@ export const campRouter = router({
     })
   }),
   update: publicProcedure.input(campSchema).mutation(({ input, ctx }) => {
-    const { title, address, email, website, link, description, facebook, instagram, quadrant, tags, id, lat, lng, ages, } = input
+    const { title, address, email, website, link, description, facebook, instagram, quadrant, tags, id, lat, lng, ages, phone } = input
     return ctx.prisma.camp.update({
       where: { id: id }, data: {
         title,
         address,
         ages,
         website,
+        phone,
         email,
         link,
         lat: parseFloat(lat),

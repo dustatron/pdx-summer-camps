@@ -84,6 +84,8 @@ const Form = ({
     }
     return [];
   };
+  const formatQuadrant = getFormattedQuadrant(formState.quadrant);
+
   const getFormattedAges = (values: string[]): MultiSelectOption[] | [] => {
     if (values) {
       return values.map((val) => ({
@@ -93,9 +95,6 @@ const Form = ({
     }
     return [];
   };
-  console.log("form", formState);
-  const formatQuadrant = getFormattedQuadrant(formState.quadrant);
-
   const formatAges = getFormattedAges(formState.ages);
 
   const setQuadrant = (quadrants: MultiSelectOption[]) => {

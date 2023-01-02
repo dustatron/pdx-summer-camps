@@ -19,7 +19,6 @@ const YourCamps = () => {
   const { data: campData, status } = trpc.camps?.getYourCamps.useQuery({
     userId: Number(sessionData?.user?.id),
   });
-  console.log("campData", campData);
   return (
     <Container
       mt="5"
@@ -59,12 +58,19 @@ const YourCamps = () => {
                 </Text>
                 <Text>{camp.camp.address}</Text>
                 <Text color="blue.400" fontWeight="bold">
-                  <a href={camp.camp.website}> website: {camp.camp.website}</a>
+                  <a href={camp.camp.website}> website </a>
                 </Text>
               </Box>
-              <Link href={`/detail/${camp.campId}`}>
-                <Button colorScheme="blue">Edit</Button>
-              </Link>
+              <Stack>
+                <Link href={`/detail/${camp.campId}`}>
+                  <Button w="100%" colorScheme="blue">
+                    Edit
+                  </Button>
+                </Link>
+                <Link href={`/show/${camp.campId}`}>
+                  <Button colorScheme="facebook">Preview</Button>
+                </Link>
+              </Stack>
             </Stack>
           ))}
       </>
