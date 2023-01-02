@@ -20,6 +20,7 @@ const initialState: CampData = {
   email: "",
   description: "",
   image: [],
+  tags: [],
 };
 
 const reducer = (

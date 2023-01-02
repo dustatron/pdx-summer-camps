@@ -12,7 +12,7 @@ export const campSchema = z.object({
   image: z.array(z.object({ src: z.string(), id: z.string().optional().nullable(), campId: z.string().optional().nullable() })),
   lat: z.string(),
   lng: z.string(),
-  tags: z.array(z.string()).optional().nullable(),
+  tags: z.array(z.string()),
   quadrant: z.string().optional().nullable(),
   userId: z.number(),
   authorName: z.string(),
