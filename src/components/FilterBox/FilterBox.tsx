@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { Box, Text, Stack, Button, FormLabel, Input } from "@chakra-ui/react";
+import type { MultiSelectOption } from "../../types/camp";
+import { ageOptions, quadrantsOptions } from "../../types/camp";
 
 type Props = {
   filterOptions: Set<string>;
 };
-
-type MultiSelectOption = { value: string; label: string };
 
 function FilterBox({ filterOptions }: Props) {
   const [tagsSelected, setTagsSelected] = useState<MultiSelectOption[]>();
@@ -17,26 +17,6 @@ function FilterBox({ filterOptions }: Props) {
 
   const tagOptions: MultiSelectOption[] = [];
   filterOptions.forEach((tag) => tagOptions.push({ label: tag, value: tag }));
-
-  const quadrantsOptions: MultiSelectOption[] = [
-    { label: "South East", value: "se" },
-    { label: "North East", value: "ne" },
-    { label: "North", value: "n" },
-    { label: "North West", value: "nw" },
-    { label: "South West", value: "sw" },
-    { label: "South", value: "s" },
-  ];
-  const ageOptions: MultiSelectOption[] = [
-    { label: "kindergarten", value: "0" },
-    { label: "1 Grade", value: "1" },
-    { label: "2 Grade", value: "2" },
-    { label: "3 Grade", value: "3" },
-    { label: "4 Grade", value: "4" },
-    { label: "5 Grade", value: "5" },
-    { label: "6 Grade", value: "6" },
-    { label: "7 Grade", value: "7" },
-    { label: "8 Grade", value: "8" },
-  ];
 
   const animatedComponents = makeAnimated();
 

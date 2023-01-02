@@ -92,7 +92,11 @@ model Camp {
     lng          Float
     place_id     String?
     tags         String[]
-    quadrant     String?
+    quadrant     String[]
+    ages         String[]
+    price        Float?
+    dateStart    DateTime?
+    dateEnd      DateTime?
     author   CampAuthor[] 
 }
 

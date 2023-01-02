@@ -11,7 +11,15 @@ import {
   Text,
   FormHelperText,
 } from "@chakra-ui/react";
-import type { CampData } from "../../types/camp";
+import makeAnimated from "react-select/animated";
+import Select, { MultiValue } from "react-select";
+import {
+  quadrantsOptions,
+  QuadrantValues,
+  ageOptions,
+  AgeValues,
+} from "../../types/camp";
+import type { CampData, MultiSelectOption } from "../../types/camp";
 import { useRouter } from "next/router";
 import AddImage from "./AddImage";
 import type { Feature } from "./AddressSelector";
@@ -42,6 +50,7 @@ const Form = ({
   updateStatus,
 }: Props) => {
   const { back } = useRouter();
+  const animatedComponents = makeAnimated();
 
   const onSelectAddress = (location: Feature) => {
     dispatch({
@@ -63,6 +72,44 @@ const Form = ({
     dispatch({
       type: "tags",
       payload: tagsArray,
+    });
+  };
+
+  const getFormattedQuadrant = (values: string[]): MultiSelectOption[] | [] => {
+    if (values) {
+      return values.map((val) => ({
+        value: val,
+        label: QuadrantValues[val as keyof typeof QuadrantValues],
+      }));
+    }
+    return [];
+  };
+  const getFormattedAges = (values: string[]): MultiSelectOption[] | [] => {
+    if (values) {
+      return values.map((val) => ({
+        value: val,
+        label: AgeValues[val as keyof typeof AgeValues],
+      }));
+    }
+    return [];
+  };
+
+  const formatQuadrant = getFormattedQuadrant(formState.quadrant);
+
+  const formatAges = getFormattedAges(formState.ages);
+
+  const setQuadrant = (quadrants: MultiSelectOption[]) => {
+    const toStringArray = quadrants.map((quad) => quad.value);
+    dispatch({
+      type: "quadrant",
+      payload: toStringArray,
+    });
+  };
+  const setAges = (ages: MultiSelectOption[]) => {
+    const toStringArray = ages.map((age) => age.value);
+    dispatch({
+      type: "ages",
+      payload: toStringArray,
     });
   };
 
@@ -126,23 +173,25 @@ const Form = ({
           </FormControl>
           <FormControl>
             <FormLabel>Quadrant</FormLabel>
-            <Input
-              type="text"
-              value={formState.quadrant || ""}
-              onChange={(e) =>
-                dispatch({ type: "quadrant", payload: e.target.value })
-              }
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={quadrantsOptions}
+              value={formatQuadrant}
+              onChange={(e) => setQuadrant(e as MultiSelectOption[])}
             />
             <FormHelperText>select none if not in Portland</FormHelperText>
           </FormControl>
           <FormControl>
             <FormLabel>Age Range</FormLabel>
-            <Input
-              type="text"
-              value={formState.quadrant || ""}
-              onChange={(e) =>
-                dispatch({ type: "age", payload: e.target.value })
-              }
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={ageOptions}
+              value={formatAges}
+              onChange={(e) => setAges(e as MultiSelectOption[])}
             />
           </FormControl>
           <FormControl>
