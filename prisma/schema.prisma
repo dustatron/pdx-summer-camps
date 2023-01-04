@@ -97,14 +97,19 @@ model Camp {
     price        Float?
     dateStart    DateTime?
     dateEnd      DateTime?
-    author   CampAuthor[] 
+    author       CampAuthor[] 
 }
 
 model CampImage {
-  id           String   @id @default(cuid())
-  campId       String
-  src          String
-  camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
+  id                  String   @id @default(cuid())
+  campId              String
+  src                 String
+  asset_id            String?
+  created_at          String?
+  folder              String?
+  original_filename   String?
+  public_id           String?
+  camp                Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
 }
 
 model CampAuthor {
