@@ -60,9 +60,9 @@ const CampCard = ({
         border={isSelectedCamp ? "2px" : "0"}
         borderColor={isSelectedCamp ? "gray.600" : ""}
       >
-        <Flex flex={1} bg="gray.200" rounded="md" overflow="hidden">
+        <Flex flex={1} bg="gray.50" rounded="md" overflow="hidden">
           <Image
-            objectFit="cover"
+            objectFit="contain"
             boxSize="100%"
             src={(image[0] && image[0].src) || "/img-place-holder.png"}
             alt="camp logo"

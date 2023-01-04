@@ -27,8 +27,6 @@ type Props = {
 const CLOUDINARY_UPLOAD_PRESET = "basic-preset";
 const CLOUDINARY_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/dtqlulaog/image/upload";
-const CLOUDINARY_FETCH_URL =
-  "https://api.cloudinary.com/v1_1/dtqlulaog/image/fetch";
 
 function AddImage({ campId }: Props) {
   const [urlImage, setUrlImage] = useState("");
