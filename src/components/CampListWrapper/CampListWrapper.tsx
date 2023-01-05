@@ -3,20 +3,34 @@ import Map, { useMap, NavigationControl } from "react-map-gl";
 import Marker from "../Marker";
 import CampCard from "../CampCard";
 import type { CardDetails } from "../CampCard";
-import { Input, Button, Box, Stack, Flex } from "@chakra-ui/react";
+import {
+  Input,
+  Button,
+  Box,
+  Stack,
+  Flex,
+  Spinner,
+  Center,
+} from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import CardDetail from "../CardDetail";
 import type { Camp } from "@prisma/client";
 import type { CampDetail } from "../CardDetail/CardDetail";
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import FilterBox from "../FilterBox";
+import type { MultiSelectOption } from "../../types/camp";
+import { filterCampList } from "../../utils/filterCampList";
 
 function CampListWrapper() {
   const { portlandMap } = useMap();
   const [selectedCampId, setSelectedCampId] = useState("");
   const [isShowFilter, setIsShowFilter] = useState(false);
   const [selectedCamp, setSelectedCamp] = useState<Camp>();
-  const [campFilter, setCampFilter] = useState("");
+  const [campName, setCampFilter] = useState("");
+  const [tagsSelected, setTagsSelected] = useState<MultiSelectOption[]>();
+  const [ageSelected, setAgeSelected] = useState<MultiSelectOption[]>();
+  const [quadrantSelected, setQuadrantSelected] =
+    useState<MultiSelectOption[]>();
   const [isShowingDetails, setIsShowingDetails] = useState(false);
 
   const { data: campData, status: campStatus } =
@@ -50,13 +64,14 @@ function CampListWrapper() {
     }
   };
 
-  const filteredCampList = campData?.filter((camp) => {
-    if (campFilter) {
-      return camp.title.toLowerCase().includes(campFilter.toLowerCase());
-    } else {
-      return true;
-    }
+  const filteredCampList = filterCampList({
+    campData,
+    ageSelected,
+    campName,
+    quadrantSelected,
+    tagsSelected,
   });
+
   const cleanTags = (values: string[]) => {
     return values.map((value) => value.replace(" ", ""));
   };
@@ -74,6 +89,11 @@ function CampListWrapper() {
 
   return (
     <Flex h="calc(92vh)">
+      {campStatus === "loading" && (
+        <Center padding="3" mt="5" w="100%">
+          <Spinner size="lg" />
+        </Center>
+      )}
       {/* Map */}
       {campData && campStatus === "success" && (
         <Box w="50%">
@@ -90,7 +110,7 @@ function CampListWrapper() {
             boxZoom
           >
             <NavigationControl />
-            {campData.map((marker) => (
+            {filteredCampList.map((marker) => (
               <Marker
                 selectedCamp={selectedCampId}
                 key={marker.id}
@@ -110,10 +130,11 @@ function CampListWrapper() {
             <>
               <Stack direction="row" p="2">
                 <Input
-                  value={campFilter}
+                  value={campName}
                   onChange={(e) => setCampFilter(e.target.value)}
                   type="text"
                   placeholder="Camp Name"
+                  bg="white"
                 />
                 <Button onClick={() => setCampFilter("")} colorScheme="blue">
                   Clear
@@ -131,7 +152,7 @@ function CampListWrapper() {
                     setIsShowFilter(!isShowFilter);
                   }}
                 >
-                  Filters{" "}
+                  Filters
                   <TriangleDownIcon
                     transform={isShowFilter ? "" : "rotate(-90deg)"}
                   />
@@ -140,7 +161,20 @@ function CampListWrapper() {
                   {filteredCampList?.length} Camps showing
                 </Box>
               </Stack>
-              {isShowFilter && <FilterBox filterOptions={tagOptions} />}
+
+              {isShowFilter && (
+                <Center>
+                  <FilterBox
+                    filterOptions={tagOptions}
+                    ageSelected={ageSelected}
+                    quadrantSelected={quadrantSelected}
+                    setAgeSelected={setAgeSelected}
+                    setQuadrantSelected={setQuadrantSelected}
+                    setTagsSelected={setTagsSelected}
+                    tagsSelected={tagsSelected}
+                  />
+                </Center>
+              )}
               <Flex flexWrap="wrap" h="100%" w="100%" overflow="scroll">
                 {filteredCampList?.map((camp) => (
                   <CampCard
