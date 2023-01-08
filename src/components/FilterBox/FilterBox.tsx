@@ -13,6 +13,7 @@ type Props = {
   setTagsSelected: (val: MultiSelectOption[]) => void;
   setQuadrantSelected: (val: MultiSelectOption[]) => void;
   setAgeSelected: (val: MultiSelectOption[]) => void;
+  clearAll: () => void;
 };
 
 function FilterBox({
@@ -23,17 +24,12 @@ function FilterBox({
   setTagsSelected,
   setAgeSelected,
   setQuadrantSelected,
+  clearAll,
 }: Props) {
   const tagOptions: MultiSelectOption[] = [];
   filterOptions.forEach((tag) => tagOptions.push({ label: tag, value: tag }));
 
   const animatedComponents = makeAnimated();
-
-  const clearAll = () => {
-    setTagsSelected([]);
-    setQuadrantSelected([]);
-    setAgeSelected([]);
-  };
 
   return (
     <Box

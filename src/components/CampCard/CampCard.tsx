@@ -30,8 +30,8 @@ export type CardDetails = {
 
 type Props = {
   details: CardDetails;
-  onSelect: (lat: number, lng: number, campId: string, campObj: Camp) => void;
-  selectedCampId: string;
+  onSelect: (campId: string) => void;
+  selectedCampId?: string;
   showDetails: () => void;
 };
 
@@ -41,8 +41,7 @@ const CampCard = ({
   selectedCampId,
   showDetails,
 }: Props) => {
-  const { title, description, image, address, website, id, lat, lng, tags } =
-    details;
+  const { title, description, image, address, website, id, tags } = details;
 
   const isSelectedCamp = selectedCampId === id;
 
@@ -114,7 +113,7 @@ const CampCard = ({
               fontSize={"sm"}
               rounded={"full"}
               onClick={() => {
-                onSelect(lat, lng, id, details as unknown as Camp);
+                onSelect(id);
                 showDetails();
               }}
               _focus={{
@@ -124,7 +123,7 @@ const CampCard = ({
               More Info
             </Button>
             <Button
-              onClick={() => onSelect(lat, lng, id, details as unknown as Camp)}
+              onClick={() => onSelect(id)}
               flex={1}
               fontSize={"sm"}
               rounded={"full"}

@@ -11,6 +11,12 @@ import "../styles/globals.css";
 import PageLayout from "../components/Styled/PageLayout";
 
 const theme = extendTheme({
+  breakpoints: {
+    sm: "320px",
+    md: "768px",
+    lg: "960px",
+    xl: "1200px",
+  },
   styles: {
     global: {
       body: {

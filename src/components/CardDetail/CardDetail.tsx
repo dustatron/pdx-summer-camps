@@ -46,6 +46,7 @@ function CardDetail({ onBack, campData }: Props) {
     ages,
     phone,
   } = campData;
+
   const getFormattedQuadrant = (values: string[]): string[] | [] => {
     if (values) {
       return values.map(

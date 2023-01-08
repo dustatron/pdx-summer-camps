@@ -1,13 +1,13 @@
 import type { Camp } from "@prisma/client";
-import type { MultiSelectOption } from "../types/camp";
+import type { FilterState } from "../components/CampListWrapper/CampListWrapper";
 
-export function filterCampList(options: { campData?: Camp[], campName?: string, tagsSelected?: MultiSelectOption[], quadrantSelected?: MultiSelectOption[], ageSelected?: MultiSelectOption[] }) {
-  const { ageSelected, campName, quadrantSelected, tagsSelected, campData } = options
+export function filterCampList(filterState: FilterState, campData?: Camp[]) {
+  const { ageSelected, campNameFilter, quadrantSelected, tagsSelected } = filterState
   if (!campData) return []
   const results = campData
     ?.filter((camp) => {
-      if (campName) {
-        return camp.title.toLowerCase().includes(campName.toLowerCase());
+      if (campNameFilter) {
+        return camp.title.toLowerCase().includes(campNameFilter.toLowerCase());
       } else {
         return true;
       }
