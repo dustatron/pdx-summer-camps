@@ -8,13 +8,21 @@ import {
   Spinner,
   Center,
   useMediaQuery,
+  Button,
+  Input,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import type { Camp } from "@prisma/client";
 import type { MultiSelectOption } from "../../types/camp";
 import { filterCampList } from "../../utils/filterCampList";
-import CampListDesktop from "./CampListDesktop";
+import CampList from "./CampList";
 import { getTagOptions } from "./utils";
+import type { CardDetails } from "../CampCard";
+import CampCard from "../CampCard";
+import type { CampDetail } from "../CardDetail/CardDetail";
+import CardDetail from "../CardDetail/CardDetail";
+import FilterBox from "../FilterBox";
+import { TriangleDownIcon } from "@chakra-ui/icons";
 
 export type FilterState = {
   selectedCamp?: Camp;
@@ -24,6 +32,8 @@ export type FilterState = {
   quadrantSelected: MultiSelectOption[];
   isShowingDetails: boolean;
   tagsSelected: MultiSelectOption[];
+  isShowingMobileList: boolean;
+  isFilterShowing: boolean;
 };
 
 export type Action = {
@@ -37,7 +47,9 @@ export type Action = {
     | "setAgeSelected"
     | "setQuadrantSelected"
     | "setTagsSelected"
-    | "clearAllFilters";
+    | "clearAllFilters"
+    | "toggleFilterShow"
+    | "toggleMobileList";
   payload?:
     | string
     | string[]
@@ -54,6 +66,8 @@ const initialState: FilterState = {
   quadrantSelected: [],
   tagsSelected: [],
   isShowingDetails: false,
+  isShowingMobileList: false,
+  isFilterShowing: false,
 };
 
 const reducer = (prevState: FilterState, action: Action) => {
@@ -85,6 +99,18 @@ const reducer = (prevState: FilterState, action: Action) => {
       return { ...prevState, quadrantSelected: payload } as FilterState;
     case "setTagsSelected":
       return { ...prevState, tagsSelected: payload } as FilterState;
+
+    case "toggleFilterShow":
+      return {
+        ...prevState,
+        isFilterShowing: !prevState.isFilterShowing,
+      } as FilterState;
+
+    case "toggleMobileList":
+      return {
+        ...prevState,
+        isShowingMobileList: !prevState.isShowingMobileList,
+      } as FilterState;
 
     case "clearAllFilters":
       return {
@@ -125,16 +151,71 @@ function CampListWrapper() {
   const tagOptions = getTagOptions(campData);
   const screenHight = "calc(92vh)";
   return (
-    <Flex h={screenHight}>
+    <Stack direction={isMobile ? "column" : "row"} h={screenHight}>
       {campStatus === "loading" && (
         <Center padding="3" mt="5" w="100%">
           <Spinner size="lg" />
         </Center>
       )}
+
       {/* Map */}
+      {isMobile && (
+        <Stack direction="row" p="2">
+          <Button
+            onClick={() => dispatch({ type: "toggleMobileList" })}
+            colorScheme={
+              filterState.isShowingMobileList ? "messenger" : "facebook"
+            }
+          >
+            {filterState.isShowingMobileList ? "Map" : "List"}
+          </Button>
+          <Input
+            value={filterState.campNameFilter}
+            onChange={(e) =>
+              dispatch({ type: "setCampNameFilter", payload: e.target.value })
+            }
+          />
+          <Button
+            onClick={() => dispatch({ type: "setCampNameFilter", payload: "" })}
+            colorScheme="linkedin"
+          >
+            X
+          </Button>
+          <Button
+            onClick={() => dispatch({ type: "toggleFilterShow" })}
+            variant="ghost"
+          >
+            <TriangleDownIcon
+              ml=".5"
+              transform={filterState.isFilterShowing ? "" : "rotate(-90deg)"}
+            />
+            Filters
+          </Button>
+        </Stack>
+      )}
+      {filterState.isFilterShowing && isMobile && (
+        <Center>
+          <FilterBox
+            isMobile={isMobile}
+            filterOptions={tagOptions}
+            ageSelected={filterState.ageSelected}
+            quadrantSelected={filterState.quadrantSelected}
+            setAgeSelected={(value: MultiSelectOption[]) =>
+              dispatch({ type: "setAgeSelected", payload: value })
+            }
+            setQuadrantSelected={(value: MultiSelectOption[]) =>
+              dispatch({ type: "setQuadrantSelected", payload: value })
+            }
+            setTagsSelected={(value: MultiSelectOption[]) =>
+              dispatch({ type: "setTagsSelected", payload: value })
+            }
+            clearAll={() => dispatch({ type: "clearAllFilters" })}
+            tagsSelected={filterState.tagsSelected}
+          />
+        </Center>
+      )}
       {campData && campStatus === "success" && (
-        <Box w={{ base: "100%", lg: "50%" }}>
-          {isMobile && <Box> Filters </Box>}
+        <Box w={isMobile ? "100%" : "50%"} height="100%">
           <Map
             id="portlandMap"
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
@@ -158,37 +239,77 @@ function CampListWrapper() {
                 setSelectCampId={selectCampFromList}
               />
             ))}
-            {filterState.selectedCamp && filterState.selectedCampId && (
-              <Popup
-                latitude={filterState.selectedCamp.lat}
-                longitude={filterState.selectedCamp?.lng}
-                onClose={() => selectCampFromList("")}
-                closeOnClick={false}
-              >
-                <div className="text-center">
-                  <h2 className="px-4">{filterState.selectedCamp.title}</h2>
-                  <h3 className="px-4">
-                    {filterState.selectedCamp.address.substr(0, 30)}
-                  </h3>
-                </div>
-              </Popup>
-            )}
           </Map>
         </Box>
       )}
-      {/* List */}
-      {campStatus === "success" && campData && !isMobile && (
-        <Stack direction="column" w={{ base: "50%" }} h={screenHight}>
-          <CampListDesktop
-            filterState={filterState}
-            filteredCampList={filteredCampList}
-            selectCampFromList={selectCampFromList}
-            tagOptions={tagOptions}
-            dispatch={dispatch}
-          />
-        </Stack>
-      )}
-    </Flex>
+      {/* Mobile Camp details card */}
+      {filterState.selectedCampId &&
+        isMobile &&
+        !filterState.isShowingMobileList && (
+          <Box position="absolute" bottom={0}>
+            <CampCard
+              isMobile={isMobile}
+              details={filterState.selectedCamp as unknown as CardDetails}
+              selectedCampId={filterState.selectedCampId}
+              onSelect={(campId: string) =>
+                dispatch({ type: "setSelectedCampId", payload: campId })
+              }
+              showDetails={() => dispatch({ type: "showingDetailsTrue" })}
+            />
+          </Box>
+        )}
+      {/* Desktop List */}
+      {campStatus === "success" &&
+        campData &&
+        !isMobile &&
+        !filterState.isShowingDetails && (
+          <Stack direction="column" w="50%" h={screenHight}>
+            <CampList
+              isMobile={isMobile}
+              filterState={filterState}
+              filteredCampList={filteredCampList}
+              selectCampFromList={selectCampFromList}
+              tagOptions={tagOptions}
+              dispatch={dispatch}
+              setIsShowFilter={() => dispatch({ type: "toggleFilterShow" })}
+            />
+          </Stack>
+        )}
+      {/* Mobile List */}
+      {campStatus === "success" &&
+        campData &&
+        isMobile &&
+        filterState.isShowingMobileList && (
+          <Stack direction="column" w={"100%"} h={screenHight}>
+            <CampList
+              isMobile={isMobile}
+              filterState={filterState}
+              filteredCampList={filteredCampList}
+              selectCampFromList={selectCampFromList}
+              tagOptions={tagOptions}
+              dispatch={dispatch}
+              setIsShowFilter={() => dispatch({ type: "toggleFilterShow" })}
+            />
+          </Stack>
+        )}
+
+      {/* // Desktop card detail  */}
+      {filterState.isShowingDetails &&
+        filterState.selectedCamp &&
+        !filterState.isShowingMobileList && (
+          <Flex
+            flexWrap="wrap"
+            h="100%"
+            w={{ sm: "100%", md: "50%" }}
+            overflow="scroll"
+          >
+            <CardDetail
+              onBack={() => dispatch({ type: "showingDetailsFalse" })}
+              campData={filterState.selectedCamp as unknown as CampDetail}
+            />
+          </Flex>
+        )}
+    </Stack>
   );
 }
 

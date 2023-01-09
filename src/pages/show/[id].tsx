@@ -1,9 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
-import { Box, Spinner } from "@chakra-ui/react";
-import CampEditForm from "../../components/CampEditForm";
-import type { CampData } from "../../types/camp";
 import { useSession } from "next-auth/react";
 
 import RenderTree from "../../components/RenderTree";
@@ -29,7 +26,6 @@ const Show = () => {
     <RenderTree
       status={status}
       session={sessionData}
-      isProtected
       finalRender={
         <CardDetail
           onBack={() => router.back()}

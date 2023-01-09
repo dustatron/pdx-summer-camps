@@ -14,6 +14,7 @@ type Props = {
   setQuadrantSelected: (val: MultiSelectOption[]) => void;
   setAgeSelected: (val: MultiSelectOption[]) => void;
   clearAll: () => void;
+  isMobile?: boolean;
 };
 
 function FilterBox({
@@ -25,6 +26,7 @@ function FilterBox({
   setAgeSelected,
   setQuadrantSelected,
   clearAll,
+  isMobile,
 }: Props) {
   const tagOptions: MultiSelectOption[] = [];
   filterOptions.forEach((tag) => tagOptions.push({ label: tag, value: tag }));
@@ -34,15 +36,18 @@ function FilterBox({
   return (
     <Box
       bg="white"
-      px="10"
-      py="3"
+      px="4"
+      py="2"
       w="95%"
       border="1px"
       borderColor="gray.50"
       rounded="md"
       shadow="lg"
+      position={isMobile ? "absolute" : "inherit"}
+      top="140px"
+      zIndex="99999"
     >
-      <Stack direction="row" justifyContent="space-between">
+      <Stack direction="row" spacing={0} justifyContent="space-between">
         <Box>
           <Text fontWeight="bold">Filters options</Text>
         </Box>

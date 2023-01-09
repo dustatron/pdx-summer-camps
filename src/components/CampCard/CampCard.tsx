@@ -10,8 +10,10 @@ import {
   Flex,
   Text,
   Badge,
+  Box,
 } from "@chakra-ui/react";
-import type { Camp } from "@prisma/client";
+
+import { useRouter } from "next/router";
 
 export type CardDetails = {
   title: string;
@@ -33,6 +35,7 @@ type Props = {
   onSelect: (campId: string) => void;
   selectedCampId?: string;
   showDetails: () => void;
+  isMobile?: boolean;
 };
 
 const CampCard = ({
@@ -40,23 +43,26 @@ const CampCard = ({
   onSelect,
   selectedCampId,
   showDetails,
+  isMobile,
 }: Props) => {
+  const router = useRouter();
   const { title, description, image, address, website, id, tags } = details;
 
   const isSelectedCamp = selectedCampId === id;
 
   return (
-    <Center py={2} id={id} w="100%">
+    <Center py={2} id={id} w="100%" minHeight={{ sm: "250px", md: "20rem" }}>
       <Stack
         borderWidth="1px"
         borderRadius="lg"
+        h={isMobile ? "100px" : ""}
         w="90%"
-        minHeight={{ sm: "476px", md: "20rem" }}
+        minHeight={{ sm: "250px", md: "20rem" }}
         direction={{ base: "column", md: "row" }}
         bg={useColorModeValue("white", "gray.900")}
         boxShadow={"2xl"}
-        padding={4}
-        border={isSelectedCamp ? "2px" : "0"}
+        padding={{ sm: 2, md: 4 }}
+        border={isSelectedCamp && !isMobile ? "2px" : "0"}
         borderColor={isSelectedCamp ? "gray.600" : ""}
       >
         <Flex flex={1} bg="gray.50" rounded="md" overflow="hidden">
@@ -65,6 +71,7 @@ const CampCard = ({
             boxSize="100%"
             src={(image[0] && image[0].src) || "/img-place-holder.png"}
             alt="camp logo"
+            width="100%"
           />
         </Flex>
         <Stack
@@ -74,17 +81,26 @@ const CampCard = ({
           alignItems="start"
           p={1}
         >
-          <Heading fontSize={"2xl"} fontFamily={"body"}>
+          <Heading fontSize={{ sm: "md", md: "2xl" }} fontFamily={"body"}>
             {title}
           </Heading>
 
-          <Text color={useColorModeValue("gray.700", "gray.400")} px={1}>
+          <Text
+            fontSize={{ sm: "smaller", md: "inherit" }}
+            color={useColorModeValue("gray.700", "gray.400")}
+            px={1}
+          >
             {description.slice(0, 70)} {description.length > 90 ? "..." : ""}
           </Text>
-          <Text fontWeight={600} color={"gray.900"} size="sm" mb={1}>
+          <Text
+            fontWeight={600}
+            color={"gray.900"}
+            fontSize={{ sm: "smaller", md: "inherit" }}
+            mb={1}
+          >
             {address.slice(0, 40)}
           </Text>
-          {website && (
+          {website && !isMobile && (
             <a href={website} target="_blank" rel="noreferrer">
               <Text fontWeight={600} color={"gray.500"} size="sm" mb={1}>
                 Website
@@ -99,49 +115,57 @@ const CampCard = ({
                 </Badge>
               ))}
           </Stack>
-
-          <Stack
-            width={"100%"}
-            mt={"2rem"}
-            direction={"row"}
-            padding={2}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
-            <Button
-              flex={1}
-              fontSize={"sm"}
-              rounded={"full"}
-              onClick={() => {
-                onSelect(id);
-                showDetails();
-              }}
-              _focus={{
-                bg: "gray.200",
-              }}
+          {!isMobile && (
+            <Stack
+              width={"100%"}
+              mt={"2rem"}
+              direction={"row"}
+              padding={2}
+              justifyContent={"space-between"}
+              alignItems={"center"}
             >
-              More Info
-            </Button>
-            <Button
-              onClick={() => onSelect(id)}
-              flex={1}
-              fontSize={"sm"}
-              rounded={"full"}
-              bg={"blue.400"}
-              color={"white"}
-              boxShadow={
-                "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-              }
-              _hover={{
-                bg: "blue.500",
-              }}
-              _focus={{
-                bg: "blue.500",
-              }}
-            >
-              Show on map
-            </Button>
-          </Stack>
+              <Button
+                flex={1}
+                fontSize={"sm"}
+                rounded={"full"}
+                onClick={() => {
+                  onSelect(id);
+                  showDetails();
+                }}
+                _focus={{
+                  bg: "gray.200",
+                }}
+              >
+                More Info
+              </Button>
+              <Button
+                onClick={() => onSelect(id)}
+                flex={1}
+                fontSize={"sm"}
+                rounded={"full"}
+                bg={"blue.400"}
+                color={"white"}
+                boxShadow={
+                  "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
+                }
+                _hover={{
+                  bg: "blue.500",
+                }}
+                _focus={{
+                  bg: "blue.500",
+                }}
+              >
+                Show on map
+              </Button>
+            </Stack>
+          )}
+          {isMobile && (
+            <Box w="100%">
+              <Button w="100%" onClick={() => router.push(`/show/${id}`)}>
+                Full Details
+              </Button>
+            </Box>
+          )}
         </Stack>
       </Stack>
     </Center>
