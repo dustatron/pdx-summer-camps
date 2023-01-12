@@ -10,7 +10,7 @@ export const favoriteRouter = router({
   }),
   getThisUsersFavorites: protectedProcedure.query(({ ctx }) => {
     const userId = ctx.session?.user.id
-    return ctx.prisma.favorite.findMany({ where: { userId: Number(userId) }, include: { camp: true } })
+    return ctx.prisma.favorite.findMany({ where: { userId: Number(userId) }, include: { camp: { include: { image: true } } } })
   }),
   addFavorite: protectedProcedure.input(z.object({ campId: z.string() })).mutation(({ input, ctx }) => {
     const currentUser = ctx.session?.user.id

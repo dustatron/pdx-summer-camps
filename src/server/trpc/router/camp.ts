@@ -1,15 +1,16 @@
 import { z } from "zod";
 import { campSchema } from '../../../types/camp'
 import cloudinary from 'cloudinary'
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 
 
 export const campRouter = router({
   getAllCamps: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.camp.findMany({ include: { image: true, favorites: true } });
   }),
-  getYourCamps: publicProcedure.input(z.object({ userId: z.number() })).query(({ input, ctx }) => {
-    return ctx.prisma.campAuthor.findMany({ where: { userId: input.userId }, include: { camp: true } })
+  getYourCamps: protectedProcedure.query(({ ctx }) => {
+    const userId = ctx.session.user.id
+    return ctx.prisma.campAuthor.findMany({ where: { userId: Number(userId) }, include: { camp: { include: { image: true } } }, })
   }),
   getCamp: publicProcedure.input(z.object({ campId: z.string() })).query(({ input, ctx }) => {
     return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true, author: true, favorites: true } })

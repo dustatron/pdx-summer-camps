@@ -8,17 +8,13 @@ import {
   Link,
   Stack,
   Text,
+  Image,
 } from "@chakra-ui/react";
-
-import { useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
 
 const YourCamps = () => {
-  const { data: sessionData } = useSession();
-  const { data: campData, status } = trpc.camps?.getYourCamps.useQuery({
-    userId: Number(sessionData?.user?.id),
-  });
+  const { data: campData, status } = trpc.camps?.getYourCamps.useQuery();
   return (
     <Container
       mt="5"
@@ -44,14 +40,26 @@ const YourCamps = () => {
               direction="row"
               key={camp.id}
               border="1px"
-              borderColor="gray.800"
-              bg="gray.300"
+              borderColor="gray.100"
+              bg="gray.50"
               rounded="md"
               marginTop="5"
               p="3"
               justifyContent="space-between"
               color="gray.800"
+              shadow="lg"
             >
+              <Box h="200px" w="220px" overflow="hidden">
+                {camp?.camp?.image[0] && camp?.camp?.image[0].src && (
+                  <Image
+                    src={camp.camp.image[0].src}
+                    alt="camp logo"
+                    objectFit="contain"
+                    boxSize="100%"
+                    width="100%"
+                  />
+                )}
+              </Box>
               <Box>
                 <Text as="h3" fontSize="2xl">
                   {camp.campName}

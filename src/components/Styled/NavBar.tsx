@@ -98,8 +98,8 @@ export default function Navbar() {
                 <Link href="/add">
                   <MenuItem>Add Camp</MenuItem>
                 </Link>
-                <Link href="/profile">
-                  <MenuItem>Profile</MenuItem>
+                <Link href="/favorites">
+                  <MenuItem>Favorites</MenuItem>
                 </Link>
                 <MenuDivider />
                 <MenuItem onClick={() => signOut()}>Sign Out</MenuItem>
