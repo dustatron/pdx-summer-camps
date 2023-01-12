@@ -6,13 +6,13 @@ import { router, publicProcedure } from "../trpc";
 
 export const campRouter = router({
   getAllCamps: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.camp.findMany({ include: { image: true } });
+    return ctx.prisma.camp.findMany({ include: { image: true, favorites: true } });
   }),
   getYourCamps: publicProcedure.input(z.object({ userId: z.number() })).query(({ input, ctx }) => {
     return ctx.prisma.campAuthor.findMany({ where: { userId: input.userId }, include: { camp: true } })
   }),
   getCamp: publicProcedure.input(z.object({ campId: z.string() })).query(({ input, ctx }) => {
-    return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true } })
+    return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true, author: true, favorites: true } })
   }),
   addCamp: publicProcedure.input(campSchema).mutation(({ input, ctx }) => {
     const { title, address, email, website, link, lat, lng, description, facebook, instagram, quadrant, tags, userId, authorName, ages, phone } = input

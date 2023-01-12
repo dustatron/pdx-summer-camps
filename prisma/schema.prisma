@@ -58,6 +58,8 @@ model User {
   sessions      Session[]
   camps         CampAuthor[]
   profile       Profile[]
+  favorites     Favorite[]
+
 }
 
 model Profile {
@@ -97,7 +99,8 @@ model Camp {
     price        Float?
     dateStart    DateTime?
     dateEnd      DateTime?
-    author       CampAuthor[] 
+    author       CampAuthor[]
+    favorites    Favorite[]
 }
 
 model CampImage {
@@ -120,6 +123,15 @@ model CampAuthor {
   campName     String
   camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
   user         User   @relation(fields: [userId], references: [id])
+}
+
+model Favorite {
+    id           String   @id @default(cuid())
+    campId       String
+    userId       Int
+    createdAt              DateTime            @default(now())
+    camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
+    user         User   @relation(fields: [userId], references: [id])
 }
 
 enum Role {

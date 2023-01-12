@@ -13,19 +13,28 @@ import { BiArrowBack } from "react-icons/bi";
 import { BsFacebook } from "react-icons/bs";
 import { ImInstagram } from "react-icons/im";
 import { useSession } from "next-auth/react";
-
 import { trpc } from "../../utils/trpc";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AgeValues, QuadrantValues } from "../../types/camp";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useAlert } from "../../context/AlertContext";
 
-export type CampDetail = Camp & { image: { src: string; id: string }[] };
+type Favorite = { campId: string; userId: number; id: string };
+
+export type CampDetail = Camp & { image: { src: string; id: string }[] } & {
+  favorites: Favorite[];
+};
 
 type Props = { onBack: () => void; campData: CampDetail };
 
 function CardDetail({ onBack, campData }: Props) {
+  const [isFav, setIsFav] = useState(false);
+
+  const [favorite, setFavorite] = useState<Favorite | undefined>();
   const router = useRouter();
   const { data: sessionData } = useSession();
+  const { addAlert } = useAlert();
 
   const { data: userData } = trpc.auth.getUser.useQuery({
     id: Number(sessionData?.user?.id),
@@ -66,15 +75,65 @@ function CardDetail({ onBack, campData }: Props) {
     return [];
   };
 
+  const { mutate: addFav, isLoading: isLoadingAddFav } =
+    trpc.favorites.addFavorite.useMutation({
+      onSuccess: () => {
+        setIsFav(true);
+      },
+    });
+  const { mutate: removeFav, isLoading: isLoadingRemoveFav } =
+    trpc.favorites.removeFavorite.useMutation({
+      onSuccess: () => {
+        setIsFav(false);
+        setFavorite(undefined);
+      },
+    });
+
+  useEffect(() => {
+    const thisFav = campData?.favorites?.find(
+      (fav) => fav.userId === userData?.id
+    );
+    setFavorite(thisFav);
+    setIsFav(!!thisFav);
+  }, [campData.favorites, userData]);
+
+  const handleFavoriteClick = () => {
+    if (!userData) {
+      return addAlert({
+        status: "error",
+        title: "Error",
+        body: "You must be logged in to favorite this camp",
+        autoClose: true,
+      });
+    }
+
+    if (favorite?.id) {
+      return removeFav({ id: favorite.id });
+    }
+    addFav({ campId: id });
+  };
   const formatAges = getFormattedAges(ages);
 
   return (
     <Stack spacing={3} p="3">
-      <Box borderBottom="1px" paddingBottom="2" borderColor="gray.300">
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        borderBottom="1px"
+        paddingBottom="2"
+        borderColor="gray.300"
+      >
         <Button onClick={onBack}>
           <BiArrowBack /> Back
         </Button>
-      </Box>
+        <Button
+          variant="ghost"
+          onClick={handleFavoriteClick}
+          isLoading={isLoadingAddFav || isLoadingRemoveFav}
+        >
+          {isFav ? <AiFillHeart size="md" /> : <AiOutlineHeart size="md" />}
+        </Button>
+      </Stack>
       <Center paddingTop="2">
         <Heading>{title}</Heading>
       </Center>

@@ -3,7 +3,6 @@ import { Marker as MapboxMarker } from "react-map-gl";
 import { GrLocation } from "react-icons/gr";
 import { HiLocationMarker } from "react-icons/hi";
 import Link from "next/link";
-import type { Camp } from "@prisma/client";
 
 type Props = {
   lat: number;
