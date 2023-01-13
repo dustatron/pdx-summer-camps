@@ -24,6 +24,7 @@ import reducer, { initialState } from "./reducer";
 import MapDeskTopWrapper from "../MapDeskTopWrapper";
 import MapMobileWrapper from "../MapMobileWrapper";
 import CampCardMobile from "../CampCardMobile";
+import { AiOutlineClose } from "react-icons/ai";
 
 function CampListWrapper() {
   const { portlandMapDesktop, portlandMapMobile } = useMap();
@@ -63,12 +64,6 @@ function CampListWrapper() {
   const screenHight = "calc(92vh)";
   return (
     <Stack direction={isMobile ? "column" : "row"} h={screenHight}>
-      {campStatus === "loading" && (
-        <Center padding="3" mt="5" w="100%">
-          <Spinner size="lg" />
-        </Center>
-      )}
-
       {/* Map */}
       {isMobile && (
         <Stack direction="row" p="2">
@@ -90,7 +85,7 @@ function CampListWrapper() {
             onClick={() => dispatch({ type: "setCampNameFilter", payload: "" })}
             colorScheme="linkedin"
           >
-            X
+            <AiOutlineClose size="md" />
           </Button>
           <Button
             onClick={() => dispatch({ type: "toggleFilterShow" })}
@@ -103,6 +98,12 @@ function CampListWrapper() {
             Filters
           </Button>
         </Stack>
+      )}
+
+      {campStatus === "loading" && (
+        <Center padding="3" mt="5" w="100%">
+          <Spinner size="lg" />
+        </Center>
       )}
       {filterState.isFilterShowing && isMobile && (
         <Center>
