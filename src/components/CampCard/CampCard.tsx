@@ -51,7 +51,13 @@ const CampCard = ({
   const isSelectedCamp = selectedCampId === id;
 
   return (
-    <Center py={2} id={id} w="100%" minHeight={{ sm: "250px", md: "20rem" }}>
+    <Flex
+      py={2}
+      id={id}
+      minHeight={{ sm: "250px", md: "20rem" }}
+      w={isMobile ? "111%" : "100%"}
+      justifyContent={isMobile ? "start" : "center"}
+    >
       <Stack
         borderWidth="1px"
         borderRadius="lg"
@@ -92,14 +98,17 @@ const CampCard = ({
           >
             {description.slice(0, 70)} {description.length > 90 ? "..." : ""}
           </Text>
-          <Text
-            fontWeight={600}
-            color={"gray.900"}
-            fontSize={{ sm: "smaller", md: "inherit" }}
-            mb={1}
-          >
-            {address.slice(0, 40)}
-          </Text>
+          {!isMobile && (
+            <Text
+              fontWeight={600}
+              color={"gray.900"}
+              fontSize={{ sm: "smaller", md: "inherit" }}
+              mb={1}
+            >
+              {address.slice(0, 40)}
+            </Text>
+          )}
+
           {website && !isMobile && (
             <a href={website} target="_blank" rel="noreferrer">
               <Text fontWeight={600} color={"gray.500"} size="sm" mb={1}>
@@ -108,7 +117,8 @@ const CampCard = ({
             </a>
           )}
           <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
-            {tags &&
+            {!isMobile &&
+              tags &&
               tags.map((tag: string) => (
                 <Badge key={tag} px={2} py={1} bg="gray.50" fontWeight={"400"}>
                   {tag}
@@ -168,7 +178,7 @@ const CampCard = ({
           )}
         </Stack>
       </Stack>
-    </Center>
+    </Flex>
   );
 };
 

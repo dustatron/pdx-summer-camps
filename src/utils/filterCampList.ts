@@ -1,5 +1,5 @@
 import type { Camp } from "@prisma/client";
-import type { FilterState } from "../components/CampListWrapper/CampListWrapper";
+import type { FilterState } from "../components/CampListWrapper/type";
 
 export function filterCampList(filterState: FilterState, campData?: Camp[]) {
   const { ageSelected, campNameFilter, quadrantSelected, tagsSelected } = filterState
