@@ -1,8 +1,7 @@
 import { useReducer } from "react";
-import Map, { NavigationControl, Popup, useMap } from "react-map-gl";
-import Marker from "../Marker";
+import { useMap } from "react-map-gl";
+
 import {
-  Box,
   Stack,
   Flex,
   Spinner,
@@ -16,122 +15,25 @@ import type { Camp } from "@prisma/client";
 import type { MultiSelectOption } from "../../types/camp";
 import { filterCampList } from "../../utils/filterCampList";
 import CampList from "./CampList";
-import { getTagOptions } from "./utils";
-import type { CardDetails } from "../CampCard";
-import CampCard from "../CampCard";
+import { getTagOptions, nextCamp } from "./utils";
 import type { CampDetail } from "../CardDetail/CardDetail";
 import CardDetail from "../CardDetail/CardDetail";
 import FilterBox from "../FilterBox";
 import { TriangleDownIcon } from "@chakra-ui/icons";
-
-export type FilterState = {
-  selectedCamp?: Camp;
-  selectedCampId: string;
-  campNameFilter: string;
-  ageSelected: MultiSelectOption[];
-  quadrantSelected: MultiSelectOption[];
-  isShowingDetails: boolean;
-  tagsSelected: MultiSelectOption[];
-  isShowingMobileList: boolean;
-  isFilterShowing: boolean;
-};
-
-export type Action = {
-  type:
-    | "setSelectedCampId"
-    | "unsetCampId"
-    | "setSelectedCamp"
-    | "showingDetailsFalse"
-    | "showingDetailsTrue"
-    | "setCampNameFilter"
-    | "setAgeSelected"
-    | "setQuadrantSelected"
-    | "setTagsSelected"
-    | "clearAllFilters"
-    | "toggleFilterShow"
-    | "toggleMobileList";
-  payload?:
-    | string
-    | string[]
-    | Camp
-    | MultiSelectOption[]
-    | boolean
-    | undefined;
-};
-
-const initialState: FilterState = {
-  selectedCampId: "",
-  campNameFilter: "",
-  ageSelected: [],
-  quadrantSelected: [],
-  tagsSelected: [],
-  isShowingDetails: false,
-  isShowingMobileList: false,
-  isFilterShowing: false,
-};
-
-const reducer = (prevState: FilterState, action: Action) => {
-  const { type, payload } = action;
-  switch (type) {
-    case "setSelectedCampId":
-      return { ...prevState, selectedCampId: payload } as FilterState;
-    case "unsetCampId":
-      return { ...prevState, selectedCampId: "" } as FilterState;
-    case "setSelectedCamp":
-      return { ...prevState, selectedCamp: payload } as FilterState;
-
-    case "showingDetailsFalse":
-      return {
-        ...prevState,
-        isShowingDetails: false,
-      } as FilterState;
-    case "showingDetailsTrue":
-      return {
-        ...prevState,
-        isShowingDetails: true,
-      } as FilterState;
-
-    case "setCampNameFilter":
-      return { ...prevState, campNameFilter: payload } as FilterState;
-    case "setAgeSelected":
-      return { ...prevState, ageSelected: payload } as FilterState;
-    case "setQuadrantSelected":
-      return { ...prevState, quadrantSelected: payload } as FilterState;
-    case "setTagsSelected":
-      return { ...prevState, tagsSelected: payload } as FilterState;
-
-    case "toggleFilterShow":
-      return {
-        ...prevState,
-        isFilterShowing: !prevState.isFilterShowing,
-      } as FilterState;
-
-    case "toggleMobileList":
-      return {
-        ...prevState,
-        isShowingMobileList: !prevState.isShowingMobileList,
-      } as FilterState;
-
-    case "clearAllFilters":
-      return {
-        ...prevState,
-        tagsSelected: [],
-        quadrantSelected: [],
-        ageSelected: [],
-      } as FilterState;
-
-    default:
-      return prevState;
-  }
-};
+import reducer, { initialState } from "./reducer";
+import MapDeskTopWrapper from "../MapDeskTopWrapper";
+import MapMobileWrapper from "../MapMobileWrapper";
+import CampCardMobile from "../CampCardMobile";
 
 function CampListWrapper() {
-  const { portlandMap } = useMap();
+  const { portlandMapDesktop, portlandMapMobile } = useMap();
   const [isMobile] = useMediaQuery("(max-width: 768px)");
   const [filterState, dispatch] = useReducer(reducer, initialState);
 
   const { data: campData, status: campStatus } =
     trpc.camps.getAllCamps.useQuery();
+
+  const filteredCampList = filterCampList(filterState, campData);
 
   const selectCampFromList = (campId: string) => {
     if (campId === filterState.selectedCampId) {
@@ -140,13 +42,22 @@ function CampListWrapper() {
       const campObj = campData?.find((camp) => camp.id === campId);
       dispatch({ type: "setSelectedCampId", payload: campId });
       dispatch({ type: "setSelectedCamp", payload: campObj as Camp });
-      if (portlandMap && campObj) {
-        portlandMap?.flyTo({ center: [campObj.lng, campObj.lat], zoom: 12 });
+      if (portlandMapDesktop && campObj && !isMobile) {
+        portlandMapDesktop?.flyTo({
+          center: [campObj.lng, campObj.lat],
+          zoom: 12,
+        });
+      }
+      if (portlandMapMobile && campObj && isMobile) {
+        portlandMapDesktop?.flyTo({
+          center: [campObj.lng, campObj.lat],
+          zoom: 12,
+        });
       }
     }
   };
 
-  const filteredCampList = filterCampList(filterState, campData);
+  const canRender = campData && campStatus === "success";
 
   const tagOptions = getTagOptions(campData);
   const screenHight = "calc(92vh)";
@@ -214,84 +125,81 @@ function CampListWrapper() {
           />
         </Center>
       )}
-      {campData && campStatus === "success" && (
-        <Box w={isMobile ? "100%" : "50%"} height="100%">
-          <Map
-            id="portlandMap"
-            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
-            initialViewState={{
-              longitude: -122.68294,
-              latitude: 45.56627,
-              zoom: 10,
-            }}
-            style={{ width: "100%", height: "100%" }}
-            mapStyle="mapbox://styles/mapbox/streets-v9"
-            boxZoom
-          >
-            <NavigationControl />
-            {filteredCampList.map((marker) => (
-              <Marker
-                selectedCampId={filterState.selectedCampId}
-                key={marker.id}
-                lat={marker.lat}
-                lng={marker.lng}
-                placeId={marker.id}
-                setSelectCampId={selectCampFromList}
-              />
-            ))}
-          </Map>
-        </Box>
+      {!isMobile && canRender && (
+        <MapDeskTopWrapper
+          campList={filteredCampList}
+          selectCampFromList={selectCampFromList}
+          selectedCampId={filterState.selectedCampId}
+        />
       )}
+      {isMobile && canRender && (
+        <MapMobileWrapper
+          campList={filteredCampList}
+          selectCampFromList={selectCampFromList}
+          selectedCampId={filterState.selectedCampId}
+        />
+      )}
+
       {/* Mobile Camp details card */}
       {filterState.selectedCampId &&
         isMobile &&
         !filterState.isShowingMobileList && (
-          <Box position="absolute" bottom={0}>
-            <CampCard
-              isMobile={isMobile}
-              details={filterState.selectedCamp as unknown as CardDetails}
-              selectedCampId={filterState.selectedCampId}
-              onSelect={(campId: string) =>
-                dispatch({ type: "setSelectedCampId", payload: campId })
-              }
-              showDetails={() => dispatch({ type: "showingDetailsTrue" })}
-            />
-          </Box>
+          <CampCardMobile
+            filterState={filterState}
+            next={() =>
+              nextCamp(
+                "down",
+                filteredCampList,
+                filterState,
+                portlandMapMobile,
+                dispatch
+              )
+            }
+            onSelect={(campId: string) =>
+              dispatch({ type: "setSelectedCampId", payload: campId })
+            }
+            prev={() =>
+              nextCamp(
+                "up",
+                filteredCampList,
+                filterState,
+                portlandMapMobile,
+                dispatch
+              )
+            }
+            showDetails={() => dispatch({ type: "showingDetailsTrue" })}
+          />
         )}
+
       {/* Desktop List */}
-      {campStatus === "success" &&
-        campData &&
-        !isMobile &&
-        !filterState.isShowingDetails && (
-          <Stack direction="column" w="50%" h={screenHight}>
-            <CampList
-              isMobile={isMobile}
-              filterState={filterState}
-              filteredCampList={filteredCampList}
-              selectCampFromList={selectCampFromList}
-              tagOptions={tagOptions}
-              dispatch={dispatch}
-              setIsShowFilter={() => dispatch({ type: "toggleFilterShow" })}
-            />
-          </Stack>
-        )}
+      {!isMobile && canRender && !filterState.isShowingDetails && (
+        <Stack direction="column" w="50%" h={screenHight}>
+          <CampList
+            isMobile={isMobile}
+            filterState={filterState}
+            filteredCampList={filteredCampList}
+            selectCampFromList={selectCampFromList}
+            tagOptions={tagOptions}
+            dispatch={dispatch}
+            setIsShowFilter={() => dispatch({ type: "toggleFilterShow" })}
+          />
+        </Stack>
+      )}
+
       {/* Mobile List */}
-      {campStatus === "success" &&
-        campData &&
-        isMobile &&
-        filterState.isShowingMobileList && (
-          <Stack direction="column" w={"100%"} h={screenHight}>
-            <CampList
-              isMobile={isMobile}
-              filterState={filterState}
-              filteredCampList={filteredCampList}
-              selectCampFromList={selectCampFromList}
-              tagOptions={tagOptions}
-              dispatch={dispatch}
-              setIsShowFilter={() => dispatch({ type: "toggleFilterShow" })}
-            />
-          </Stack>
-        )}
+      {isMobile && canRender && filterState.isShowingMobileList && (
+        <Stack direction="column" w={"100%"} h={screenHight}>
+          <CampList
+            isMobile={isMobile}
+            filterState={filterState}
+            filteredCampList={filteredCampList}
+            selectCampFromList={selectCampFromList}
+            tagOptions={tagOptions}
+            dispatch={dispatch}
+            setIsShowFilter={() => dispatch({ type: "toggleFilterShow" })}
+          />
+        </Stack>
+      )}
 
       {/* // Desktop card detail  */}
       {filterState.isShowingDetails &&

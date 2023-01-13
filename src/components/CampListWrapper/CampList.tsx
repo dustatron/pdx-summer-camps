@@ -1,12 +1,11 @@
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import { Input, Button, Box, Stack, Flex, Center } from "@chakra-ui/react";
 import type { Camp } from "@prisma/client";
-import { useState } from "react";
 import type { MultiSelectOption } from "../../types/camp";
 import type { CardDetails } from "../CampCard";
 import CampCard from "../CampCard";
 import FilterBox from "../FilterBox";
-import type { Action, FilterState } from "./CampListWrapper";
+import type { Action, FilterState } from "./type";
 
 type Props = {
   selectCampFromList: (campId: string) => void;
