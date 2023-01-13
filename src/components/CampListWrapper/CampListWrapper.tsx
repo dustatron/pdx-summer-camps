@@ -9,6 +9,7 @@ import {
   useMediaQuery,
   Button,
   Input,
+  Icon,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import type { Camp } from "@prisma/client";
@@ -61,7 +62,7 @@ function CampListWrapper() {
   const canRender = campData && campStatus === "success";
 
   const tagOptions = getTagOptions(campData);
-  const screenHight = "calc(92vh)";
+  // const screenHight = "calc(92vh)";
   return (
     <Stack direction={isMobile ? "column" : "row"} h={"100%"}>
       {/* Map */}
@@ -85,7 +86,7 @@ function CampListWrapper() {
             onClick={() => dispatch({ type: "setCampNameFilter", payload: "" })}
             colorScheme="linkedin"
           >
-            <AiOutlineClose size="md" />
+            <Icon as={AiOutlineClose} size="md" />
           </Button>
           <Button
             onClick={() => dispatch({ type: "toggleFilterShow" })}
