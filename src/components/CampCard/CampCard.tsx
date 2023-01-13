@@ -51,13 +51,7 @@ const CampCard = ({
   const isSelectedCamp = selectedCampId === id;
 
   return (
-    <Flex
-      py={2}
-      id={id}
-      minHeight={{ sm: "250px", md: "20rem" }}
-      w={isMobile ? "111%" : "100%"}
-      justifyContent={isMobile ? "start" : "center"}
-    >
+    <Center py={2} id={id} minHeight={{ sm: "250px", md: "20rem" }} w="100%">
       <Stack
         borderWidth="1px"
         borderRadius="lg"
@@ -178,7 +172,7 @@ const CampCard = ({
           )}
         </Stack>
       </Stack>
-    </Flex>
+    </Center>
   );
 };
 

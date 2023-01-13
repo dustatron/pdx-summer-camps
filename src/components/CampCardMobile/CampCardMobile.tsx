@@ -1,6 +1,9 @@
-import { Box, Button, Center, Flex, Stack } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import React from "react";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+} from "react-icons/io";
 import type { CardDetails } from "../CampCard/CampCard";
 import CampCard from "../CampCard/CampCard";
 import type { FilterState } from "../CampListWrapper/type";
@@ -21,45 +24,41 @@ const CampCardMobile = ({
   showDetails,
 }: Props) => {
   return (
-    <Stack
-      direction="row"
-      position="absolute"
-      bottom={0}
-      spacing="0"
-      padding={0}
-    >
-      <Center>
+    <Box position="relative" w="100%s">
+      <Box position="absolute" bottom="20" zIndex={2000}>
         <Button
-          variant="ghost"
-          height="200px"
-          width="45px"
+          variant="link"
+          height="10rem"
+          width="35px"
           p="0"
           onClick={() => next()}
         >
-          <AiFillCaretLeft size="md" />
+          <IoIosArrowDropleftCircle size="md" />
         </Button>
-      </Center>
-      <Box padding={0} w="100%">
-        <CampCard
-          isMobile={true}
-          details={filterState.selectedCamp as unknown as CardDetails}
-          selectedCampId={filterState.selectedCampId}
-          onSelect={onSelect}
-          showDetails={showDetails}
-        />
       </Box>
-      <Center>
+      <Box position="absolute" bottom="20" zIndex={2000} right="0">
         <Button
-          variant="ghost"
-          height="200px"
-          width="45px"
+          variant="link"
+          height="10rem"
+          width="35px"
           p="0"
           onClick={() => prev()}
         >
-          <AiFillCaretRight size="md" />
+          <IoIosArrowDroprightCircle size="md" />
         </Button>
-      </Center>
-    </Stack>
+      </Box>
+      <Box position="absolute" bottom={0} zIndex={1000}>
+        <Box padding={0} w="100%">
+          <CampCard
+            isMobile={true}
+            details={filterState.selectedCamp as unknown as CardDetails}
+            selectedCampId={filterState.selectedCampId}
+            onSelect={onSelect}
+            showDetails={showDetails}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
