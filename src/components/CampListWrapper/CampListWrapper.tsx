@@ -63,7 +63,7 @@ function CampListWrapper() {
   const tagOptions = getTagOptions(campData);
   const screenHight = "calc(92vh)";
   return (
-    <Stack direction={isMobile ? "column" : "row"} h={screenHight}>
+    <Stack direction={isMobile ? "column" : "row"} h={"100%"}>
       {/* Map */}
       {isMobile && (
         <Stack direction="row" p="2">
@@ -174,7 +174,7 @@ function CampListWrapper() {
 
       {/* Desktop List */}
       {!isMobile && canRender && !filterState.isShowingDetails && (
-        <Stack direction="column" w="50%" h={screenHight}>
+        <Stack direction="column" w="50%" h={"100%"}>
           <CampList
             isMobile={isMobile}
             filterState={filterState}
@@ -189,7 +189,7 @@ function CampListWrapper() {
 
       {/* Mobile List */}
       {isMobile && canRender && filterState.isShowingMobileList && (
-        <Stack direction="column" w={"100%"} h={screenHight}>
+        <Stack direction="column" w={"100%"} h={"100%"}>
           <CampList
             isMobile={isMobile}
             filterState={filterState}

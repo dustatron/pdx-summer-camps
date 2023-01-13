@@ -1,9 +1,6 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Icon } from "@chakra-ui/react";
 import React from "react";
-import {
-  IoIosArrowDropleftCircle,
-  IoIosArrowDroprightCircle,
-} from "react-icons/io";
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import type { CardDetails } from "../CampCard/CampCard";
 import CampCard from "../CampCard/CampCard";
 import type { FilterState } from "../CampListWrapper/type";
@@ -25,26 +22,28 @@ const CampCardMobile = ({
 }: Props) => {
   return (
     <Box position="relative" w="100%s">
-      <Box position="absolute" bottom="20" zIndex={2000}>
+      <Box position="absolute" bottom={150} zIndex={2000} left={1}>
         <Button
-          variant="link"
-          height="10rem"
-          width="35px"
+          colorScheme="linkedin"
+          height="3rem"
           p="0"
+          w="35px"
+          rounded="2xl"
           onClick={() => next()}
         >
-          <IoIosArrowDropleftCircle size="md" />
+          <Icon as={ArrowLeftIcon} size="md" />
         </Button>
       </Box>
-      <Box position="absolute" bottom="20" zIndex={2000} right="0">
+      <Box position="absolute" bottom={150} zIndex={2000} right={1}>
         <Button
-          variant="link"
-          height="10rem"
-          width="35px"
+          colorScheme="linkedin"
+          height="3rem"
+          rounded="2xl"
           p="0"
+          w="35px"
           onClick={() => prev()}
         >
-          <IoIosArrowDroprightCircle size="md" />
+          <Icon as={ArrowRightIcon} />
         </Button>
       </Box>
       <Box position="absolute" bottom={0} zIndex={1000}>

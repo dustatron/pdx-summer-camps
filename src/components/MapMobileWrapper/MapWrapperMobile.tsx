@@ -17,7 +17,6 @@ function MapWrapper({ campList, selectedCampId, selectCampFromList }: Props) {
         id="portlandMapMobile"
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         initialViewState={{
-          padding: { bottom: 300, left: 0, right: 0, top: 0 },
           longitude: -122.68294,
           latitude: 45.56627,
           zoom: 10,
