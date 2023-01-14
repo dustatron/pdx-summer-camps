@@ -93,7 +93,7 @@ model Camp {
     lat          Float
     lng          Float
     place_id     String?
-    Brief        String?
+    brief        String?
     pickUp       String?
     dropOff      String?
     tags         String[]

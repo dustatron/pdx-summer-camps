@@ -1,12 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
-import { inputTheme } from "./input";
 
 const theme = extendTheme({
-  components: {
-    Input: {
-      inputTheme,
-    },
-  },
+
   breakpoints: {
     sm: "320px",
     md: "768px",

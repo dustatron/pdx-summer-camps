@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import type { Camp } from "@prisma/client";
-import type { MultiSelectOption } from "../../types/camp";
+import type { CampData, MultiSelectOption } from "../../types/camp";
 import { filterCampList } from "../../utils/filterCampList";
 import CampList from "./CampList";
 import { getTagOptions, nextCamp } from "./utils";
@@ -80,6 +80,7 @@ function CampListWrapper() {
           </Button>
           <InputGroup size="md">
             <Input
+              placeholder="Search by name"
               value={filterState.campNameFilter}
               onChange={(e) =>
                 dispatch({ type: "setCampNameFilter", payload: e.target.value })
@@ -159,6 +160,7 @@ function CampListWrapper() {
         !filterState.isShowingMobileList && (
           <CampCardMobile
             filterState={filterState}
+            selectedCamp={filterState.selectedCamp as unknown as CampData}
             next={() =>
               nextCamp(
                 "down",
@@ -167,9 +169,6 @@ function CampListWrapper() {
                 portlandMapMobile,
                 dispatch
               )
-            }
-            onSelect={(campId: string) =>
-              dispatch({ type: "setSelectedCampId", payload: campId })
             }
             prev={() =>
               nextCamp(
@@ -180,7 +179,6 @@ function CampListWrapper() {
                 dispatch
               )
             }
-            showDetails={() => dispatch({ type: "showingDetailsTrue" })}
           />
         )}
 
