@@ -15,8 +15,8 @@ type Props = {
 const CampCardMobile = ({ next, prev, selectedCamp, filterState }: Props) => {
   const router = useRouter();
   return (
-    <Box position="relative" w="100%s">
-      <Box position="absolute" bottom={150} zIndex={2000} left={1}>
+    <>
+      {/* <Box zIndex={2000} left={1}>
         <Button
           colorScheme="linkedin"
           height="3rem"
@@ -28,7 +28,7 @@ const CampCardMobile = ({ next, prev, selectedCamp, filterState }: Props) => {
           <Icon as={ArrowLeftIcon} size="md" />
         </Button>
       </Box>
-      <Box position="absolute" bottom={150} zIndex={2000} right={1}>
+      <Box zIndex={2000} right={1}>
         <Button
           colorScheme="linkedin"
           height="3rem"
@@ -39,47 +39,51 @@ const CampCardMobile = ({ next, prev, selectedCamp, filterState }: Props) => {
         >
           <Icon as={ArrowRightIcon} />
         </Button>
-      </Box>
+      </Box> */}
+
       <Flex
-        position="absolute"
-        justifyContent="center"
         w="100%"
-        h="30vh"
-        bottom={0}
         zIndex={1000}
+        onClick={() => router.push(`/show/${selectedCamp?.id}`)}
+        border="1px"
+        borderColor="gray.100"
       >
         <Stack
-          w="90%"
+          direction="row"
+          w="100%"
           backgroundColor="white"
-          h="29vh"
-          rounded="md"
           p="3"
-          justifyContent="space-between"
-          alignContent="center"
+          bg="white"
+          shadow="lg"
         >
-          <Flex h="50%" overflow="hidden" justifyContent="center">
+          <Flex w="30%" justifyContent="center">
             {selectedCamp.image && selectedCamp.image[0] && (
-              <Image src={selectedCamp.image[0].src} h="100%" alt="camp logo" />
+              <Image
+                src={selectedCamp.image[0].src}
+                fit="scale-down"
+                alt="camp logo"
+              />
             )}
           </Flex>
-          <Text fontWeight="bold" textAlign="center">
-            {selectedCamp.title}
-          </Text>
-          <Box>
-            {selectedCamp.brief && <Text>{selectedCamp?.brief}</Text>}
-            {!selectedCamp.brief && (
-              <Text>{selectedCamp?.description?.substring(0, 100)}</Text>
-            )}
+
+          <Box w="70%">
+            <Text fontWeight="bold" textAlign="start">
+              {selectedCamp.title}
+            </Text>
+            <Box>
+              {selectedCamp.brief && (
+                <Text fontSize="sm">{selectedCamp?.brief}</Text>
+              )}
+              {!selectedCamp.brief && (
+                <Text fontSize="sm">
+                  {selectedCamp?.description?.substring(0, 100)}
+                </Text>
+              )}
+            </Box>
           </Box>
-          <Button
-            p="4"
-            onClick={() => router.push(`/show/${selectedCamp?.id}`)}
-          >
-            More Details
-          </Button>
         </Stack>
       </Flex>
-    </Box>
+    </>
   );
 };
 

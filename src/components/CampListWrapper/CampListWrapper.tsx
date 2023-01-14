@@ -66,7 +66,7 @@ function CampListWrapper() {
   const tagOptions = getTagOptions(campData);
   // const screenHight = "calc(92vh)";
   return (
-    <Stack direction={isMobile ? "column" : "row"} h={"100%"}>
+    <Stack spacing={0} direction={isMobile ? "column" : "row"} h={"100%"}>
       {/* Map */}
       {isMobile && (
         <Stack direction="row" p="2">
@@ -112,7 +112,33 @@ function CampListWrapper() {
           </Button>
         </Stack>
       )}
-
+      {/* Mobile Camp details card */}
+      {filterState.selectedCampId &&
+        isMobile &&
+        !filterState.isShowingMobileList && (
+          <CampCardMobile
+            filterState={filterState}
+            selectedCamp={filterState.selectedCamp as unknown as CampData}
+            next={() =>
+              nextCamp(
+                "down",
+                filteredCampList,
+                filterState,
+                portlandMapMobile,
+                dispatch
+              )
+            }
+            prev={() =>
+              nextCamp(
+                "up",
+                filteredCampList,
+                filterState,
+                portlandMapMobile,
+                dispatch
+              )
+            }
+          />
+        )}
       {campStatus === "loading" && (
         <Center padding="3" mt="5" w="100%">
           <Spinner size="lg" />
@@ -153,34 +179,6 @@ function CampListWrapper() {
           selectedCampId={filterState.selectedCampId}
         />
       )}
-
-      {/* Mobile Camp details card */}
-      {filterState.selectedCampId &&
-        isMobile &&
-        !filterState.isShowingMobileList && (
-          <CampCardMobile
-            filterState={filterState}
-            selectedCamp={filterState.selectedCamp as unknown as CampData}
-            next={() =>
-              nextCamp(
-                "down",
-                filteredCampList,
-                filterState,
-                portlandMapMobile,
-                dispatch
-              )
-            }
-            prev={() =>
-              nextCamp(
-                "up",
-                filteredCampList,
-                filterState,
-                portlandMapMobile,
-                dispatch
-              )
-            }
-          />
-        )}
 
       {/* Desktop List */}
       {!isMobile && canRender && !filterState.isShowingDetails && (
