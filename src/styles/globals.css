@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  background: rgb(210, 222, 234);
-}
- */
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+};
