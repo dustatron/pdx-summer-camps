@@ -10,6 +10,9 @@ import {
   Flex,
   Text,
   FormHelperText,
+  Select as ChakraSelect,
+  InputGroup,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
@@ -24,7 +27,6 @@ import { useRouter } from "next/router";
 import AddImage from "./AddImage";
 import type { Feature } from "./AddressSelector";
 import AddressSelector from "./AddressSelector";
-
 type Status = "error" | "success" | "loading" | "idle";
 
 type Props = {
@@ -129,15 +131,20 @@ const Form = ({
           </FormControl>
           <FormControl>
             <FormLabel>Website *</FormLabel>
-            <Input
-              type="text"
-              value={formState.website}
-              isRequired
-              onChange={(e) =>
-                dispatch({ type: "website", payload: e.target.value })
-              }
-            />
-            <FormHelperText>Include https:// at the beginning</FormHelperText>
+            <InputGroup size="md">
+              <InputLeftAddon> http:// </InputLeftAddon>
+              <Input
+                placeholder="your website address"
+                value={formState.website}
+                isRequired
+                onChange={(e) =>
+                  dispatch({ type: "website", payload: e.target.value })
+                }
+              />
+            </InputGroup>
+            <FormHelperText>
+              Please link directly to your camps page
+            </FormHelperText>
           </FormControl>
           <FormControl>
             <FormLabel>e-mail</FormLabel>
@@ -152,10 +159,21 @@ const Form = ({
           <FormControl>
             <FormLabel>Phone</FormLabel>
             <Input
-              type="text"
+              type="tel"
               value={formState.phone || ""}
+              placeholder="Number parents can contact you at"
               onChange={(e) =>
                 dispatch({ type: "phone", payload: e.target.value })
+              }
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Contact Name</FormLabel>
+            <Input
+              type="text"
+              value={formState.contactName || ""}
+              onChange={(e) =>
+                dispatch({ type: "contactName", payload: e.target.value })
               }
             />
           </FormControl>
@@ -173,6 +191,7 @@ const Form = ({
           <FormControl>
             <FormLabel>Quadrant</FormLabel>
             <Select
+              className="black-border"
               closeMenuOnSelect={false}
               components={animatedComponents}
               isMulti
@@ -193,33 +212,68 @@ const Form = ({
               onChange={(e) => setAges(e as MultiSelectOption[])}
             />
           </FormControl>
+          <FormControl>
+            <FormLabel>Status</FormLabel>
+            <ChakraSelect>
+              <option value="UNKNOWN">Unknown</option>
+              <option value="OPEN">Open</option>
+              <option value="FULL">Full</option>
+            </ChakraSelect>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Drop off time</FormLabel>
+            <Input
+              type="number"
+              placeholder="Time kids can show up"
+              value={formState.dropOff || ""}
+              onChange={(e) =>
+                dispatch({ type: "DropOff", payload: e.target.value })
+              }
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Pickup time</FormLabel>
+            <Input
+              type="number"
+              placeholder="Time the camp ends"
+              value={formState.pickUp || ""}
+              onChange={(e) =>
+                dispatch({ type: "pickUp", payload: e.target.value })
+              }
+            />
+          </FormControl>
         </Stack>
       </Stack>
-      <Stack direction="row" py="4">
-        <FormControl>
-          <FormLabel>Facebook</FormLabel>
-          <Input
-            type="text"
-            value={formState.facebook || ""}
-            onChange={(e) =>
-              dispatch({ type: "facebook", payload: e.target.value })
-            }
-          />
-          <FormHelperText>Include https:// at the beginning</FormHelperText>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Instagram</FormLabel>
-          <Input
-            type="text"
-            value={formState.instagram || ""}
-            onChange={(e) =>
-              dispatch({ type: "instagram", payload: e.target.value })
-            }
-          />
-          <FormHelperText>Include https:// at the beginning</FormHelperText>
-        </FormControl>
-      </Stack>
 
+      <FormControl my="5" border="1px" rounded="md" p="3">
+        <FormLabel>Address *</FormLabel>
+        <Text>Please search your address and select it from the results</Text>
+        <AddressSelector
+          onSelectAddress={onSelectAddress}
+          placeholder="your camps address"
+        />
+        <Input
+          type="text"
+          isRequired
+          value={formState.address}
+          isDisabled
+          placeholder="Final Address"
+        />
+      </FormControl>
+
+      <Box bg="black" h="1px" mt="25px" mb="25px" />
+
+      <FormControl marginTop="3">
+        <FormLabel>Brief</FormLabel>
+        <Textarea
+          height="1rem"
+          value={formState.brief || ""}
+          onChange={(e) => dispatch({ type: "brief", payload: e.target.value })}
+        />
+        <FormHelperText>
+          Give a brief quick one or two sentence description of your camp
+        </FormHelperText>
+      </FormControl>
       <FormControl marginTop="3">
         <>
           <Flex justifyContent="space-between">
@@ -242,16 +296,34 @@ const Form = ({
           />
         </>
       </FormControl>
+      <Box bg="black" h="1px" mt="25px" mb="25px" />
 
-      <FormControl my="5" border="1px" rounded="md" p="3">
-        <FormLabel>Address *</FormLabel>
-        <AddressSelector onSelectAddress={onSelectAddress} />
-        <Input type="text" isRequired value={formState.address} isDisabled />
-      </FormControl>
-
-      {isEdit && (
+      <Stack direction="row" py="4">
         <FormControl>
-          <AddImage campId={formState.id!} />
+          <FormLabel>Facebook</FormLabel>
+          <Input
+            type="text"
+            value={formState.facebook || ""}
+            onChange={(e) =>
+              dispatch({ type: "facebook", payload: e.target.value })
+            }
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Instagram</FormLabel>
+          <Input
+            type="text"
+            value={formState.instagram || ""}
+            onChange={(e) =>
+              dispatch({ type: "instagram", payload: e.target.value })
+            }
+          />
+        </FormControl>
+      </Stack>
+
+      {isEdit && formState.id && (
+        <FormControl>
+          <AddImage campId={formState.id} />
         </FormControl>
       )}
 

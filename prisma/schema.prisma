@@ -89,16 +89,21 @@ model Camp {
     facebook     String?
     instagram    String?
     description  String?
-    image        CampImage[]
+    contactName  String?
     lat          Float
     lng          Float
     place_id     String?
+    Brief        String?
+    pickUp       String?
+    dropOff      String?
     tags         String[]
     quadrant     String[]
     ages         String[]
     price        Float?
     dateStart    DateTime?
     dateEnd      DateTime?
+    status       Status @default(UNKNOWN)
+    image        CampImage[]
     author       CampAuthor[]
     favorites    Favorite[]
 }
@@ -138,4 +143,10 @@ enum Role {
   USER
   PROVIDER
   ADMIN
+}
+
+enum Status {
+  OPEN
+  FULL
+  UNKNOWN
 }

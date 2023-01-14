@@ -8,7 +8,8 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "theme": "chakra-cli tokens src/theme/theme.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -41,6 +42,7 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.3.0",
     "@types/mapbox-gl": "^2.7.10",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",

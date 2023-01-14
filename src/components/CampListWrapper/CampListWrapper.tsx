@@ -10,6 +10,8 @@ import {
   Button,
   Input,
   Icon,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import type { Camp } from "@prisma/client";
@@ -76,18 +78,27 @@ function CampListWrapper() {
           >
             {filterState.isShowingMobileList ? "Map" : "List"}
           </Button>
-          <Input
-            value={filterState.campNameFilter}
-            onChange={(e) =>
-              dispatch({ type: "setCampNameFilter", payload: e.target.value })
-            }
-          />
-          <Button
-            onClick={() => dispatch({ type: "setCampNameFilter", payload: "" })}
-            colorScheme="linkedin"
-          >
-            <Icon as={AiOutlineClose} size="md" />
-          </Button>
+          <InputGroup size="md">
+            <Input
+              value={filterState.campNameFilter}
+              onChange={(e) =>
+                dispatch({ type: "setCampNameFilter", payload: e.target.value })
+              }
+            />
+            <InputRightElement width="4rem">
+              {filterState.campNameFilter && (
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={() =>
+                    dispatch({ type: "setCampNameFilter", payload: "" })
+                  }
+                >
+                  <Icon as={AiOutlineClose} size="md" />
+                </Button>
+              )}
+            </InputRightElement>
+          </InputGroup>
           <Button
             onClick={() => dispatch({ type: "toggleFilterShow" })}
             variant="ghost"

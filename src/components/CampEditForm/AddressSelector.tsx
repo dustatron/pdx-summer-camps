@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Box, Input, Button, Stack, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  Button,
+  Stack,
+  Center,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 const api = `https://api.mapbox.com/geocoding/v5/mapbox.places/`;
 
 export type Feature = {
@@ -26,6 +34,7 @@ function AddressSelector({
   onSelectAddress,
 }: {
   onSelectAddress: (location: Feature) => void;
+  placeholder?: string;
 }) {
   const [address, setAddress] = useState("");
   const [results, setResults] = useState<GeoCodeResult>();
@@ -49,13 +58,19 @@ function AddressSelector({
     <Box p={5}>
       <Box>
         <Stack direction="row">
-          <Input
-            value={address}
-            onChange={(e) => {
-              setAddress(e.target.value);
-            }}
-          />
-          <Button onClick={onSearch}>Find</Button>
+          <InputGroup size="md">
+            <Input
+              value={address}
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
+            />
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={onSearch}>
+                Find
+              </Button>
+            </InputRightElement>
+          </InputGroup>
         </Stack>
       </Box>
       <Stack py="5" spacing={2}>
