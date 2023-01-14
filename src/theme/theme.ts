@@ -12,6 +12,7 @@ const theme = extendTheme({
     global: {
       body: {
         bg: "#F7FAFC",
+        paddingBottom: "env(safe-area-inset-bottom)"
       },
     },
   },
