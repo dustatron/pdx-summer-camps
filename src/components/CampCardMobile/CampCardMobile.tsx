@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Icon, Text, Image, Stack } from "@chakra-ui/react";
+import { Box, Flex, Text, Image, Stack } from "@chakra-ui/react";
 import React from "react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import type { FilterState } from "../CampListWrapper/type";
 import { useRouter } from "next/router";
 import type { CampData } from "../../types/camp";

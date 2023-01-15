@@ -10,10 +10,10 @@ import {
   Flex,
   Text,
   Badge,
-  Box,
 } from "@chakra-ui/react";
-
 import { useRouter } from "next/router";
+import type { Camp } from "@prisma/client";
+import removeHttp from "../../utils/http";
 
 export type CardDetails = {
   title: string;
@@ -45,24 +45,23 @@ const CampCard = ({
   showDetails,
   isMobile,
 }: Props) => {
-  const router = useRouter();
   const { title, description, image, address, website, id, tags } = details;
+  const router = useRouter();
 
   const isSelectedCamp = selectedCampId === id;
 
   return (
-    <Center py={2} id={id} minHeight={{ sm: "250px", md: "20rem" }} w="100%">
+    <Center py={2} id={id} w="100%">
       <Stack
         borderWidth="1px"
         borderRadius="lg"
-        h={isMobile ? "100px" : ""}
         w="90%"
-        minHeight={{ sm: "250px", md: "20rem" }}
+        minHeight={{ sm: "476px", md: "20rem" }}
         direction={{ base: "column", md: "row" }}
         bg={useColorModeValue("white", "gray.900")}
         boxShadow={"2xl"}
-        padding={{ sm: 2, md: 4 }}
-        border={isSelectedCamp && !isMobile ? "2px" : "0"}
+        padding={4}
+        border={isSelectedCamp ? "2px" : "0"}
         borderColor={isSelectedCamp ? "gray.600" : ""}
       >
         <Flex flex={1} bg="gray.50" rounded="md" overflow="hidden">
@@ -71,7 +70,6 @@ const CampCard = ({
             boxSize="100%"
             src={(image[0] && image[0].src) || "/img-place-holder.png"}
             alt="camp logo"
-            width="100%"
           />
         </Flex>
         <Stack
@@ -81,38 +79,29 @@ const CampCard = ({
           alignItems="start"
           p={1}
         >
-          <Heading fontSize={{ sm: "md", md: "2xl" }} fontFamily={"body"}>
+          <Heading fontSize={"2xl"} fontFamily={"body"}>
             {title}
           </Heading>
 
-          <Text
-            fontSize={{ sm: "smaller", md: "inherit" }}
-            color={useColorModeValue("gray.700", "gray.400")}
-            px={1}
-          >
+          <Text color={useColorModeValue("gray.700", "gray.400")} px={1}>
             {description.slice(0, 70)} {description.length > 90 ? "..." : ""}
           </Text>
-          {!isMobile && (
-            <Text
-              fontWeight={600}
-              color={"gray.900"}
-              fontSize={{ sm: "smaller", md: "inherit" }}
-              mb={1}
+          <Text fontWeight={600} color={"gray.900"} size="sm" mb={1}>
+            {address.slice(0, 40)}
+          </Text>
+          {website && (
+            <a
+              href={`https://${removeHttp(website)}`}
+              target="_blank"
+              rel="noreferrer"
             >
-              {address.slice(0, 40)}
-            </Text>
-          )}
-
-          {website && !isMobile && (
-            <a href={website} target="_blank" rel="noreferrer">
               <Text fontWeight={600} color={"gray.500"} size="sm" mb={1}>
                 Website
               </Text>
             </a>
           )}
           <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
-            {!isMobile &&
-              tags &&
+            {tags &&
               tags.map((tag: string) => (
                 <Badge key={tag} px={2} py={1} bg="gray.50" fontWeight={"400"}>
                   {tag}
@@ -164,11 +153,9 @@ const CampCard = ({
             </Stack>
           )}
           {isMobile && (
-            <Box w="100%">
-              <Button w="100%" onClick={() => router.push(`/show/${id}`)}>
-                Full Details
-              </Button>
-            </Box>
+            <Button w="100%" onClick={() => router.push(`/show/${details.id}`)}>
+              More Info
+            </Button>
           )}
         </Stack>
       </Stack>

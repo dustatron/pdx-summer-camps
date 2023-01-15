@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { AgeValues, QuadrantValues } from "../../types/camp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAlert } from "../../context/AlertContext";
+import removeHttp from "../../utils/http";
 
 type Favorite = { campId: string; userId: number; id: string };
 
@@ -153,9 +154,13 @@ function CardDetail({ onBack, campData }: Props) {
       <Box>
         <Text fontWeight="bold">Website:</Text>
         {website && (
-          <a href={website} target="_blank" rel="noreferrer">
+          <a
+            href={`https://${removeHttp(website)}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             <Text color="blue.600" cursor="pointer">
-              {website}
+              {`https://${removeHttp(website)}`}
             </Text>
           </a>
         )}
