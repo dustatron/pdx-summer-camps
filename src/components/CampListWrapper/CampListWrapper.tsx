@@ -15,11 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import type { Camp } from "@prisma/client";
-import type { CampData, MultiSelectOption } from "../../types/camp";
+import type {
+  CampData,
+  CampDetailFromAPI,
+  MultiSelectOption,
+} from "../../types/camp";
 import { filterCampList } from "../../utils/filterCampList";
 import CampList from "./CampList";
 import { getTagOptions, nextCamp } from "./utils";
-import type { CampDetail } from "../CardDetail/CardDetail";
 import CardDetail from "../CardDetail/CardDetail";
 import FilterBox from "../FilterBox";
 import { TriangleDownIcon } from "@chakra-ui/icons";
@@ -118,7 +121,9 @@ function CampListWrapper() {
         !filterState.isShowingMobileList && (
           <CampCardMobile
             filterState={filterState}
-            selectedCamp={filterState.selectedCamp as unknown as CampData}
+            selectedCamp={
+              filterState.selectedCamp as unknown as CampDetailFromAPI
+            }
             next={() =>
               nextCamp(
                 "down",
@@ -222,7 +227,9 @@ function CampListWrapper() {
           >
             <CardDetail
               onBack={() => dispatch({ type: "showingDetailsFalse" })}
-              campData={filterState.selectedCamp as unknown as CampDetail}
+              campData={
+                filterState.selectedCamp as unknown as CampDetailFromAPI
+              }
             />
           </Flex>
         )}
