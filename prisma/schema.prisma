@@ -99,9 +99,9 @@ model Camp {
     tags         String[]
     quadrant     String[]
     ages         String[]
-    price        Float?
-    dateStart    DateTime?
-    dateEnd      DateTime?
+    price        String?
+    dateStart    String?
+    dateEnd      String?
     status       Status @default(UNKNOWN)
     image        CampImage[]
     author       CampAuthor[]

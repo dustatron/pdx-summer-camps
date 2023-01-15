@@ -1,3 +1,4 @@
+import type { Camp, Favorite } from "@prisma/client";
 import { z } from "zod";
 export const campSchema = z.object({
   title: z.string().max(150),
@@ -11,24 +12,34 @@ export const campSchema = z.object({
   brief: z.string().max(150, 'Brief message was too long').optional().nullable(),
   description: z.string().max(2500).optional().nullable(),
   contactName: z.string().optional().nullable(),
-  image: z.array(z.object({ src: z.string(), id: z.string().optional().nullable(), campId: z.string().optional().nullable() })),
-  lat: z.string(),
-  lng: z.string(),
+  lat: z.number(),
+  lng: z.number(),
   tags: z.array(z.string()),
   quadrant: z.array(z.string()),
   ages: z.array(z.string()),
-  price: z.number().optional().nullable(),
-  dateStart: z.date().optional().nullable(),
+  price: z.string().optional().nullable(),
   pickUp: z.string().max(100).optional().nullable(),
   dropOff: z.string().max(100).optional().nullable(),
-  endDate: z.date().optional().nullable(),
-  userId: z.number(),
+  dateStart: z.string().optional(),
+  dateEnd: z.string().optional(),
+  userId: z.number().optional(),
   status: z.enum(["OPEN", "FULL", "UNKNOWN"]),
-  authorName: z.string(),
+  authorName: z.string().optional(),
   id: z.string().optional(),
 });
 
-export type CampData = z.input<typeof campSchema>;
+export const campImages = z.object({
+  images: z.array(z.object({ src: z.string(), id: z.string().optional().nullable(), campId: z.string().optional().nullable() }))
+})
+
+export type CampImages = z.input<typeof campImages>
+export type CampData = z.input<typeof campSchema>
+
+export type CampDataToAPI = Camp
+
+export type CampDetailFromAPI = CampData & { image: { src: string, id: string, campId: string }[] } & {
+  favorites: Favorite[];
+};
 
 export type MultiSelectOption = { value: string; label: string };
 
@@ -63,7 +74,12 @@ export const AgeValues = {
   5: "5th Grade",
   6: "6th Grade",
   7: "7th Grade",
-  8: "8th Grade"
+  8: "8th Grade",
+  9: "9th Grade",
+  10: "10th Grade",
+  11: "11th Grade",
+  12: "12th Grade",
+  13: "Parents Too"
 }
 
 export const ageOptions: MultiSelectOption[] = [
@@ -76,4 +92,9 @@ export const ageOptions: MultiSelectOption[] = [
   { label: AgeValues[6], value: "6" },
   { label: AgeValues[7], value: "7" },
   { label: AgeValues[8], value: "8" },
+  { label: AgeValues[9], value: "9" },
+  { label: AgeValues[10], value: "10" },
+  { label: AgeValues[11], value: "11" },
+  { label: AgeValues[12], value: "12" },
+  { label: AgeValues[13], value: "Parents Too" },
 ];

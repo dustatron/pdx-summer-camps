@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import type { Camp } from "@prisma/client";
 import { BiArrowBack } from "react-icons/bi";
 import { BsFacebook } from "react-icons/bs";
 import { ImInstagram } from "react-icons/im";
@@ -16,6 +15,7 @@ import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import type { CampDetailFromAPI } from "../../types/camp";
 import { AgeValues, QuadrantValues } from "../../types/camp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAlert } from "../../context/AlertContext";
@@ -23,11 +23,7 @@ import removeHttp from "../../utils/http";
 
 type Favorite = { campId: string; userId: number; id: string };
 
-export type CampDetail = Camp & { image: { src: string; id: string }[] } & {
-  favorites: Favorite[];
-};
-
-type Props = { onBack: () => void; campData: CampDetail };
+type Props = { onBack: () => void; campData: CampDetailFromAPI };
 
 function CardDetail({ onBack, campData }: Props) {
   const [isFav, setIsFav] = useState(false);
@@ -55,6 +51,16 @@ function CardDetail({ onBack, campData }: Props) {
     id,
     ages,
     phone,
+    status,
+    favorites,
+    authorName,
+    brief,
+    contactName,
+    dateEnd,
+    dateStart,
+    dropOff,
+    pickUp,
+    price,
   } = campData;
 
   const getFormattedQuadrant = (values: string[]): string[] | [] => {
@@ -111,7 +117,7 @@ function CardDetail({ onBack, campData }: Props) {
     if (favorite?.id) {
       return removeFav({ id: favorite.id });
     }
-    addFav({ campId: id });
+    addFav({ campId: id || "" });
   };
   const formatAges = getFormattedAges(ages);
 
@@ -144,9 +150,14 @@ function CardDetail({ onBack, campData }: Props) {
         ))}
       </Center>
       <Box>
+        <Text fontWeight="bold">Brief description:</Text>
+        <Text>{brief}</Text>
+      </Box>
+      <Box>
         <Text fontWeight="bold">Description:</Text>
         <Text>{description}</Text>
       </Box>
+
       <Box>
         <Text fontWeight="bold">Address:</Text>
         <Text>{address}</Text>
@@ -200,6 +211,13 @@ function CardDetail({ onBack, campData }: Props) {
         {!tags && <Text>Not Provided</Text>}
       </Box>
       <Box>
+        <Text fontWeight="bold">Status:</Text>
+        <Text color="blue.600" cursor="pointer">
+          <Badge key={`tag-${status}}`}>{status}</Badge>
+        </Text>
+        {!tags && <Text>Not Provided</Text>}
+      </Box>
+      <Box>
         <Text fontWeight="bold">Age Range:</Text>
         {ages && (
           <Text color="blue.600" cursor="pointer">
@@ -212,7 +230,37 @@ function CardDetail({ onBack, campData }: Props) {
         )}
         {!ages && <Text>Not Provided</Text>}
       </Box>
+      <Box>
+        <Text fontWeight="bold">Price:</Text>
+        <Text>{price}</Text>
+        {!price && <Text>Not Provided</Text>}
+      </Box>
+      <Box>
+        <Text fontWeight="bold">Contact Person:</Text>
+        <Text>{contactName}</Text>
+        {!contactName && <Text>Not Provided</Text>}
+      </Box>
 
+      <Box>
+        <Text fontWeight="bold">Start Date:</Text>
+        <Text>{dateStart}</Text>
+        {!dateStart && <Text>Not Provided</Text>}
+      </Box>
+      <Box>
+        <Text fontWeight="bold">End Date:</Text>
+        <Text>{dateEnd}</Text>
+        {!dateEnd && <Text>Not Provided</Text>}
+      </Box>
+      <Box>
+        <Text fontWeight="bold">Drop Off Time:</Text>
+        <Text>{dropOff}</Text>
+        {!dropOff && <Text>Not Provided</Text>}
+      </Box>
+      <Box>
+        <Text fontWeight="bold">Pick Up Time:</Text>
+        <Text>{pickUp}</Text>
+        {!pickUp && <Text>Not Provided</Text>}
+      </Box>
       <Box>
         <Text fontWeight="bold">Quadrant:</Text>
         {quadrant && (
@@ -227,7 +275,14 @@ function CardDetail({ onBack, campData }: Props) {
         {!quadrant && <Text>Not Provided</Text>}
       </Box>
 
-      <Box>
+      <Stack spacing={4}>
+        <Box>
+          <Text fontWeight="bold">favorites: #{favorites.length}</Text>
+        </Box>
+        <Box>
+          <Text fontWeight="bold">This camp posting was created by:</Text>
+          <Text>{authorName ? authorName : "Page administrator"}</Text>
+        </Box>
         <Text fontWeight="bold">Social Media:</Text>
         <Stack direction="row">
           {facebook && (
@@ -246,7 +301,7 @@ function CardDetail({ onBack, campData }: Props) {
           )}
           {!facebook && !instagram && <Text>Not Provided</Text>}
         </Stack>
-      </Box>
+      </Stack>
       {userData?.role === "ADMIN" && (
         <Button onClick={() => router.push(`/detail/${id}`)}>Edit</Button>
       )}

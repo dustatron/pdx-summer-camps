@@ -34,7 +34,7 @@ type Props = {
   formState: CampData;
   dispatch: React.Dispatch<{
     type: string;
-    payload: string | string[];
+    payload: string | string[] | number;
   }>;
   isEdit?: boolean;
   deleteCamp: (value: { campId: string }) => void;
@@ -57,15 +57,15 @@ const Form = ({
   const onSelectAddress = (location: Feature) => {
     dispatch({
       type: "lng",
-      payload: String(location.geometry.coordinates[0]),
+      payload: location.geometry.coordinates[0] || "",
     });
     dispatch({
       type: "lat",
-      payload: String(location.geometry.coordinates[1]),
+      payload: location.geometry.coordinates[1] || "",
     });
     dispatch({
       type: "address",
-      payload: String(location.place_name),
+      payload: location.place_name,
     });
   };
 
@@ -116,8 +116,16 @@ const Form = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <Stack direction="row" w="100%" spacing={5}>
-        <Stack direction="column" spacing={5} w="50%">
+      <Stack
+        direction={{ sm: "column", md: "column", lg: "row" }}
+        w="100%"
+        spacing={5}
+      >
+        <Stack
+          direction="column"
+          spacing={5}
+          w={{ sm: "100%", md: "100%", lg: "50%" }}
+        >
           <FormControl>
             <FormLabel>Camp Title *</FormLabel>
             <Input
@@ -134,6 +142,7 @@ const Form = ({
             <InputGroup size="md">
               <InputLeftAddon> http:// </InputLeftAddon>
               <Input
+                type="text"
                 placeholder="your website address"
                 value={formState.website}
                 isRequired
@@ -148,20 +157,23 @@ const Form = ({
           </FormControl>
           <FormControl>
             <FormLabel>e-mail</FormLabel>
-            <Input
-              type="text"
-              value={formState.email || ""}
-              onChange={(e) =>
-                dispatch({ type: "email", payload: e.target.value })
-              }
-            />
+            <InputGroup size="md">
+              <InputLeftAddon> @ </InputLeftAddon>
+              <Input
+                type="email"
+                value={formState.email || ""}
+                onChange={(e) =>
+                  dispatch({ type: "email", payload: e.target.value })
+                }
+              />
+            </InputGroup>
           </FormControl>
           <FormControl>
             <FormLabel>Phone</FormLabel>
             <Input
               type="tel"
               value={formState.phone || ""}
-              placeholder="Number parents can contact you at"
+              placeholder="Number parents can use"
               onChange={(e) =>
                 dispatch({ type: "phone", payload: e.target.value })
               }
@@ -178,7 +190,7 @@ const Form = ({
             />
           </FormControl>
         </Stack>
-        <Stack spacing={5} w="50%">
+        <Stack spacing={5} w={{ sm: "100%", md: "100%", lg: "50%" }}>
           <FormControl>
             <FormLabel>Tags</FormLabel>
             <Input
@@ -221,30 +233,69 @@ const Form = ({
             </ChakraSelect>
           </FormControl>
           <FormControl>
-            <FormLabel>Drop off time</FormLabel>
-            <Input
-              type="number"
-              placeholder="Time kids can show up"
-              value={formState.dropOff || ""}
-              onChange={(e) =>
-                dispatch({ type: "DropOff", payload: e.target.value })
-              }
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Pickup time</FormLabel>
-            <Input
-              type="number"
-              placeholder="Time the camp ends"
-              value={formState.pickUp || ""}
-              onChange={(e) =>
-                dispatch({ type: "pickUp", payload: e.target.value })
-              }
-            />
+            <FormLabel>price</FormLabel>
+            <InputGroup size="md">
+              <InputLeftAddon> $ </InputLeftAddon>
+              <Input
+                type="number"
+                placeholder="Time kids can show up"
+                value={formState.price || ""}
+                onChange={(e) =>
+                  dispatch({ type: "price", payload: e.target.value })
+                }
+              />
+            </InputGroup>
           </FormControl>
         </Stack>
       </Stack>
-
+      <Stack pt="10" direction={{ sm: "column", md: "column", lg: "row" }}>
+        <FormControl>
+          <FormLabel>Drop off time</FormLabel>
+          <Input
+            type="time"
+            placeholder="Time kids can show up"
+            value={formState.dropOff || ""}
+            onChange={(e) =>
+              dispatch({ type: "dropOff", payload: e.target.value })
+            }
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Pickup time</FormLabel>
+          <Input
+            type="time"
+            placeholder="Time the camp ends"
+            value={formState.pickUp || ""}
+            onChange={(e) =>
+              dispatch({ type: "pickUp", payload: e.target.value })
+            }
+          />
+        </FormControl>
+      </Stack>
+      <Stack pt="10" direction={{ sm: "column", md: "column", lg: "row" }}>
+        <FormControl>
+          <FormLabel>Start Date</FormLabel>
+          <Input
+            type="date"
+            placeholder="Time kids can show up"
+            value={formState.dateStart}
+            onChange={(e) =>
+              dispatch({ type: "dateStart", payload: e.target.value })
+            }
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>End Date</FormLabel>
+          <Input
+            type="date"
+            placeholder="Time the camp ends"
+            value={formState.dateEnd}
+            onChange={(e) =>
+              dispatch({ type: "dateEnd", payload: e.target.value })
+            }
+          />
+        </FormControl>
+      </Stack>
       <FormControl my="5" border="1px" rounded="md" p="3">
         <FormLabel>Address *</FormLabel>
         <Text>Please search your address and select it from the results</Text>

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Camp" ALTER COLUMN "price" SET DATA TYPE TEXT;

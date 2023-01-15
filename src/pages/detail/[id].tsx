@@ -25,16 +25,14 @@ const Detail = () => {
 
   const campEditData = {
     ...campData,
-    image: campData?.image,
-    lat: String(campData?.lat),
-    lng: String(campData?.lng),
+    images: campData?.image,
+    lat: campData?.lat,
+    lng: campData?.lng,
     email: campData?.email || "",
     facebook: campData?.facebook || "",
     instagram: campData?.instagram || "",
     link: campData?.link || "",
     place_id: campData?.link || "",
-    userId: Number(sessionData?.user?.id),
-    authorName: sessionData?.user?.name as string,
   };
 
   return (

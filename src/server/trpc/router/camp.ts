@@ -15,60 +15,29 @@ export const campRouter = router({
   getCamp: publicProcedure.input(z.object({ campId: z.string() })).query(({ input, ctx }) => {
     return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true, author: true, favorites: true } })
   }),
-  addCamp: publicProcedure.input(campSchema).mutation(({ input, ctx }) => {
-    const { title, address, brief, dropOff, pickUp, status, email, website, link, lat, lng, description, facebook, instagram, quadrant, tags, userId, authorName, ages, phone } = input
+  addCamp: protectedProcedure.input(campSchema).mutation(({ input, ctx }) => {
+    const { name, id } = ctx.session.user
     return ctx.prisma.camp.create({
       data: {
-        title,
-        address,
-        ages,
-        brief,
-        dropOff,
-        pickUp,
-        status,
-        website,
-        email,
-        link,
-        lat: parseFloat(lat),
-        lng: parseFloat(lng),
-        description,
-        facebook,
-        instagram,
-        quadrant,
-        tags,
-        phone,
+        ...input,
+        lat: input.lat,
+        lng: input.lng,
         author: {
           create: {
-            authorName,
-            campName: title,
-            userId
+            authorName: name as string,
+            campName: input.title,
+            userId: Number(id)
           }
         }
       }
     })
   }),
-  update: publicProcedure.input(campSchema).mutation(({ input, ctx }) => {
-    const { title, brief, dropOff, pickUp, status, address, email, website, link, description, facebook, instagram, quadrant, tags, id, lat, lng, ages, phone } = input
+  update: protectedProcedure.input(campSchema).mutation(({ input, ctx }) => {
+    const { id } = input
+
     return ctx.prisma.camp.update({
       where: { id: id }, data: {
-        title,
-        address,
-        brief,
-        dropOff,
-        pickUp,
-        status,
-        ages,
-        website,
-        phone,
-        email,
-        link,
-        lat: parseFloat(lat),
-        lng: parseFloat(lng),
-        description,
-        facebook,
-        instagram,
-        quadrant,
-        tags,
+        ...input,
       }
     })
   }),

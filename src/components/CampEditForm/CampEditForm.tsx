@@ -10,25 +10,33 @@ import Form from "./Form";
 import { useAlert } from "../../context/AlertContext";
 
 const initialState: CampData = {
-  lat: "",
-  lng: "",
+  lat: 0,
+  lng: 0,
   title: "",
   address: "",
   website: "",
-  userId: 0,
-  authorName: "",
   email: "",
   description: "",
-  image: [],
   tags: [],
   ages: [],
   quadrant: [],
   status: "UNKNOWN",
+  brief: "",
+  contactName: "",
+  link: "",
+  phone: "",
+  facebook: "",
+  instagram: "",
+  pickUp: "",
+  dropOff: "",
+  price: "0",
+  dateStart: "",
+  dateEnd: "",
 };
 
 const reducer = (
   prevState: CampData,
-  action: { type: string; payload: string | string[] }
+  action: { type: string; payload: string | string[] | number }
 ) => {
   const { type, payload } = action;
   if (type !== "reset") {
@@ -149,11 +157,7 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
     if (isEdit && validate.success && campId) {
       updateCamp({ ...formState, id: campId });
     } else if (validate.success && session && session.user) {
-      addCamp({
-        ...formState,
-        userId: Number(session.user.id),
-        authorName: session.user.name as string,
-      });
+      addCamp(formState);
     }
   };
 

@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 
 import RenderTree from "../../components/RenderTree";
 import CardDetail from "../../components/CardDetail";
-import type { CampDetail } from "../../components/CardDetail/CardDetail";
+import type { CampDetailFromAPI } from "../../types/camp";
 
 const Show = () => {
   const router = useRouter();
@@ -29,7 +29,7 @@ const Show = () => {
       finalRender={
         <CardDetail
           onBack={() => router.back()}
-          campData={campData as unknown as CampDetail}
+          campData={campData as unknown as CampDetailFromAPI}
         />
       }
     />
