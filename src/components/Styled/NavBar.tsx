@@ -51,13 +51,13 @@ export default function Navbar() {
   const { data: sessionData } = useSession();
 
   return (
-    <Box
-      bg={useColorModeValue("white", "gray.900")}
-      px={2}
-      // borderBottom="1px solid #EDF2F7"
-      shadow="lg"
-    >
-      <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+    <Box bg={useColorModeValue("white", "gray.900")} px={2} shadow="lg">
+      <Flex
+        h={16}
+        px={5}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+      >
         <IconButton
           size={"md"}
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}

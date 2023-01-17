@@ -3,6 +3,9 @@ import {
   Box,
   Button,
   Center,
+  Container,
+  Divider,
+  Flex,
   Heading,
   Image,
   Stack,
@@ -122,190 +125,288 @@ function CardDetail({ onBack, campData }: Props) {
   const formatAges = getFormattedAges(ages);
 
   return (
-    <Stack spacing={3} p="3">
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        borderBottom="1px"
-        paddingBottom="2"
-        borderColor="gray.300"
-      >
-        <Button onClick={onBack}>
-          <BiArrowBack /> Back
-        </Button>
-        <Button
-          variant="ghost"
-          onClick={handleFavoriteClick}
-          isLoading={isLoadingAddFav || isLoadingRemoveFav}
-        >
-          {isFav ? <AiFillHeart size="md" /> : <AiOutlineHeart size="md" />}
-        </Button>
-      </Stack>
-      <Center paddingTop="2">
-        <Heading>{title}</Heading>
-      </Center>
-      <Center>
+    <Box p="5">
+      <Center w="100%">
         {image?.map((img) => (
-          <Image key={img.id} src={img.src} alt="image of camp" maxH="200px" />
+          <Image
+            fit="fill"
+            key={img.id}
+            src={img.src}
+            alt="image of camp"
+            maxH="300px"
+          />
         ))}
       </Center>
-      <Box>
-        <Text fontWeight="bold">Brief description:</Text>
-        <Text>{brief}</Text>
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Description:</Text>
-        <Text>{description}</Text>
-      </Box>
-
-      <Box>
-        <Text fontWeight="bold">Address:</Text>
-        <Text>{address}</Text>
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Website:</Text>
-        {website && (
-          <a
-            href={`https://${removeHttp(website)}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Text color="blue.600" cursor="pointer">
-              {`https://${removeHttp(website)}`}
-            </Text>
-          </a>
-        )}
-        {!website && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Email:</Text>
-        {email && (
-          <a href={`mailto:${email}`} target="_blank" rel="noreferrer">
-            <Text color="blue.600" cursor="pointer">
-              {email}
-            </Text>
-          </a>
-        )}
-        {!email && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Phone:</Text>
-        {phone && (
-          <a href={`mailto:${phone}`} target="_blank" rel="noreferrer">
-            <Text color="blue.600" cursor="pointer">
-              {phone}
-            </Text>
-          </a>
-        )}
-        {!phone && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Tags:</Text>
-        {tags && (
-          <Text color="blue.600" cursor="pointer">
-            {tags.map((tag) => (
-              <Badge key={`tag-${tag}`}>{tag}</Badge>
-            ))}
-          </Text>
-        )}
-        {!tags && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Status:</Text>
-        <Text color="blue.600" cursor="pointer">
-          <Badge key={`tag-${status}}`}>{status}</Badge>
-        </Text>
-        {!tags && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Age Range:</Text>
-        {ages && (
-          <Text color="blue.600" cursor="pointer">
-            {formatAges.map((age) => (
-              <Badge mx="3" key={`age-${age}`}>
-                {age}
-              </Badge>
-            ))}
-          </Text>
-        )}
-        {!ages && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Price:</Text>
-        <Text>{price}</Text>
-        {!price && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Contact Person:</Text>
-        <Text>{contactName}</Text>
-        {!contactName && <Text>Not Provided</Text>}
-      </Box>
-
-      <Box>
-        <Text fontWeight="bold">Start Date:</Text>
-        <Text>{dateStart}</Text>
-        {!dateStart && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">End Date:</Text>
-        <Text>{dateEnd}</Text>
-        {!dateEnd && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Drop Off Time:</Text>
-        <Text>{dropOff}</Text>
-        {!dropOff && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Pick Up Time:</Text>
-        <Text>{pickUp}</Text>
-        {!pickUp && <Text>Not Provided</Text>}
-      </Box>
-      <Box>
-        <Text fontWeight="bold">Quadrant:</Text>
-        {quadrant && (
-          <Text color="blue.600" cursor="pointer">
-            {formatQuadrant.map((quad) => (
-              <Badge mx="3" key={`quad-${quad}`}>
-                {quad}
-              </Badge>
-            ))}
-          </Text>
-        )}
-        {!quadrant && <Text>Not Provided</Text>}
-      </Box>
-
-      <Stack spacing={4}>
-        <Box>
-          <Text fontWeight="bold">favorites: #{favorites.length}</Text>
-        </Box>
-        <Box>
-          <Text fontWeight="bold">This camp posting was created by:</Text>
-          <Text>{authorName ? authorName : "Page administrator"}</Text>
-        </Box>
-        <Text fontWeight="bold">Social Media:</Text>
-        <Stack direction="row">
-          {facebook && (
-            <a href={facebook} target="_blank" rel="noreferrer">
-              <Button colorScheme="facebook">
-                <BsFacebook />
-              </Button>
-            </a>
+      <Container maxW={["100%", "100%", "80%"]} mt="3">
+        <Stack
+          direction={{ sm: "column", md: "column", lg: "row" }}
+          justifyContent="space-between"
+          borderBottom="1px"
+          paddingBottom="2"
+          borderColor="gray.300"
+        >
+          <Button onClick={onBack}>
+            <BiArrowBack /> Back
+          </Button>
+          {userData?.role === "ADMIN" && (
+            <Button
+              colorScheme="facebook"
+              onClick={() => router.push(`/detail/${id}`)}
+            >
+              Edit
+            </Button>
           )}
-          {instagram && (
-            <a href={instagram} target="_blank" rel="noreferrer">
-              <Button colorScheme="twitter">
-                <ImInstagram />
-              </Button>
-            </a>
-          )}
-          {!facebook && !instagram && <Text>Not Provided</Text>}
         </Stack>
-      </Stack>
-      {userData?.role === "ADMIN" && (
-        <Button onClick={() => router.push(`/detail/${id}`)}>Edit</Button>
-      )}
-    </Stack>
+
+        <Stack direction={{ sm: "column", md: "column", lg: "row" }} pt="10">
+          {/* //Left  */}
+          <Stack spacing="5" w={{ sm: "100%", md: "100%", lg: "50%" }}>
+            <Heading size="2xl">{title}</Heading>
+            <Box>
+              <Text>{brief}</Text>
+            </Box>
+            <Box>
+              <Text fontWeight="extrabold" fontSize="lg">
+                Favorited : {favorites.length}
+              </Text>
+            </Box>
+
+            <Box>
+              {tags && (
+                <Text color="blue.600" cursor="pointer">
+                  {tags.map((tag) => (
+                    <Badge key={`tag-${tag}`}>{tag}</Badge>
+                  ))}
+                </Text>
+              )}
+              {!tags && <Text>Not Provided</Text>}
+            </Box>
+            <Stack spacing={5}>
+              <Stack direction="row">
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Address
+                  </Text>
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURI(
+                      campData.address
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Text color="blue.600" cursor="pointer">
+                      {address}
+                    </Text>
+                  </a>
+                </Box>
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Website
+                  </Text>
+                  {website && (
+                    <a
+                      href={`https://${removeHttp(website)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Text color="blue.600" cursor="pointer">
+                        {`https://${removeHttp(website)}`}
+                      </Text>
+                    </a>
+                  )}
+                  {!website && <Text>Not Provided</Text>}
+                </Box>
+              </Stack>
+              <Stack direction="row">
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Email
+                  </Text>
+                  {email && (
+                    <a
+                      href={`mailto:${email}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Text color="blue.600" cursor="pointer">
+                        {email}
+                      </Text>
+                    </a>
+                  )}
+                  {!email && <Text>Not Provided</Text>}
+                </Box>
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Phone
+                  </Text>
+                  {phone && (
+                    <a
+                      href={`mailto:${phone}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Text color="blue.600" cursor="pointer">
+                        {phone}
+                      </Text>
+                    </a>
+                  )}
+                  {!phone && <Text>Not Provided</Text>}
+                </Box>
+              </Stack>
+            </Stack>
+
+            <Box>
+              <Text fontWeight="extrabold" fontSize="lg">
+                Contact Person
+              </Text>
+              <Text>{contactName}</Text>
+              {!contactName && <Text>Not Provided</Text>}
+            </Box>
+          </Stack>
+
+          {/* //Right  */}
+          <Stack w={{ sm: "100%", md: "100%", lg: "50%" }} spacing={5}>
+            <Stack direction="row" w="100%" justifyContent="space-between">
+              <Box>
+                <Text fontWeight="extrabold" fontSize="3xl">
+                  {price ? `$${price}` : "No Price Provided"}
+                </Text>
+              </Box>
+              <Button
+                variant="ghost"
+                onClick={handleFavoriteClick}
+                isLoading={isLoadingAddFav || isLoadingRemoveFav}
+              >
+                {isFav ? (
+                  <AiFillHeart size="md" />
+                ) : (
+                  <AiOutlineHeart size="md" />
+                )}
+              </Button>
+            </Stack>
+            <Divider />
+
+            <Stack w="100%" direction="column">
+              <Stack direction="row" border="1px" w="100%" p="2">
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Start Date
+                  </Text>
+                  <Text>{dateStart}</Text>
+                  {!dateStart && <Text>Not Provided</Text>}
+                </Box>
+                <Divider orientation="vertical" />
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    End Date
+                  </Text>
+                  <Text>{dateEnd}</Text>
+                  {!dateEnd && <Text>Not Provided</Text>}
+                </Box>
+              </Stack>
+              <Stack direction="row" border="1px" w="100%" p="2">
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Pick Up Time
+                  </Text>
+                  <Text>{pickUp}</Text>
+                  {!pickUp && <Text>Not Provided</Text>}
+                </Box>
+
+                <Divider orientation="vertical" />
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Drop Off Time
+                  </Text>
+                  <Text>{dropOff}</Text>
+                  {!dropOff && <Text>Not Provided</Text>}
+                </Box>
+              </Stack>
+            </Stack>
+            <Box>
+              <Text fontWeight="extrabold" fontSize="lg">
+                Age Range
+              </Text>
+              <Flex flexWrap="wrap" py="2">
+                {ages &&
+                  formatAges.map((age) => (
+                    <Badge mt="2" mr="2" key={`age-${age}`}>
+                      {age}
+                    </Badge>
+                  ))}
+                {!ages && <Text>Not Provided</Text>}
+              </Flex>
+            </Box>
+            <Stack direction="row">
+              <Box w="50%">
+                <Text fontWeight="extrabold" fontSize="lg">
+                  Status
+                </Text>
+                <Text color="blue.600" cursor="pointer">
+                  <Badge key={`tag-${status}}`}>{status}</Badge>
+                </Text>
+              </Box>
+
+              <Box w="50%">
+                <Text fontWeight="extrabold" fontSize="lg">
+                  Quadrant
+                </Text>
+                {quadrant &&
+                  formatQuadrant.map((quad) => (
+                    <Badge mx="3" key={`quad-${quad}`}>
+                      {quad}
+                    </Badge>
+                  ))}
+                {!quadrant && <Text>Not Provided</Text>}
+              </Box>
+            </Stack>
+            <Box>
+              <Stack direction="row">
+                {facebook && (
+                  <a href={facebook} target="_blank" rel="noreferrer">
+                    <Button colorScheme="facebook">
+                      <BsFacebook />
+                    </Button>
+                  </a>
+                )}
+                {instagram && (
+                  <a href={instagram} target="_blank" rel="noreferrer">
+                    <Button colorScheme="twitter">
+                      <ImInstagram />
+                    </Button>
+                  </a>
+                )}
+              </Stack>
+            </Box>
+          </Stack>
+        </Stack>
+        <Box my="5">
+          <Text fontWeight="extrabold" fontSize="lg">
+            Description
+          </Text>
+          <Text>{description}</Text>
+        </Box>
+        <Stack
+          spacing={4}
+          w="100%"
+          border="1px"
+          p="5"
+          mt="5"
+          bg="gray.100"
+          borderColor="gray.300"
+          rounded="md"
+        >
+          <Flex>
+            <Text fontWeight="extrabold" fontSize="lg" mr="5">
+              This camp posting was created by:{" "}
+            </Text>
+            <Text>
+              {authorName ? authorName : "Portland Kid Camps site admin"}
+            </Text>
+          </Flex>
+        </Stack>
+      </Container>
+    </Box>
   );
 }
 

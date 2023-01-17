@@ -1,9 +1,10 @@
 import React from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { Box, Text, Stack, Button, FormLabel } from "@chakra-ui/react";
+import { Box, Text, Stack, Button, FormLabel, Icon } from "@chakra-ui/react";
 import type { MultiSelectOption } from "../../types/camp";
 import { ageOptions, quadrantsOptions } from "../../types/camp";
+import { AiOutlineClose } from "react-icons/ai";
 
 type Props = {
   filterOptions: Set<string>;
@@ -51,8 +52,8 @@ function FilterBox({
         <Box>
           <Text fontWeight="bold">Filters options</Text>
         </Box>
-        <Button onClick={clearAll} colorScheme="linkedin">
-          Clear All
+        <Button onClick={clearAll} rounded="2xl" colorScheme="linkedin">
+          <Icon as={AiOutlineClose} size="md" />
         </Button>
       </Stack>
 

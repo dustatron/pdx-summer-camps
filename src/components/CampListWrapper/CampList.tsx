@@ -1,11 +1,22 @@
 import { TriangleDownIcon } from "@chakra-ui/icons";
-import { Input, Button, Box, Stack, Flex, Center } from "@chakra-ui/react";
+import {
+  Input,
+  Button,
+  Box,
+  Stack,
+  Flex,
+  Center,
+  InputGroup,
+  InputRightElement,
+  Icon,
+} from "@chakra-ui/react";
 import type { Camp } from "@prisma/client";
 import type { MultiSelectOption } from "../../types/camp";
 import type { CardDetails } from "../CampCard";
 import CampCard from "../CampCard";
 import FilterBox from "../FilterBox";
 import type { Action, FilterState } from "./type";
+import { AiOutlineClose } from "react-icons/ai";
 
 type Props = {
   selectCampFromList: (campId: string) => void;
@@ -40,34 +51,7 @@ export default function CampList({
       <>
         {!isMobile && (
           <>
-            <Stack direction="row" p="2">
-              <Input
-                value={campNameFilter}
-                onChange={(e) =>
-                  dispatch({
-                    type: "setCampNameFilter",
-                    payload: e.target.value,
-                  })
-                }
-                type="text"
-                placeholder="Camp Name"
-                bg="white"
-              />
-              <Button
-                onClick={() =>
-                  dispatch({ type: "setCampNameFilter", payload: "" })
-                }
-                colorScheme="blue"
-              >
-                Clear
-              </Button>
-            </Stack>
-            <Stack
-              direction="row"
-              textAlign="center"
-              justifyContent="space-between"
-              px="10"
-            >
+            <Stack direction="row" py="2" px="10">
               <Button
                 variant="ghost"
                 onClick={() => {
@@ -79,8 +63,40 @@ export default function CampList({
                   transform={isFilterShowing ? "" : "rotate(-90deg)"}
                 />
               </Button>
-              <Box border="1px" rounded="md" px="3" py="1">
-                {filteredCampList?.length} Camps showing
+              <InputGroup size="md">
+                <Input
+                  placeholder="Search by camp name"
+                  value={filterState.campNameFilter}
+                  onChange={(e) =>
+                    dispatch({
+                      type: "setCampNameFilter",
+                      payload: e.target.value,
+                    })
+                  }
+                />
+                <InputRightElement width="4rem">
+                  {filterState.campNameFilter && (
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={() =>
+                        dispatch({ type: "setCampNameFilter", payload: "" })
+                      }
+                    >
+                      <Icon as={AiOutlineClose} size="md" />
+                    </Button>
+                  )}
+                </InputRightElement>
+              </InputGroup>
+              <Box
+                w="22%"
+                border="1px"
+                rounded="md"
+                px="3"
+                py="1"
+                textAlign="center"
+              >
+                {filteredCampList?.length} showing
               </Box>
             </Stack>
           </>

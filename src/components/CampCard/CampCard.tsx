@@ -123,7 +123,8 @@ const CampCard = ({
                 rounded={"full"}
                 onClick={() => {
                   onSelect(id);
-                  showDetails();
+                  router.push(`/show/${details.id}`);
+                  // showDetails();
                 }}
                 _focus={{
                   bg: "gray.200",

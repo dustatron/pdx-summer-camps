@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Form from "./Form";
 import { useAlert } from "../../context/AlertContext";
+import { format } from "path";
 
 const initialState: CampData = {
   lat: 0,
@@ -143,7 +144,12 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validate = campSchema.safeParse(formState);
+    const cleanFormData = Object.fromEntries(
+      Object.entries(formState).filter(([_, v]) => v != null)
+    ) as CampData;
+
+    const validate = campSchema.safeParse(cleanFormData);
+    console.log("validate", validate);
 
     if (!validate.success) {
       const error = validate.error.issues[0];
@@ -155,9 +161,9 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
     }
 
     if (isEdit && validate.success && campId) {
-      updateCamp({ ...formState, id: campId });
+      updateCamp({ ...cleanFormData, id: campId });
     } else if (validate.success && session && session.user) {
-      addCamp(formState);
+      addCamp(cleanFormData);
     }
   };
 

@@ -15,11 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import type { Camp } from "@prisma/client";
-import type {
-  CampData,
-  CampDetailFromAPI,
-  MultiSelectOption,
-} from "../../types/camp";
+import type { CampDetailFromAPI, MultiSelectOption } from "../../types/camp";
 import { filterCampList } from "../../utils/filterCampList";
 import CampList from "./CampList";
 import { getTagOptions, nextCamp } from "./utils";
