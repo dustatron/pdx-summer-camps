@@ -126,19 +126,17 @@ function CardDetail({ onBack, campData }: Props) {
   const formatAges = getFormattedAges(ages);
 
   return (
-    <Box p="5">
-      <Center w="100%">
-        {image?.map((img) => (
-          <Image
-            fit="fill"
-            key={img.id}
-            src={img.src}
-            alt="image of camp"
-            maxH="300px"
-          />
-        ))}
+    <Box>
+      <Center w="100%" maxH="350px" overflow="hidden">
+        <Image objectFit="fill" src={image[0]?.src} alt="image of camp" />
       </Center>
-      <Container maxW={{ sm: "100%", md: "100%", lg: "80%" }} mt="3">
+      <Container
+        bg="white"
+        p="3"
+        shadow="lg"
+        rounded="md"
+        maxW={{ sm: "100%", md: "100%", lg: "80%" }}
+      >
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -154,6 +152,7 @@ function CardDetail({ onBack, campData }: Props) {
             <Button
               colorScheme="facebook"
               onClick={() => router.push(`/detail/${id}`)}
+              w="100px"
             >
               Edit
             </Button>
@@ -164,14 +163,14 @@ function CardDetail({ onBack, campData }: Props) {
             isLoading={isLoadingAddFav || isLoadingRemoveFav}
           >
             {isFav ? (
-              <Icon as={AiFillHeart} h="25px" w="25px" />
+              <Icon as={AiFillHeart} h="40px" w="40px" />
             ) : (
-              <Icon as={AiOutlineHeart} h="25px" w="25px" />
+              <Icon as={AiOutlineHeart} h="40px" w="40px" />
             )}
           </Button>
         </Stack>
 
-        <Stack direction={{ sm: "column", md: "column", lg: "column" }} pt="10">
+        <Stack direction={{ sm: "column", md: "column", lg: "row" }} pt="10">
           {/* //Left  */}
           <Stack spacing="5" w={{ sm: "100%", md: "100%", lg: "50%" }}>
             <Heading size="2xl">{title}</Heading>

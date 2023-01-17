@@ -119,19 +119,14 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
   const { mutate: updateCamp, status: updateStatus } =
     trpc.camps.update.useMutation({
       onSuccess: () => {
-        const history = window.history.state.url;
-
         addAlert({
           status: "success",
           title: "Success",
           body: "Camp details updated",
           autoClose: true,
         });
-        if (history === "/detail/[id]") {
-          router.push("/");
-        } else {
-          router.push("/your-camps");
-        }
+
+        router.push(`/show/${campData?.id}`);
       },
       onError: () => {
         addAlert({
@@ -169,15 +164,15 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
 
   return (
     <Container
-      marginTop="2rem"
-      maxW={{ dm: "100%", md: "100%", lg: "80%" }}
       bg="white"
+      marginTop="2rem"
       py="10"
       rounded="md"
       centerContent
       border="2px"
       borderColor="gray.100"
       boxShadow="2xl"
+      maxW={{ sm: "100%", md: "100%", lg: "80%" }}
     >
       <Heading textAlign="center">
         {isEdit ? "Edit Camp Details" : "New Camp"}
