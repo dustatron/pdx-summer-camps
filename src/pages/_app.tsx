@@ -7,6 +7,7 @@ import theme from "../styles/theme/theme";
 import AlertContextProvider from "../context/AlertContext";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { trpc } from "../utils/trpc";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 import "../styles/globals.css";
 
 import PageLayout from "../components/Styled/PageLayout";
@@ -21,6 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <MapProvider>
           <SessionProvider session={session}>
             <PageLayout>
+              <GoogleAnalytics trackPageViews />
               <Component {...pageProps} />
             </PageLayout>
           </SessionProvider>
