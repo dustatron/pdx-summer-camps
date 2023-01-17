@@ -349,7 +349,7 @@ const Form = ({
       </FormControl>
       <Box bg="black" h="1px" mt="25px" mb="25px" />
 
-      <Stack direction="row" py="4">
+      <Stack direction={{ sm: "column", lg: "row" }} py="4">
         <FormControl>
           <FormLabel>Facebook</FormLabel>
           <Input

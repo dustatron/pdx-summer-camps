@@ -170,7 +170,7 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
   return (
     <Container
       marginTop="2rem"
-      maxW={["100%", "100%", "80%"]}
+      maxW={{ dm: "100%", md: "100%", lg: "80%" }}
       bg="white"
       py="10"
       rounded="md"
@@ -182,7 +182,7 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
       <Heading textAlign="center">
         {isEdit ? "Edit Camp Details" : "New Camp"}
       </Heading>
-      <Box w="80%" marginTop={10}>
+      <Box w={{ sm: "100%", md: "100%", lg: "80%" }} marginTop={10}>
         <Form
           deleteCamp={deleteCamp}
           dispatch={dispatch}

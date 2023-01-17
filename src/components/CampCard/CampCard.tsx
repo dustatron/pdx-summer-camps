@@ -1,5 +1,4 @@
 import React from "react";
-// import Image from "next/image";
 import {
   Button,
   Stack,
@@ -12,7 +11,6 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import type { Camp } from "@prisma/client";
 import removeHttp from "../../utils/http";
 
 export type CardDetails = {

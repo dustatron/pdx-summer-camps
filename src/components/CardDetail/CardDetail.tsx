@@ -7,6 +7,7 @@ import {
   Divider,
   Flex,
   Heading,
+  Icon,
   Image,
   Stack,
   Text,
@@ -137,13 +138,14 @@ function CardDetail({ onBack, campData }: Props) {
           />
         ))}
       </Center>
-      <Container maxW={["100%", "100%", "80%"]} mt="3">
+      <Container maxW={{ sm: "100%", md: "100%", lg: "80%" }} mt="3">
         <Stack
-          direction={{ sm: "column", md: "column", lg: "row" }}
+          direction="row"
           justifyContent="space-between"
           borderBottom="1px"
           paddingBottom="2"
           borderColor="gray.300"
+          w="100%"
         >
           <Button onClick={onBack}>
             <BiArrowBack /> Back
@@ -156,9 +158,20 @@ function CardDetail({ onBack, campData }: Props) {
               Edit
             </Button>
           )}
+          <Button
+            variant="ghost"
+            onClick={handleFavoriteClick}
+            isLoading={isLoadingAddFav || isLoadingRemoveFav}
+          >
+            {isFav ? (
+              <Icon as={AiFillHeart} h="25px" w="25px" />
+            ) : (
+              <Icon as={AiOutlineHeart} h="25px" w="25px" />
+            )}
+          </Button>
         </Stack>
 
-        <Stack direction={{ sm: "column", md: "column", lg: "row" }} pt="10">
+        <Stack direction={{ sm: "column", md: "column", lg: "column" }} pt="10">
           {/* //Left  */}
           <Stack spacing="5" w={{ sm: "100%", md: "100%", lg: "50%" }}>
             <Heading size="2xl">{title}</Heading>
@@ -182,8 +195,8 @@ function CardDetail({ onBack, campData }: Props) {
               {!tags && <Text>Not Provided</Text>}
             </Box>
             <Stack spacing={5}>
-              <Stack direction="row">
-                <Box w="50%">
+              <Stack direction={{ sm: "column", md: "column", lg: "row" }}>
+                <Box w={{ md: "100%", lg: "50%" }}>
                   <Text fontWeight="extrabold" fontSize="lg">
                     Address
                   </Text>
@@ -199,7 +212,7 @@ function CardDetail({ onBack, campData }: Props) {
                     </Text>
                   </a>
                 </Box>
-                <Box w="50%">
+                <Box w={{ md: "100%", lg: "50%" }}>
                   <Text fontWeight="extrabold" fontSize="lg">
                     Website
                   </Text>
@@ -217,8 +230,8 @@ function CardDetail({ onBack, campData }: Props) {
                   {!website && <Text>Not Provided</Text>}
                 </Box>
               </Stack>
-              <Stack direction="row">
-                <Box w="50%">
+              <Stack direction={{ sm: "column", md: "column", lg: "row" }}>
+                <Box w={{ md: "100%", lg: "50%" }}>
                   <Text fontWeight="extrabold" fontSize="lg">
                     Email
                   </Text>
@@ -235,7 +248,7 @@ function CardDetail({ onBack, campData }: Props) {
                   )}
                   {!email && <Text>Not Provided</Text>}
                 </Box>
-                <Box w="50%">
+                <Box w={{ md: "100%", lg: "50%" }}>
                   <Text fontWeight="extrabold" fontSize="lg">
                     Phone
                   </Text>
@@ -272,17 +285,6 @@ function CardDetail({ onBack, campData }: Props) {
                   {price ? `$${price}` : "No Price Provided"}
                 </Text>
               </Box>
-              <Button
-                variant="ghost"
-                onClick={handleFavoriteClick}
-                isLoading={isLoadingAddFav || isLoadingRemoveFav}
-              >
-                {isFav ? (
-                  <AiFillHeart size="md" />
-                ) : (
-                  <AiOutlineHeart size="md" />
-                )}
-              </Button>
             </Stack>
             <Divider />
 
