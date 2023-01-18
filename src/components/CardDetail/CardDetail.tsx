@@ -310,19 +310,18 @@ function CardDetail({ onBack, campData }: Props) {
               <Stack direction="row" border="1px" w="100%" p="2">
                 <Box w="50%">
                   <Text fontWeight="extrabold" fontSize="lg">
-                    Pick Up Time
-                  </Text>
-                  <Text>{pickUp}</Text>
-                  {!pickUp && <Text>Not Provided</Text>}
-                </Box>
-
-                <Divider orientation="vertical" />
-                <Box w="50%">
-                  <Text fontWeight="extrabold" fontSize="lg">
                     Drop Off Time
                   </Text>
                   <Text>{dropOff}</Text>
                   {!dropOff && <Text>Not Provided</Text>}
+                </Box>
+                <Divider orientation="vertical" />
+                <Box w="50%">
+                  <Text fontWeight="extrabold" fontSize="lg">
+                    Pick Up Time
+                  </Text>
+                  <Text>{pickUp}</Text>
+                  {!pickUp && <Text>Not Provided</Text>}
                 </Box>
               </Stack>
             </Stack>

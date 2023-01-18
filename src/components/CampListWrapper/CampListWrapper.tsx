@@ -63,7 +63,6 @@ function CampListWrapper() {
   const canRender = campData && campStatus === "success";
 
   const tagOptions = getTagOptions(campData);
-  // const screenHight = "calc(92vh)";
   return (
     <Stack spacing={0} direction={isMobile ? "column" : "row"} h={"100%"}>
       {/* Map */}
