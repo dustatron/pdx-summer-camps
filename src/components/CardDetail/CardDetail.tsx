@@ -25,6 +25,7 @@ import { AgeValues, QuadrantValues } from "../../types/camp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAlert } from "../../context/AlertContext";
 import removeHttp from "../../utils/http";
+import formatDate from "../../utils/formatDate";
 
 type Favorite = { campId: string; userId: number; id: string };
 
@@ -294,7 +295,7 @@ function CardDetail({ onBack, campData }: Props) {
                   <Text fontWeight="extrabold" fontSize="lg">
                     Start Date
                   </Text>
-                  <Text>{dateStart}</Text>
+                  <Text>{formatDate(dateStart)}</Text>
                   {!dateStart && <Text>Not Provided</Text>}
                 </Box>
                 <Divider orientation="vertical" />
@@ -302,7 +303,7 @@ function CardDetail({ onBack, campData }: Props) {
                   <Text fontWeight="extrabold" fontSize="lg">
                     End Date
                   </Text>
-                  <Text>{dateEnd}</Text>
+                  <Text>{formatDate(dateEnd)}</Text>
                   {!dateEnd && <Text>Not Provided</Text>}
                 </Box>
               </Stack>
