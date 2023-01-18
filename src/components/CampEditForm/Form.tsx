@@ -14,6 +14,7 @@ import {
   InputGroup,
   InputLeftAddon,
 } from "@chakra-ui/react";
+import "react-quill/dist/quill.snow.css";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import {
@@ -27,6 +28,9 @@ import { useRouter } from "next/router";
 import AddImage from "./AddImage";
 import type { Feature } from "./AddressSelector";
 import AddressSelector from "./AddressSelector";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 type Status = "error" | "success" | "loading" | "idle";
 
 type Props = {
@@ -335,16 +339,15 @@ const Form = ({
               </Text>
             )}
           </Flex>
-          <Textarea
-            height="4rem"
-            value={formState.description || ""}
-            placeholder="Full Address"
-            maxLength={2500}
-            minH="15rem"
-            onChange={(e) =>
-              dispatch({ type: "description", payload: e.target.value })
-            }
-          />
+          <Box h="500px">
+            <ReactQuill
+              theme="snow"
+              value={formState.description || ""}
+              onChange={(value) =>
+                dispatch({ type: "description", payload: value })
+              }
+            />
+          </Box>
         </>
       </FormControl>
       <Box bg="black" h="1px" mt="25px" mb="25px" />

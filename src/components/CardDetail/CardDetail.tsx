@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import parse from "html-react-parser";
 import { BiArrowBack } from "react-icons/bi";
 import { BsFacebook } from "react-icons/bs";
 import { ImInstagram } from "react-icons/im";
@@ -385,7 +386,7 @@ function CardDetail({ onBack, campData }: Props) {
           <Text fontWeight="extrabold" fontSize="lg">
             Description
           </Text>
-          <Text>{description}</Text>
+          <Text>{parse(description || "")}</Text>
         </Box>
         <Stack
           spacing={4}
