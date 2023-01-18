@@ -3,6 +3,7 @@ import React from "react";
 import type { FilterState } from "../CampListWrapper/type";
 import { useRouter } from "next/router";
 import type { CampDetailFromAPI } from "../../types/camp";
+import parse from "html-react-parser";
 
 type Props = {
   next: () => void;
@@ -13,6 +14,9 @@ type Props = {
 
 const CampCardMobile = ({ next, prev, selectedCamp, filterState }: Props) => {
   const router = useRouter();
+  const parsedDescription = parse(
+    selectedCamp?.description?.slice(0, 150) || ""
+  );
   return (
     <>
       {/* <Box zIndex={2000} left={1}>
@@ -73,9 +77,10 @@ const CampCardMobile = ({ next, prev, selectedCamp, filterState }: Props) => {
               {selectedCamp.brief && (
                 <Text fontSize="sm">{selectedCamp?.brief}</Text>
               )}
-              {!selectedCamp.brief && (
+              {!selectedCamp.brief && selectedCamp?.description && (
                 <Text fontSize="sm">
-                  {selectedCamp?.description?.substring(0, 100)}
+                  {parsedDescription}
+                  {selectedCamp?.description?.length > 150 ? "..." : ""}
                 </Text>
               )}
             </Box>

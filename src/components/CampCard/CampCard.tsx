@@ -10,6 +10,7 @@ import {
   Text,
   Badge,
 } from "@chakra-ui/react";
+import parse from "html-react-parser";
 import { useRouter } from "next/router";
 import removeHttp from "../../utils/http";
 
@@ -48,6 +49,8 @@ const CampCard = ({
 
   const isSelectedCamp = selectedCampId === id;
 
+  const parsedDescription = parse(description.slice(0, 150));
+
   return (
     <Center py={2} id={id} w="100%">
       <Stack
@@ -82,7 +85,7 @@ const CampCard = ({
           </Heading>
 
           <Text color={useColorModeValue("gray.700", "gray.400")} px={1}>
-            {description.slice(0, 70)} {description.length > 90 ? "..." : ""}
+            {parsedDescription} {description.length > 150 ? "..." : ""}
           </Text>
           <Text fontWeight={600} color={"gray.900"} size="sm" mb={1}>
             {address.slice(0, 40)}
