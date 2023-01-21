@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -134,26 +135,31 @@ function CardDetail({ onBack, campData }: Props) {
 
   return (
     <Box>
-      <Center w="100%" maxH="350px" overflow="hidden">
-        {image[0]?.public_id && (
-          <CldImage
-            width="1500"
-            height="400"
-            crop="fill"
-            gravity="faces"
-            src={image[0]?.public_id}
-            preserveTransformations={true}
-            alt="image of from camp"
-          />
-        )}
-      </Center>
       <Container
+        my="5"
         bg="white"
         p="3"
         shadow="lg"
         rounded="md"
         maxW={{ sm: "100%", md: "100%", lg: "80%" }}
       >
+        <Center w="100%" maxH="350px" overflow="hidden" my="2">
+          {image[0]?.public_id && (
+            <CldImage
+              width="1500"
+              height="400"
+              crop="fill"
+              gravity="faces"
+              sizes="100vw"
+              src={image[0]?.public_id}
+              preserveTransformations={true}
+              alt="image of from camp"
+            />
+          )}
+          {!image[0]?.public_id && (
+            <Image objectFit="fill" src={image[0]?.src} alt="image of camp" />
+          )}
+        </Center>
         <Stack
           direction="row"
           justifyContent="space-between"

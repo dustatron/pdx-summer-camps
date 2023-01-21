@@ -13,6 +13,7 @@ import {
 import parse from "html-react-parser";
 import { useRouter } from "next/router";
 import removeHttp from "../../utils/http";
+import { CldImage } from "next-cloudinary";
 
 export type CardDetails = {
   title: string;
@@ -22,7 +23,7 @@ export type CardDetails = {
   facebook?: string;
   instagram?: string;
   description: string;
-  image: { src: string }[];
+  image: { src: string; public_id?: string }[];
   lat: number;
   lng: number;
   id: string;
@@ -37,13 +38,7 @@ type Props = {
   isMobile?: boolean;
 };
 
-const CampCard = ({
-  details,
-  onSelect,
-  selectedCampId,
-  showDetails,
-  isMobile,
-}: Props) => {
+const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
   const { title, description, image, address, website, id, tags } = details;
   const router = useRouter();
 
@@ -66,12 +61,23 @@ const CampCard = ({
         borderColor={isSelectedCamp ? "gray.600" : ""}
       >
         <Flex flex={1} bg="gray.50" rounded="md" overflow="hidden">
-          <Image
-            objectFit="contain"
-            boxSize="100%"
-            src={(image[0] && image[0].src) || "/img-place-holder.png"}
-            alt="camp logo"
-          />
+          {image[0]?.public_id && (
+            <CldImage
+              height="250"
+              width="400"
+              crop="thumb"
+              gravity="faces"
+              src={image[0]?.public_id}
+            />
+          )}
+          {!image[0]?.public_id && image[0]?.src && (
+            <Image
+              objectFit="contain"
+              boxSize="100%"
+              src={image[0].src || "/img-place-holder.png"}
+              alt="camp logo"
+            />
+          )}
         </Flex>
         <Stack
           flex={1}
