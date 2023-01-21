@@ -37,7 +37,7 @@ export type CampData = z.input<typeof campSchema>
 
 export type CampDataToAPI = Camp
 
-export type CampDetailFromAPI = CampData & { image: { src: string, id: string, campId: string }[] } & {
+export type CampDetailFromAPI = CampData & { image: { src: string, id: string, campId: string, public_id: string, original_filename: string, folder: string, created_at: string, asset_id: string }[] } & {
   favorites: Favorite[];
 };
 

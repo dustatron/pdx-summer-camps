@@ -8,7 +8,6 @@ import {
   Flex,
   Heading,
   Icon,
-  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -26,6 +25,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAlert } from "../../context/AlertContext";
 import removeHttp from "../../utils/http";
 import formatDate from "../../utils/formatDate";
+import { CldImage } from "next-cloudinary";
 
 type Favorite = { campId: string; userId: number; id: string };
 
@@ -39,9 +39,14 @@ function CardDetail({ onBack, campData }: Props) {
   const { data: sessionData } = useSession();
   const { addAlert } = useAlert();
 
-  const { data: userData } = trpc.auth.getUser.useQuery({
-    id: Number(sessionData?.user?.id),
-  });
+  const { data: userData } = trpc.auth.getUser.useQuery(
+    {
+      id: Number(sessionData?.user?.id),
+    },
+    {
+      retry: false,
+    }
+  );
 
   const {
     title,
@@ -130,7 +135,17 @@ function CardDetail({ onBack, campData }: Props) {
   return (
     <Box>
       <Center w="100%" maxH="350px" overflow="hidden">
-        <Image objectFit="fill" src={image[0]?.src} alt="image of camp" />
+        {image[0]?.public_id && (
+          <CldImage
+            width="1500"
+            height="400"
+            crop="fill"
+            gravity="faces"
+            src={image[0]?.public_id}
+            preserveTransformations={true}
+            alt="image of from camp"
+          />
+        )}
       </Center>
       <Container
         bg="white"
