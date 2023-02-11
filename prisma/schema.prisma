@@ -11,6 +11,7 @@ datasource db {
   // Further reading:
   // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
   // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
   url      = env("DATABASE_URL")
 }
 
@@ -57,6 +58,7 @@ model User {
   accounts            Account[]
   sessions            Session[]
   camps               CampAuthor[]
+  providers           ProviderAuthor[]
   profile             Profile[]
   favorites           Favorite[]
   providerFavorites   FavoriteProvider[]
@@ -99,6 +101,7 @@ model Provider {
   brief         String?
   description   String?
   Tags          String[]
+  author        ProviderAuthor[]
   camps         Camp[] 
   image         ProviderImage[]
   favorites     FavoriteProvider[]
@@ -159,6 +162,16 @@ model ProviderImage {
   original_filename   String?
   public_id           String?
   provider            Provider   @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model ProviderAuthor {
+  id               String   @id @default(cuid())
+  providerId       String
+  userId           Int
+  providerName     String
+  authorName       String
+  provider         Provider   @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  user             User   @relation(fields: [userId], references: [id])
 }
 
 model CampAuthor {
