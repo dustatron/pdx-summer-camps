@@ -78,6 +78,30 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Provider {
+  id            String @id @default(cuid())
+  created_at    String?
+  ages          String[]
+  pickUp        String?
+  dropOff       String?
+  title         String
+  contactName   String?
+  facebook      String?
+  instagram     String?
+  address       String
+  place_id      String?
+  lat           Float
+  lng           Float
+  phone         String?
+  website       String
+  brief         String?
+  description   String?
+  Tags          String[]
+  camps         Camp[] 
+  image         ProviderImage[]
+
+}
+
 model Camp {
     id           String @id @default(cuid())
     title        String
@@ -106,6 +130,8 @@ model Camp {
     image        CampImage[]
     author       CampAuthor[]
     favorites    Favorite[]
+    providerId   String?
+    provider     Provider?  @relation(fields: [providerId], references: [id])
 }
 
 model CampImage {
@@ -119,6 +145,17 @@ model CampImage {
   public_id           String?
   camp                Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
 }
+model ProviderImage {
+  id                  String   @id @default(cuid())
+  providerId          String
+  src                 String
+  asset_id            String?
+  created_at          String?
+  folder              String?
+  original_filename   String?
+  public_id           String?
+  provider            Provider   @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
 
 model CampAuthor {
   id           String   @id @default(cuid())
@@ -131,12 +168,12 @@ model CampAuthor {
 }
 
 model Favorite {
-    id           String   @id @default(cuid())
+    id           String    @id @default(cuid())
     campId       String
     userId       Int
-    createdAt              DateTime            @default(now())
-    camp         Camp   @relation(fields: [campId], references: [id], onDelete: Cascade)
-    user         User   @relation(fields: [userId], references: [id])
+    createdAt    DateTime  @default(now())
+    camp         Camp      @relation(fields: [campId], references: [id], onDelete: Cascade)
+    user         User      @relation(fields: [userId], references: [id])
 }
 
 enum Role {
