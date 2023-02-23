@@ -1,7 +1,7 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { providerSchema } from "../../types/provider";
+import { useForm, FormProvider } from "react-hook-form";
 
 import type * as z from "zod";
 
@@ -14,66 +14,55 @@ import {
   Textarea,
   Text,
 } from "@chakra-ui/react";
+import ContactInfo from "./Steps/ContactInfo";
+import Location from "./Steps/Location";
+import Details from "./Steps/Details";
+import Preview from "./Steps/Preview";
 
 function ProviderForm() {
+  const [step, setStep] = useState(1);
   type ProviderSchema = z.infer<typeof providerSchema>;
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ProviderSchema>({
+  const methods = useForm<ProviderSchema>({
     mode: "onBlur",
     resolver: zodResolver(providerSchema),
   });
-  console.log("errors", errors);
   return (
-    <form onSubmit={handleSubmit((e) => console.log("submit", e))}>
-      <Stack
-        direction={{ sm: "column", md: "column", lg: "row" }}
-        w="100%"
-        spacing={5}
-      >
-        <FormControl>
-          <FormLabel>Camp Title *</FormLabel>
-          <Input placeholder={"Provider Title"} {...register("title")} />
-          {errors.title?.message && (
-            <Text color="red.500">{errors.title.message}</Text>
-          )}
-        </FormControl>
-        <FormControl>
-          <FormLabel>Address *</FormLabel>
-          <Input {...register("address")} />
-          {errors.address?.message && (
-            <Text color="red.500">{errors.address.message}</Text>
-          )}
-        </FormControl>
-        <FormControl>
-          <FormLabel>website *</FormLabel>
-          <Input {...register("website")} />
-          {errors.website?.message && (
-            <Text color="red.500">{errors.website.message}</Text>
-          )}
-        </FormControl>
-        <FormControl>
-          <FormLabel>Description </FormLabel>
-          <Textarea {...register("description")} />
-          {errors.description?.message && (
-            <Text color="red.500">{errors.description.message}</Text>
-          )}
-        </FormControl>
-
-        <FormControl>
-          <FormLabel>Phone*</FormLabel>
-          <Input {...register("phone")} isRequired />
-          {errors.phone?.message && (
-            <Text color="red.500">{errors.phone.message}</Text>
-          )}
-        </FormControl>
-        <Button onClick={() => reset()}>Clear</Button>
-        <Button type="submit">Submit</Button>
-      </Stack>
-    </form>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit((e) => console.log("submit", e))}>
+        <Stack
+          direction={{ sm: "column", md: "column", lg: "column" }}
+          w="100%"
+          p="5"
+          spacing={5}
+        >
+          {step === 1 && <Location />}
+          {step === 2 && <ContactInfo />}
+          {step === 3 && <Details />}
+          {step === 4 && <Preview />}
+          <Stack direction="row">
+            {step > 1 && (
+              <Button colorScheme="blue" onClick={() => setStep(step - 1)}>
+                Back
+              </Button>
+            )}
+            {step < 4 && (
+              <Button colorScheme="blue" onClick={() => setStep(step + 1)}>
+                Next
+              </Button>
+            )}
+            <Button
+              onClick={() => {
+                methods.reset();
+                setStep(1);
+              }}
+            >
+              Clear
+            </Button>
+            <Button type="submit">Submit</Button>
+          </Stack>
+        </Stack>
+      </form>
+    </FormProvider>
   );
 }
 

@@ -26,3 +26,5 @@ export const providerSchema = z.object({
   authorName: z.string().optional().nullable(),
   id: z.string().optional().nullable(),
 });
+
+export type ProviderSchema = z.infer<typeof providerSchema>;
