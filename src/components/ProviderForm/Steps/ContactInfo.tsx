@@ -19,8 +19,8 @@ const ContactInfo = () => {
     <Stack spacing={5}>
       <Heading>Provider Details</Heading>
       <FormControl>
-        <FormLabel>Camp Title *</FormLabel>
-        <Input placeholder={"Provider Title"} {...register("title")} />
+        <FormLabel>Name of organization *</FormLabel>
+        <Input {...register("title")} />
         {errors.title?.message && (
           <Text color="red.500">{errors.title.message}</Text>
         )}
@@ -47,10 +47,10 @@ const ContactInfo = () => {
         )}
       </FormControl>
       <FormControl>
-        <FormLabel>contactName*</FormLabel>
-        <Input {...register("phone")} isRequired />
-        {errors.phone?.message && (
-          <Text color="red.500">{errors.phone.message}</Text>
+        <FormLabel>Contact Name</FormLabel>
+        <Input {...register("contactName")} />
+        {errors.contactName?.message && (
+          <Text color="red.500">{errors.contactName.message}</Text>
         )}
       </FormControl>
       <FormControl>

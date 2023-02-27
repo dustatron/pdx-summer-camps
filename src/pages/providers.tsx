@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading } from "@chakra-ui/react";
+import { Heading, Box } from "@chakra-ui/react";
 import { trpc } from "../utils/trpc";
 import ProviderForm from "../components/ProviderForm";
 
@@ -11,7 +11,19 @@ const providers = () => {
       <ProviderForm />
       <hr />
       {isLoading && <>...loading</>}
-      {data && <>{JSON.stringify(data)}</>}
+      {data && <Box>{data.length}</Box>}
+      {data && (
+        <>
+          {data.map((provider) => (
+            <Box key={provider.id}>
+              {" "}
+              <a href={`/providerdetail/${provider.id}`}>
+                {provider.title}
+              </a>{" "}
+            </Box>
+          ))}
+        </>
+      )}
     </div>
   );
 };

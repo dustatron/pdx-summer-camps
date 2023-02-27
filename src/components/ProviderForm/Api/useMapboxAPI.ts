@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAlert } from "../../../context/AlertContext";
 const API_MAPBOX = `https://api.mapbox.com/geocoding/v5/mapbox.places/`;
 
 export type Feature = {
@@ -15,16 +16,11 @@ export type Feature = {
   relevance: number;
 };
 
-type GeoCodeResult = {
-  attribution: "string";
-  features: Feature[];
-  query: string[];
-};
 
 
 
 export const useMapboxAPI = (providedAddress?: string) => {
-
+  const { addAlert } = useAlert();
 
   const fetcher = async () => {
     if (providedAddress) {
@@ -40,6 +36,13 @@ export const useMapboxAPI = (providedAddress?: string) => {
   return useQuery({
     queryKey: ["provider", "address", providedAddress],
     enabled: false,
-    queryFn: fetcher
+    queryFn: fetcher,
+    onError: (err: Error) => {
+      addAlert({
+        status: "error",
+        title: "ERROR",
+        body: `Unresolved address: ${err.message}`,
+      })
+    }
   });
 }

@@ -16,10 +16,9 @@ import { useFormContext, Controller } from "react-hook-form";
 import dynamic from "next/dynamic";
 import type { ProviderSchema } from "../../../types/provider";
 import "react-quill/dist/quill.snow.css";
-import { quadrantsOptions } from "../../../types/camp";
+import type { MultiSelectOption } from "../../../types/camp";
+import { ageOptions, quadrantsOptions } from "../../../types/camp";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
-//https://stackoverflow.com/questions/62795886/returning-correct-value-using-react-select-and-react-hook-form
 
 function Details() {
   const {
@@ -33,51 +32,26 @@ function Details() {
   const animatedComponents = makeAnimated();
 
   const descriptionValue = getValues("description");
+
   return (
     <Stack spacing={5}>
       <FormControl>
-        <FormLabel>Quadrant</FormLabel>
-        <div>
-          <Controller
-            control={control}
-            name="quadrant"
-            rules={{
-              required: {
-                value: assetType.value == "item",
-                message: "Item type is required.",
-              },
-            }}
-            render={({ field: { onChange, value, ref, name } }) => (
-              <Select
-                className="black-border"
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={quadrantsOptions as unknown as string[]}
-                value={value}
-                onChange={(val) => {
-                  onChange(val.values);
-                  // handleChangeType(val);
-                }}
-              />
-            )}
-          />
-        </div>
-        {/* <Select
-          className="black-border"
-          closeMenuOnSelect={false}
-          components={animatedComponents}
-          isMulti
-          options={quadrantsOptions as unknown as string[]}
-          {...register("quadrant")}
-          // value={quadrantValue}
-          // onChange={(e) => setValue("quadrant", e as string[])}
-        /> */}
-        <FormHelperText>select none if not in Portland</FormHelperText>
-      </FormControl>
-      <FormControl>
         <FormLabel>ages</FormLabel>
-        <Input {...register("ages")} />
+        <Controller
+          control={control}
+          name="agesObject"
+          render={({ field: { onChange, value } }) => (
+            <Select
+              className="black-border"
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={ageOptions as MultiSelectOption[]}
+              value={value}
+              onChange={(val) => onChange(val)}
+            />
+          )}
+        />
         {errors.ages?.message && (
           <Text color="red.500">{errors.ages.message}</Text>
         )}
@@ -128,7 +102,7 @@ function Details() {
         </Flex>
         <ReactQuill
           theme="snow"
-          value={getValues("description") || ""}
+          value={descriptionValue || ""}
           onChange={(e) => {
             setValue("description", e);
           }}

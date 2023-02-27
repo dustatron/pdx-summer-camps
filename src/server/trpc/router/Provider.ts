@@ -20,7 +20,20 @@ export const providerRouter = router({
     const { name, id } = ctx.session.user
     return ctx.prisma.provider.create({
       data: {
-        ...input,
+        title: input.title,
+        lat: parseFloat(input.lat),
+        lng: parseFloat(input.lng),
+        website: input.website,
+        ages: input?.agesObject?.map((age) => age.value),
+        facebook: input.facebook,
+        instagram: input.instagram,
+        brief: input.brief,
+        description: input.description,
+        phone: input.phone,
+        pickUp: input.pickUp,
+        dropOff: input.dropOff,
+        contactName: input.contactName,
+        address: input.address,
         author: {
           create: {
             providerName: input.title,
@@ -36,7 +49,12 @@ export const providerRouter = router({
 
     return ctx.prisma.camp.update({
       where: { id: id }, data: {
-        ...input,
+        title: input.title,
+        lat: parseFloat(input.lat),
+        lng: parseFloat(input.lng),
+        website: input.website,
+        ages: input?.agesObject?.map((age) => age.value),
+        address: input.address,
       }
     })
   }),

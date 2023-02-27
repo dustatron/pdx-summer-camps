@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMapboxAPI } from "../Api/useMapboxAPI";
+import Map, { NavigationControl } from "react-map-gl";
+import Marker from "../../Marker";
 import {
   Box,
   Input,
@@ -8,52 +10,88 @@ import {
   Center,
   InputGroup,
   InputRightElement,
+  Heading,
+  Divider,
 } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 import type { ProviderSchema } from "../../../types/provider";
+import { useAlert } from "../../../context/AlertContext";
 
 export type Feature = {
-  address: string;
-  center: string[];
-  context: [];
+  address?: string;
+  center?: string[];
+  context?: [];
   geometry: {
     coordinates: number[];
-    tye: string;
+    type: string;
   };
   id: string;
   place_name: string;
-  place_type: string[];
-  relevance: number;
+  place_type?: string[];
+  relevance?: number;
 };
 
 const Location = () => {
-  const [providedAddress, setProvidedAddress] = useState<string>();
-  const [select, setSelect] = useState<Feature>();
-  const { data, status, refetch } = useMapboxAPI(providedAddress);
+  const { addAlert } = useAlert();
+  const [providedAddressToFind, setProvidedAddressToFind] = useState<string>();
+  const [selectedAddress, setSelectedAddress] = useState<Feature>();
+  const { data, refetch } = useMapboxAPI(providedAddressToFind);
 
-  const { register, setValue } = useFormContext<ProviderSchema>();
+  const { register, setValue, getValues } = useFormContext<ProviderSchema>();
 
-  const addAddress = (item: Feature) => {
-    setSelect(item);
-    console.log("item", item);
-    setValue("address", item.place_name);
-    setValue("lat", item.geometry.coordinates[1]?.toString());
-    setValue("lng", item.geometry.coordinates[0]?.toString());
+  useEffect(() => {
+    const address = getValues("address");
+    const lat = getValues("lat");
+    const lng = getValues("lng");
+    if (address) {
+      setSelectedAddress({
+        place_name: address,
+        place_type: ["address"],
+        id: address,
+        geometry: {
+          coordinates: [parseFloat(lng), parseFloat(lat)],
+          type: "Point",
+        },
+      });
+    }
+  }, []);
+
+  const onSelectAddress = (item: Feature) => {
+    if (!item) {
+      return "";
+    }
+    setSelectedAddress(item);
+    setProvidedAddressToFind("");
+    if (item?.geometry?.coordinates[1] && item?.geometry?.coordinates[0]) {
+      setValue("address", item.place_name);
+      setValue("lat", item?.geometry?.coordinates[1]?.toString());
+      setValue("lng", item?.geometry?.coordinates[0]?.toString());
+    } else {
+      addAlert({
+        status: "error",
+        title: "ERROR",
+        body: "unable to set address",
+      });
+    }
   };
-  console.log("data", data);
-
+  console.log("selectedAddress", selectedAddress);
   return (
     <Box p={5}>
-      <Input {...register("address")} isDisabled /> - address
-      <Input {...register("lat")} isDisabled /> - lat
-      <Input {...register("lng")} isDisabled /> - lng
       <Box>
         <Stack direction="row">
+          <Heading size="sm" p="2">
+            Address
+          </Heading>
           <InputGroup size="md">
             <Input
-              value={providedAddress}
+              placeholder={
+                !selectedAddress
+                  ? "Enter your address and select find"
+                  : "Enter an new address to try again"
+              }
+              value={providedAddressToFind}
               onChange={(e) => {
-                setProvidedAddress(e.target.value);
+                setProvidedAddressToFind(e.target.value);
               }}
             />
             <InputRightElement width="4.5rem">
@@ -70,18 +108,52 @@ const Location = () => {
           data.features.map((local: any) => (
             <Button
               key={local.id}
-              onClick={() => addAddress(local)}
+              onClick={() => onSelectAddress(local)}
               fontSize="16px"
               colorScheme={
-                select && select.id === local.id ? "facebook" : "gray"
+                selectedAddress && selectedAddress?.id === local.id
+                  ? "facebook"
+                  : "gray"
               }
             >
               {local.place_name}
             </Button>
           ))}
-        {status === "loading" && <>...loading</>}
         {data && !data.features && <Center> No Results Found </Center>}
       </Stack>
+      {selectedAddress && (
+        <>
+          <Divider m="5" />
+          <Heading size="sm"> Selected Address</Heading>
+          <Input {...register("address")} isDisabled />
+          <Box w={"100vw"} height="50vw">
+            <Map
+              id="portlandMapMobile"
+              mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+              initialViewState={{
+                longitude: -122.68294,
+                latitude: 45.56627,
+                zoom: 10,
+              }}
+              style={{ width: "100%", height: "100%" }}
+              mapStyle="mapbox://styles/mapbox/streets-v9"
+              boxZoom
+            >
+              <Marker
+                selectedCampId={selectedAddress.id}
+                key={selectedAddress.id}
+                lat={selectedAddress.geometry.coordinates[1]!}
+                lng={selectedAddress.geometry.coordinates[0]!}
+                placeId={selectedAddress.place_name}
+                setSelectCampId={() => {
+                  return;
+                }}
+              />
+              <NavigationControl />
+            </Map>
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
