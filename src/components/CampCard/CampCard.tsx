@@ -10,6 +10,7 @@ import {
   Text,
   Badge,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import parse from "html-react-parser";
 import { useRouter } from "next/router";
 import removeHttp from "../../utils/http";
@@ -71,12 +72,14 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
             />
           )}
           {!image[0]?.public_id && image[0]?.src && (
-            <Image
-              objectFit="contain"
-              boxSize="100%"
-              src={image[0].src || "/img-place-holder.png"}
-              alt="camp logo"
-            />
+            <Link href={`/show/${details.id}`}>
+              <Image
+                objectFit="cover"
+                boxSize="100%"
+                src={(image[0] && image[0].src) || "/img-place-holder.png"}
+                alt="camp logo"
+              />
+            </Link>
           )}
         </Flex>
         <Stack

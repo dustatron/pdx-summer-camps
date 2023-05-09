@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   Box,
   Flex,
@@ -21,7 +22,15 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-const Links = [{ title: "About", route: "/about" }];
+const Links = [
+  { title: "Providers", route: "/providers" },
+  { title: "Camps", route: "/camps" },
+  { title: "About", route: "/about" },
+];
+
+const Underline = () => {
+  return <Box borderBottom={"4px"} />;
+};
 
 const NavLink = ({
   children,
@@ -47,6 +56,7 @@ const NavLink = ({
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
 
   const { data: sessionData } = useSession();
 
@@ -69,11 +79,13 @@ export default function Navbar() {
         <HStack spacing={8} alignItems={"center"}>
           <Link href="/">
             <Box fontWeight="black">Portland Kid Camps</Box>
+            {router.pathname === "/" && <Underline />}
           </Link>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
               <NavLink key={link.title} route={link.route}>
                 <Text fontWeight="black">{link.title}</Text>
+                {router.pathname === link.route && <Underline />}
               </NavLink>
             ))}
           </HStack>

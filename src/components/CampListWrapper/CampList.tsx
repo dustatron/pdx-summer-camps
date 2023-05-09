@@ -39,7 +39,6 @@ export default function CampList({
 }: Props) {
   const {
     ageSelected,
-    campNameFilter,
     quadrantSelected,
     selectedCampId,
     tagsSelected,

@@ -41,7 +41,7 @@ export type CampDetailFromAPI = CampData & { image: { src: string, id: string, c
   favorites: Favorite[];
 };
 
-export type MultiSelectOption = { value: string; label: string };
+export interface MultiSelectOption { value: string; label: string }
 
 export const QuadrantValues = {
   n: "North",
