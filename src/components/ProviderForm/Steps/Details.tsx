@@ -17,7 +17,7 @@ import dynamic from "next/dynamic";
 import type { ProviderSchema } from "../../../types/provider";
 import "react-quill/dist/quill.snow.css";
 import type { MultiSelectOption } from "../../../types/camp";
-import { ageOptions, quadrantsOptions } from "../../../types/camp";
+import { ageOptions } from "../../../types/camp";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 function Details() {

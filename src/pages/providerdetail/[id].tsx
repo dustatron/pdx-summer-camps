@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { trpc } from "../../utils/trpc";
+import { Box } from "@chakra-ui/react";
 
 const ProviderDetails = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const ProviderDetails = () => {
       ProviderDetails {id}
       {status === "success" && data && <>{data.title}</>}
       {status === "loading" && <>...loading</>}
+      <Box> {JSON.stringify(data, null, 2)}</Box>
     </div>
   );
 };
