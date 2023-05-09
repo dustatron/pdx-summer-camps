@@ -26,6 +26,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAlert } from "../../context/AlertContext";
 import removeHttp from "../../utils/http";
 import formatDate from "../../utils/formatDate";
+import { CldImage } from "next-cloudinary";
 
 type Favorite = { campId: string; userId: number; id: string };
 
@@ -39,9 +40,14 @@ function CardDetail({ onBack, campData }: Props) {
   const { data: sessionData } = useSession();
   const { addAlert } = useAlert();
 
-  const { data: userData } = trpc.auth.getUser.useQuery({
-    id: Number(sessionData?.user?.id),
-  });
+  const { data: userData } = trpc.auth.getUser.useQuery(
+    {
+      id: Number(sessionData?.user?.id),
+    },
+    {
+      retry: false,
+    }
+  );
 
   const {
     title,
@@ -129,16 +135,31 @@ function CardDetail({ onBack, campData }: Props) {
 
   return (
     <Box>
-      <Center w="100%" maxH="350px" overflow="hidden">
-        <Image objectFit="fill" src={image[0]?.src} alt="image of camp" />
-      </Center>
       <Container
+        my="5"
         bg="white"
         p="3"
         shadow="lg"
         rounded="md"
         maxW={{ sm: "100%", md: "100%", lg: "80%" }}
       >
+        <Center w="100%" maxH="350px" overflow="hidden" my="2">
+          {image[0]?.public_id && (
+            <CldImage
+              width="1500"
+              height="400"
+              crop="fill"
+              gravity="faces"
+              sizes="100vw"
+              src={image[0]?.public_id}
+              preserveTransformations={true}
+              alt="image of from camp"
+            />
+          )}
+          {!image[0]?.public_id && (
+            <Image objectFit="fill" src={image[0]?.src} alt="image of camp" />
+          )}
+        </Center>
         <Stack
           direction="row"
           justifyContent="space-between"

@@ -5,7 +5,7 @@ export const campSchema = z.object({
   address: z.string().max(255),
   website: z.string().max(150),
   email: z.string().max(100).optional().nullable(),
-  phone: z.string().max(12).optional().nullable(),
+  phone: z.string().max(20).optional().nullable(),
   link: z.string().optional().nullable(),
   facebook: z.string().max(150).optional().nullable(),
   instagram: z.string().optional().nullable(),
@@ -37,7 +37,7 @@ export type CampData = z.input<typeof campSchema>
 
 export type CampDataToAPI = Camp
 
-export type CampDetailFromAPI = CampData & { image: { src: string, id: string, campId: string }[] } & {
+export type CampDetailFromAPI = CampData & { image: { src: string, id: string, campId: string, public_id: string, original_filename: string, folder: string, created_at: string, asset_id: string }[] } & {
   favorites: Favorite[];
 };
 
