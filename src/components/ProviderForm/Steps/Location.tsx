@@ -77,12 +77,13 @@ const Location = () => {
   console.log("selectedAddress", selectedAddress);
   return (
     <Box p={5}>
+      <Heading pb="5">Add Your Location</Heading>
       <Box>
         <Stack direction="row">
           <Heading size="sm" p="2">
             Address
           </Heading>
-          <InputGroup size="md">
+          <InputGroup size="lg">
             <Input
               placeholder={
                 !selectedAddress
@@ -123,12 +124,9 @@ const Location = () => {
       </Stack>
       {selectedAddress && (
         <>
-          <Divider m="5" />
           <Heading size="sm"> Selected Address</Heading>
           <Input {...register("address")} isDisabled />
-          <Input {...register("lat")} isDisabled />
-          <Input {...register("lng")} isDisabled />
-          <Box w={"100vw"} height="50vw">
+          <Box w={"100%"} height="40vw">
             <Map
               id="portlandMapMobile"
               mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}

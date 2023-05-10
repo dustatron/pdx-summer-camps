@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { trpc } from "../../utils/trpc";
 import type * as z from "zod";
 
-import { Button, Container, Heading, Stack } from "@chakra-ui/react";
+import { Button, Container, Divider, Heading, Stack } from "@chakra-ui/react";
 import ContactInfo from "./Steps/ContactInfo";
 import Location from "./Steps/Location";
 import Details from "./Steps/Details";
@@ -42,19 +42,32 @@ function ProviderForm() {
     mutate(form);
   };
   return (
-    <Container w="100%">
+    <Container
+      bg="white"
+      marginTop="2rem"
+      py="10"
+      rounded="md"
+      centerContent
+      border="2px"
+      borderColor="gray.100"
+      boxShadow="2xl"
+      maxW={{ sm: "100%", md: "100%", lg: "80%" }}
+    >
       <Heading textAlign="center"> New Provider </Heading>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit((e) => submitForm(e))}>
-          <Stack
-            direction={{ sm: "column", md: "column", lg: "column" }}
-            w="100%"
-            p="5"
-            spacing={5}
-          >
-            {step === 1 && <Location />}
-            {step === 2 && <ContactInfo />}
-            {step === 3 && <Details />}
+        <Stack
+          direction={{ sm: "column", md: "column", lg: "column" }}
+          w={{ sm: "100%", md: "100%", lg: "80%" }}
+          p="5"
+          spacing={5}
+        >
+          <form onSubmit={methods.handleSubmit((e) => submitForm(e))}>
+            <Location />
+            <Divider m="5" />
+            <ContactInfo />
+            <Divider m="5" />
+            <Details />
+            <Divider m="5" />
             {step === 4 && <Preview />}
             <Stack direction="row" justifyContent="space-between">
               <Button
@@ -85,8 +98,8 @@ function ProviderForm() {
                 )}
               </Stack>
             </Stack>
-          </Stack>
-        </form>
+          </form>
+        </Stack>
       </FormProvider>
     </Container>
   );

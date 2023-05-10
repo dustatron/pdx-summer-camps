@@ -64,6 +64,7 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
         <Flex flex={1} bg="gray.50" rounded="md" overflow="hidden">
           {image[0]?.public_id && (
             <CldImage
+              alt={title}
               height="250"
               width="400"
               crop="thumb"

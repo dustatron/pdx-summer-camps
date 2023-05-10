@@ -1,11 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { trpc } from "../../utils/trpc";
-import CampEditForm from "../../components/CampEditForm";
-import type { CampData } from "../../types/camp";
+import { trpc } from "../../../utils/trpc";
+import CampEditForm from "../../../components/CampEditForm";
+import type { CampData } from "../../../types/camp";
 import { useSession } from "next-auth/react";
 
-import RenderTree from "../../components/RenderTree";
+import RenderTree from "../../../components/RenderTree";
 
 const Detail = () => {
   const router = useRouter();
