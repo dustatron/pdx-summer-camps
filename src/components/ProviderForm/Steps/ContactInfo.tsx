@@ -33,6 +33,20 @@ const ContactInfo = () => {
         )}
       </FormControl>
       <FormControl>
+        <FormLabel>Contact</FormLabel>
+        <Input {...register("contact")} />
+        {errors.contact?.message && (
+          <Text color="red.500">{errors.contact.message}</Text>
+        )}
+      </FormControl>
+      <FormControl>
+        <FormLabel>Contact Name</FormLabel>
+        <Input {...register("contactName")} />
+        {errors.contactName?.message && (
+          <Text color="red.500">{errors.contactName.message}</Text>
+        )}
+      </FormControl>
+      <FormControl>
         <FormLabel>Email</FormLabel>
         <Input {...register("email")} />
         {errors.email?.message && (
@@ -44,13 +58,6 @@ const ContactInfo = () => {
         <Input {...register("phone")} isRequired />
         {errors.phone?.message && (
           <Text color="red.500">{errors.phone.message}</Text>
-        )}
-      </FormControl>
-      <FormControl>
-        <FormLabel>Contact Name</FormLabel>
-        <Input {...register("contactName")} />
-        {errors.contactName?.message && (
-          <Text color="red.500">{errors.contactName.message}</Text>
         )}
       </FormControl>
       <FormControl>

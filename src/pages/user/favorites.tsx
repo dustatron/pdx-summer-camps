@@ -1,9 +1,9 @@
 import { Box, Center, Heading, Spinner } from "@chakra-ui/react";
 import React from "react";
-import type { CardDetails } from "../components/CampCard";
-import CampCard from "../components/CampCard";
+import type { CardDetails } from "../../components/CampCard";
+import CampCard from "../../components/CampCard";
 import { useRouter } from "next/router";
-import { trpc } from "../utils/trpc";
+import { trpc } from "../../utils/trpc";
 
 function Favorite() {
   const { data, isLoading } = trpc.favorites.getThisUsersFavorites.useQuery();

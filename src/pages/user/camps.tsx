@@ -11,9 +11,9 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-import { trpc } from "../utils/trpc";
+import { trpc } from "../../utils/trpc";
 
-const YourCamps = () => {
+const getYourCamps = () => {
   const { data: campData, status } = trpc.camps?.getYourCamps.useQuery();
   return (
     <Container
@@ -86,4 +86,4 @@ const YourCamps = () => {
   );
 };
 
-export default YourCamps;
+export default getYourCamps;

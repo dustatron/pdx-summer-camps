@@ -126,6 +126,8 @@ const Location = () => {
           <Divider m="5" />
           <Heading size="sm"> Selected Address</Heading>
           <Input {...register("address")} isDisabled />
+          <Input {...register("lat")} isDisabled />
+          <Input {...register("lng")} isDisabled />
           <Box w={"100vw"} height="50vw">
             <Map
               id="portlandMapMobile"

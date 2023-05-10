@@ -1,5 +1,5 @@
 import React from "react";
-import ProviderForm from "../components/ProviderForm";
+import ProviderForm from "../../components/ProviderForm";
 
 const addProvider = () => {
   return <ProviderForm />;

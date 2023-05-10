@@ -1,11 +1,11 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { trpc } from "../../utils/trpc";
+import { trpc } from "../../../utils/trpc";
 import { useSession } from "next-auth/react";
 
-import RenderTree from "../../components/RenderTree";
-import CardDetail from "../../components/CardDetail";
-import type { CampDetailFromAPI } from "../../types/camp";
+import RenderTree from "../../../components/RenderTree";
+import CardDetail from "../../../components/CardDetail";
+import type { CampDetailFromAPI } from "../../../types/camp";
 
 const Show = () => {
   const router = useRouter();

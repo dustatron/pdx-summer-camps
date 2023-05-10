@@ -23,8 +23,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 const Links = [
-  { title: "Providers", route: "/providers" },
-  { title: "Camps", route: "/camps" },
+  { title: "Providers", route: "/provider/list" },
+  { title: "Camps", route: "/camps/list" },
   { title: "About", route: "/about" },
 ];
 
@@ -109,13 +109,16 @@ export default function Navbar() {
                 />
               </MenuButton>
               <MenuList>
-                <Link href="/your-camps">
+                <Link href="/user/camps">
                   <MenuItem>Your Camps</MenuItem>
                 </Link>
-                <Link href="/add">
+                <Link href="/camps/add">
                   <MenuItem>Add Camp</MenuItem>
                 </Link>
-                <Link href="/favorites">
+                <Link href="/provider/add">
+                  <MenuItem>Add Provider</MenuItem>
+                </Link>
+                <Link href="/user/favorites">
                   <MenuItem>Favorites</MenuItem>
                 </Link>
                 <MenuDivider />

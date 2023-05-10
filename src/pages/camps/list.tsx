@@ -1,5 +1,5 @@
 import React from "react";
-import CampListWrapper from "../components/CampListWrapper";
+import CampListWrapper from "../../components/CampListWrapper";
 
 function camps() {
   return <CampListWrapper />;

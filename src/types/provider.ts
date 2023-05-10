@@ -10,6 +10,7 @@ export const providerSchema = z.object({
   instagram: z.string().max(150).optional().nullable(),
   brief: z.string().max(150, 'Brief message was too long').optional().nullable(),
   description: z.string().max(2500).optional().nullable(),
+  contact: z.string().max(250),
   contactName: z.string().max(150).optional().nullable(),
   lat: z.string(),
   lng: z.string(),

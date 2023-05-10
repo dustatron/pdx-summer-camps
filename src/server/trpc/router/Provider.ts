@@ -24,6 +24,7 @@ export const providerRouter = router({
         lat: parseFloat(input.lat),
         lng: parseFloat(input.lng),
         website: input.website,
+        email: input.email,
         ages: input?.agesObject?.map((age) => age.value),
         facebook: input.facebook,
         instagram: input.instagram,
@@ -32,6 +33,7 @@ export const providerRouter = router({
         phone: input.phone,
         pickUp: input.pickUp,
         dropOff: input.dropOff,
+        contact: input.contact,
         contactName: input.contactName,
         address: input.address,
         author: {

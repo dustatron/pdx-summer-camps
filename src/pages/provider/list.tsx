@@ -12,8 +12,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { trpc } from "../utils/trpc";
-import removeHttp from "../utils/http";
+import { trpc } from "../../utils/trpc";
+import removeHttp from "../../utils/http";
 
 const providers = () => {
   const { data, isLoading } = trpc.provider.getAllProviders.useQuery();
@@ -29,7 +29,7 @@ const providers = () => {
         <>
           {data.map((provider) => (
             <Box key={provider.id}>
-              <Link href={`/providerdetail/${provider.id}`}>
+              <Link href={`/provider/detail/${provider.id}`}>
                 <Center py={2} id={provider.id} w="100%">
                   <Stack
                     borderWidth="1px"
@@ -60,9 +60,8 @@ const providers = () => {
                         color={useColorModeValue("gray.700", "gray.400")}
                         px={1}
                       >
-                        {provider.description}
-                        {provider.description &&
-                        provider?.description?.length > 150
+                        {provider.brief}
+                        {provider.brief && provider?.brief?.length > 150
                           ? "..."
                           : ""}
                       </Text>

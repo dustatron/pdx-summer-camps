@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { trpc } from "../../utils/trpc";
 import type * as z from "zod";
 
-import { Button, Stack } from "@chakra-ui/react";
+import { Button, Container, Heading, Stack } from "@chakra-ui/react";
 import ContactInfo from "./Steps/ContactInfo";
 import Location from "./Steps/Location";
 import Details from "./Steps/Details";
@@ -42,50 +42,53 @@ function ProviderForm() {
     mutate(form);
   };
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit((e) => submitForm(e))}>
-        <Stack
-          direction={{ sm: "column", md: "column", lg: "column" }}
-          w="100%"
-          p="5"
-          spacing={5}
-        >
-          {step === 1 && <Location />}
-          {step === 2 && <ContactInfo />}
-          {step === 3 && <Details />}
-          {step === 4 && <Preview />}
-          <Stack direction="row" justifyContent="space-between">
-            <Button
-              onClick={() => {
-                methods.reset();
-                setStep(1);
-              }}
-            >
-              Clear
-            </Button>
-            <Stack direction="row">
-              {step > 1 && (
-                <Button colorScheme="blue" onClick={() => setStep(step - 1)}>
-                  Back
-                </Button>
-              )}
-              {step < 4 && (
-                <Button colorScheme="blue" onClick={() => setStep(step + 1)}>
-                  Next
-                </Button>
-              )}
-              {step === 4 && (
-                <>
-                  <Button type="submit" isLoading={status === "loading"}>
-                    Submit
+    <Container w="100%">
+      <Heading textAlign="center"> New Provider </Heading>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit((e) => submitForm(e))}>
+          <Stack
+            direction={{ sm: "column", md: "column", lg: "column" }}
+            w="100%"
+            p="5"
+            spacing={5}
+          >
+            {step === 1 && <Location />}
+            {step === 2 && <ContactInfo />}
+            {step === 3 && <Details />}
+            {step === 4 && <Preview />}
+            <Stack direction="row" justifyContent="space-between">
+              <Button
+                onClick={() => {
+                  methods.reset();
+                  setStep(1);
+                }}
+              >
+                Clear
+              </Button>
+              <Stack direction="row">
+                {step > 1 && (
+                  <Button colorScheme="blue" onClick={() => setStep(step - 1)}>
+                    Back
                   </Button>
-                </>
-              )}
+                )}
+                {step < 4 && (
+                  <Button colorScheme="blue" onClick={() => setStep(step + 1)}>
+                    Next
+                  </Button>
+                )}
+                {step === 4 && (
+                  <>
+                    <Button type="submit" isLoading={status === "loading"}>
+                      Submit
+                    </Button>
+                  </>
+                )}
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </Container>
   );
 }
 
