@@ -80,11 +80,14 @@ export const providerRouter = router({
     }
     return ctx.prisma.campImage.delete({ where: { id: input.imgId } })
   }),
-  addImage: publicProcedure.input(z.object({ campId: z.string(), src: z.string(), public_id: z.string().optional(), asset_id: z.string().optional(), created_at: z.string().optional(), folder: z.string().optional(), original_filename: z.string().optional() })).mutation(({ input, ctx }) => {
-    const { src, campId, asset_id, created_at, folder, original_filename, public_id } = input
-    return ctx.prisma.provider.update({ where: { id: campId }, data: { image: { create: { src, asset_id, created_at, folder, original_filename, public_id } } } })
+  addImage: protectedProcedure.input(z.object({ providerId: z.string(), src: z.string(), public_id: z.string().optional(), asset_id: z.string().optional(), created_at: z.string().optional(), folder: z.string().optional(), original_filename: z.string().optional() })).mutation(({ input, ctx }) => {
+    const { src, providerId, asset_id, created_at, folder, original_filename, public_id } = input
+    return ctx.prisma.provider.update({ where: { id: providerId }, data: { image: { create: { src, asset_id, created_at, folder, original_filename, public_id } } } })
   }),
   getImages: publicProcedure.input(z.object({ providerId: z.string() })).query(({ input, ctx }) => {
     return ctx.prisma.providerImage.findMany({ where: { providerId: input.providerId } })
+  }),
+  addCamp: protectedProcedure.input(z.object({ campId: z.string(), providerId: z.string() })).mutation(({ input, ctx }) => {
+    return ctx.prisma.provider.update({ where: { id: input.providerId }, data: { camps: { connect: { id: input.campId } } } })
   })
 });

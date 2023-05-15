@@ -134,7 +134,7 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
                 rounded={"full"}
                 onClick={() => {
                   onSelect(id);
-                  router.push(`/show/${details.id}`);
+                  router.push(`/camps/show/${details.id}`);
                   // showDetails();
                 }}
                 _focus={{

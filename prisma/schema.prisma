@@ -86,7 +86,7 @@ model Provider {
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
   email         String
-  contact       String
+  contact       String?
   ages          String[]
   pickUp        String?
   dropOff       String?
@@ -102,7 +102,7 @@ model Provider {
   website       String
   brief         String?
   description   String?
-  Tags          String[]
+  tags          String[]
   author        ProviderAuthor[]
   camps         Camp[] 
   image         ProviderImage[]

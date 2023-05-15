@@ -80,9 +80,6 @@ const Location = () => {
       <Heading pb="5">Add Your Location</Heading>
       <Box>
         <Stack direction="row">
-          <Heading size="sm" p="2">
-            Address
-          </Heading>
           <InputGroup size="lg">
             <Input
               placeholder={

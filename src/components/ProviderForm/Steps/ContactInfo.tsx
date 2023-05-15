@@ -6,7 +6,8 @@ import {
   Text,
   Heading,
   Stack,
-  Divider,
+  InputGroup,
+  InputLeftAddon,
   Box,
 } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
@@ -19,12 +20,11 @@ const ContactInfo = () => {
   } = useFormContext<ProviderSchema>();
   return (
     <Stack spacing={5}>
-      <Heading pb="5">Contact Info</Heading>
-      <Stack direction="row" spacing={10}>
+      <Stack direction="row" spacing={5}>
         {/* Left */}
-        <Box w="50%">
+        <Stack w="50%" spacing={5}>
           <FormControl>
-            <FormLabel>Name of organization *</FormLabel>
+            <FormLabel>Organization Title *</FormLabel>
             <Input {...register("title")} />
             {errors.title?.message && (
               <Text color="red.500">{errors.title.message}</Text>
@@ -32,13 +32,21 @@ const ContactInfo = () => {
           </FormControl>
           <FormControl>
             <FormLabel>Website *</FormLabel>
-            <Input {...register("website")} />
+            <InputGroup size="md">
+              <Input
+                type="text"
+                isRequired
+                placeholder="your website address"
+                {...register("website")}
+              />
+            </InputGroup>
             {errors.website?.message && (
               <Text color="red.500">{errors.website.message}</Text>
             )}
           </FormControl>
+
           <FormControl>
-            <FormLabel>Contact</FormLabel>
+            <FormLabel>Contact Title *</FormLabel>
             <Input {...register("contact")} />
             {errors.contact?.message && (
               <Text color="red.500">{errors.contact.message}</Text>
@@ -51,13 +59,16 @@ const ContactInfo = () => {
               <Text color="red.500">{errors.contactName.message}</Text>
             )}
           </FormControl>
-        </Box>
+        </Stack>
 
         {/* Right */}
-        <Box w="50%">
+        <Stack w="50%" spacing={5}>
           <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input {...register("email")} />
+            <FormLabel>e-mail</FormLabel>
+            <InputGroup size="md">
+              <InputLeftAddon> @ </InputLeftAddon>
+              <Input {...register("email")} />
+            </InputGroup>
             {errors.email?.message && (
               <Text color="red.500">{errors.email.message}</Text>
             )}
@@ -70,20 +81,30 @@ const ContactInfo = () => {
             )}
           </FormControl>
           <FormControl>
-            <FormLabel>Facebook Profile Link</FormLabel>
-            <Input {...register("facebook")} />
-            {errors.facebook?.message && (
-              <Text color="red.500">{errors.facebook.message}</Text>
-            )}
+            <FormLabel>Tags</FormLabel>
+            <Input
+              type="text"
+              placeholder="Comma separated list"
+              {...register("tags")}
+            />
           </FormControl>
-          <FormControl>
-            <FormLabel>Instagram Profile Link</FormLabel>
-            <Input {...register("instagram")} />
-            {errors.instagram?.message && (
-              <Text color="red.500">{errors.instagram.message}</Text>
-            )}
-          </FormControl>
-        </Box>
+        </Stack>
+      </Stack>
+      <Stack direction="row" spacing={5}>
+        <FormControl>
+          <FormLabel>Facebook Profile Link</FormLabel>
+          <Input {...register("facebook")} />
+          {errors.facebook?.message && (
+            <Text color="red.500">{errors.facebook.message}</Text>
+          )}
+        </FormControl>
+        <FormControl>
+          <FormLabel>Instagram Profile Link</FormLabel>
+          <Input {...register("instagram")} />
+          {errors.instagram?.message && (
+            <Text color="red.500">{errors.instagram.message}</Text>
+          )}
+        </FormControl>
       </Stack>
     </Stack>
   );

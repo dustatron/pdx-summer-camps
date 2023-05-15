@@ -31,3 +31,4 @@ export const providerSchema = z.object({
 });
 
 export type ProviderSchema = z.infer<typeof providerSchema>;
+export type ProviderData = z.input<typeof providerSchema>

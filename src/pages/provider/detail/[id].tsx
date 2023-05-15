@@ -63,22 +63,15 @@ const ProviderDetails = () => {
       Tags,
       address,
       ages,
-      author,
       brief,
       camps,
       contactName,
-      createdAt,
       description,
-      dropOff,
       email,
       facebook,
       favorites,
       instagram,
-      lat,
-      lng,
       phone,
-      pickUp,
-      place_id,
       title,
       website,
     } = data;
@@ -122,13 +115,22 @@ const ProviderDetails = () => {
             <BiArrowBack /> Back
           </Button>
           {userData?.role === "ADMIN" && (
-            <Button
-              colorScheme="facebook"
-              onClick={() => router.push(`/provider/edit/${id}`)}
-              w="100px"
-            >
-              Edit
-            </Button>
+            <Stack direction="row" spacing={5}>
+              <Button
+                colorScheme="facebook"
+                onClick={() => router.push(`/provider/edit/${id}`)}
+                w="100px"
+              >
+                Edit
+              </Button>
+              <Button
+                colorScheme="facebook"
+                onClick={() => router.push(`/camps/add`)}
+                w="100px"
+              >
+                Add Camp
+              </Button>
+            </Stack>
           )}
           <Button
             variant="ghost"
@@ -320,7 +322,11 @@ const ProviderDetails = () => {
     );
   }
   if (status === "loading") {
-    return <Spinner />;
+    return (
+      <Center w="100%" py="50vh">
+        <Spinner />
+      </Center>
+    );
   }
 };
 

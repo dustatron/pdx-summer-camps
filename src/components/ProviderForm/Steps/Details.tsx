@@ -36,10 +36,9 @@ function Details() {
 
   return (
     <Stack spacing={5}>
-      <Heading pb="5">Details</Heading>
       <Stack direction="row" spacing={10}>
         {/* Left */}
-        <Box w="50%">
+        <Stack spacing={10} w="50%">
           <FormControl>
             <FormLabel>ages</FormLabel>
             <Controller
@@ -68,9 +67,9 @@ function Details() {
               <Text color="red.500">{errors.price.message}</Text>
             )}
           </FormControl>
-        </Box>
+        </Stack>
         {/* Right  */}
-        <Box w="50%">
+        <Stack spacing={10} w="50%">
           <FormControl>
             <FormLabel>Drop Off Times</FormLabel>
             <Input {...register("dropOff")} />
@@ -85,7 +84,7 @@ function Details() {
               <Text color="red.500">{errors.pickUp.message}</Text>
             )}
           </FormControl>
-        </Box>
+        </Stack>
       </Stack>
 
       <Heading size="md">Description</Heading>

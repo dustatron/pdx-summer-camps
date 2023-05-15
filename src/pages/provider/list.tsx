@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import removeHttp from "../../utils/http";
+import { CldImage } from "next-cloudinary";
 
 const providers = () => {
   const { data, isLoading } = trpc.provider.getAllProviders.useQuery();
@@ -43,8 +44,23 @@ const providers = () => {
                     border={false ? "2px" : "0"}
                     borderColor={false ? "gray.600" : ""}
                   >
-                    <Flex flex={1} bg="gray.50" rounded="md" overflow="hidden">
-                      Image here
+                    <Flex
+                      flex={1}
+                      bg="gray.50"
+                      rounded="md"
+                      w="30%"
+                      overflow="hidden"
+                    >
+                      {provider && (
+                        <CldImage
+                          alt={provider.title}
+                          height="250"
+                          width="700"
+                          crop="thumb"
+                          gravity="faces"
+                          src={provider.image[0]?.public_id as string}
+                        />
+                      )}
                     </Flex>
                     <Stack
                       flex={1}
