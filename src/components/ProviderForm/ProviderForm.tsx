@@ -57,6 +57,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
     resolver: zodResolver(providerSchema),
     defaultValues: {
       ...provider,
+      contact: provider?.contact || "",
       lat: String(provider?.lat),
       lng: String(provider?.lng),
       phone: String(provider?.phone),

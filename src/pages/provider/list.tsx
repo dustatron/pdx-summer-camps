@@ -111,8 +111,8 @@ const providers = () => {
                         direction={"row"}
                         mt={6}
                       >
-                        {provider.Tags &&
-                          provider.Tags.map((tag: string) => (
+                        {provider.tags &&
+                          provider.tags.map((tag: string) => (
                             <Badge
                               key={tag}
                               px={2}

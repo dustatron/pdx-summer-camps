@@ -14,7 +14,7 @@ export const providerRouter = router({
     return ctx.prisma.providerAuthor.findMany({ where: { userId: Number(userId) } })
   }),
   getProvider: publicProcedure.input(z.object({ providerId: z.string() })).query(({ input, ctx }) => {
-    return ctx.prisma.provider.findFirst({ where: { id: input.providerId }, include: { image: true, camps: true, author: true, favorites: true } })
+    return ctx.prisma.provider.findFirst({ where: { id: input.providerId }, include: { image: true, camps: { include: { image: true } }, author: true, favorites: true } })
   }),
   addProvider: protectedProcedure.input(providerSchema).mutation(({ input, ctx }) => {
     const { name, id } = ctx.session.user
