@@ -60,7 +60,7 @@ const ProviderDetails = () => {
   if (data) {
     const {
       image,
-      Tags,
+      tags,
       address,
       ages,
       brief,
@@ -158,14 +158,14 @@ const ProviderDetails = () => {
             </Box>
 
             <Box>
-              {Tags && (
+              {tags && (
                 <Text color="blue.600" cursor="pointer">
-                  {Tags.map((tag) => (
+                  {tags.map((tag) => (
                     <Badge key={`tag-${tag}`}>{tag}</Badge>
                   ))}
                 </Text>
               )}
-              {!Tags && <Text>Not Provided</Text>}
+              {!tags && <Text>Not Provided</Text>}
             </Box>
             <Stack spacing={5}>
               <Stack direction={{ sm: "column", md: "column", lg: "row" }}>
