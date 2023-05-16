@@ -165,7 +165,10 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
             </Stack>
           )}
           {isMobile && (
-            <Button w="100%" onClick={() => router.push(`/show/${details.id}`)}>
+            <Button
+              w="100%"
+              onClick={() => router.push(`/camps/show/${details.id}`)}
+            >
               More Info
             </Button>
           )}

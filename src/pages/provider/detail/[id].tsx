@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { trpc } from "../../../utils/trpc";
 import parse from "html-react-parser";
 import {
@@ -16,6 +16,7 @@ import {
   Spinner,
   Stack,
   Text,
+  useEditable,
 } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import { BiArrowBack } from "react-icons/bi";
@@ -25,6 +26,8 @@ import { BsFacebook } from "react-icons/bs";
 import { ImInstagram } from "react-icons/im";
 import { useSession } from "next-auth/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import type { CardDetails } from "../../../components/CampCard";
+import CampCard from "../../../components/CampCard";
 
 const getFormattedAges = (values: string[]): string[] => {
   if (values) {
@@ -35,8 +38,26 @@ const getFormattedAges = (values: string[]): string[] => {
 
 const ProviderDetails = () => {
   const router = useRouter();
-  const [isFav, setIsFav] = useState(false);
+
+  const [isFav, setIsFav] = useState<boolean>(false);
+
   const { data: sessionData } = useSession();
+
+  const { mutate: addFav, isLoading: isAddFavLoading } =
+    trpc.favorites.addProviderFavorite.useMutation({
+      onSuccess: () => {
+        setIsFav(true);
+      },
+    });
+
+  const { mutate: removeFav, isLoading: isRemoveFavLoading } =
+    trpc.favorites.removeProviderFavorite.useMutation({
+      onSuccess: () => {
+        setIsFav(false);
+      },
+    });
+
+  const isFavMutationLoading = isAddFavLoading || isRemoveFavLoading;
 
   const { data: userData } = trpc.auth.getUser.useQuery(
     {
@@ -53,7 +74,25 @@ const ProviderDetails = () => {
     providerId: id as string,
   });
 
+  useEffect(() => {
+    if (
+      userData?.id &&
+      data?.favorites.find((fav) => fav.userId === userData.id)
+    ) {
+      setIsFav(true);
+    }
+  }, [data?.favorites, userData?.id]);
+
   const handleFavoriteClick = () => {
+    if (data?.id && !isFav) {
+      addFav({ providerId: data?.id });
+    }
+
+    const fav = data?.favorites.find((fav) => fav.userId === userData?.id);
+    if (data?.id && isFav && fav) {
+      removeFav({ id: fav?.id });
+    }
+
     return null;
   };
 
@@ -79,7 +118,8 @@ const ProviderDetails = () => {
     return (
       <Container
         w="100%"
-        my="5"
+        marginTop={5}
+        marginBottom={10}
         bg="white"
         p="3"
         shadow="lg"
@@ -137,11 +177,13 @@ const ProviderDetails = () => {
             onClick={handleFavoriteClick}
             // isLoading={isLoadingAddFav || isLoadingRemoveFav}
           >
-            {isFav ? (
+            {isFav && !isFavMutationLoading && (
               <Icon as={AiFillHeart} h="40px" w="40px" />
-            ) : (
+            )}
+            {!isFav && !isFavMutationLoading && (
               <Icon as={AiOutlineHeart} h="40px" w="40px" />
             )}
+            {isFavMutationLoading && <Spinner />}
           </Button>
         </Stack>
         <Stack direction={{ sm: "column", md: "column", lg: "row" }} pt="10">
@@ -283,15 +325,7 @@ const ProviderDetails = () => {
                 </Text>
               </Box>
             </Stack>
-            <Box>
-              <Text fontWeight="extrabold" fontSize="lg">
-                {camps.length} Camps
-              </Text>
-              <Box>
-                {!!camps?.length &&
-                  camps.map((camp) => <Box key={camp.id}>{camp.title}</Box>)}
-              </Box>
-            </Box>
+
             <Box>
               <Stack direction="row">
                 {facebook && (
@@ -317,6 +351,27 @@ const ProviderDetails = () => {
             Description
           </Text>
           <Text>{parse(description || "")}</Text>
+        </Box>
+        <Box py="5">
+          <Text fontWeight="extrabold" fontSize="lg">
+            Camps: {camps.length}
+          </Text>
+          <Box>
+            {!!camps?.length &&
+              camps.map((camp) => (
+                <CampCard
+                  key={camp.id}
+                  details={camp as CardDetails}
+                  isMobile
+                  onSelect={() => {
+                    return "";
+                  }}
+                  showDetails={() => {
+                    return "";
+                  }}
+                />
+              ))}
+          </Box>
         </Box>
       </Container>
     );

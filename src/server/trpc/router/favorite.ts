@@ -19,4 +19,12 @@ export const favoriteRouter = router({
   removeFavorite: protectedProcedure.input(z.object({ id: z.string() })).mutation(({ input, ctx }) => {
     return ctx.prisma.favorite.delete({ where: { id: input.id } })
   }),
+
+  addProviderFavorite: protectedProcedure.input(z.object({ providerId: z.string() })).mutation(({ input, ctx }) => {
+    const currentUser = ctx.session?.user.id
+    return ctx.prisma.favoriteProvider.create({ data: { providerId: input.providerId, userId: Number(currentUser) } })
+  }),
+  removeProviderFavorite: protectedProcedure.input(z.object({ id: z.string() })).mutation(({ input, ctx }) => {
+    return ctx.prisma.favoriteProvider.delete({ where: { id: input.id } })
+  }),
 })
