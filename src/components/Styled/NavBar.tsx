@@ -24,7 +24,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 const Links = [
   { title: "Providers", route: "/provider/list" },
-  { title: "Camps", route: "/camps/list" },
+  { title: "Camps", route: "/camp/list" },
   { title: "About", route: "/about" },
 ];
 
@@ -112,7 +112,7 @@ export default function Navbar() {
                 <Link href="/user/camps">
                   <MenuItem>Your Camps</MenuItem>
                 </Link>
-                <Link href="/camps/add">
+                <Link href="/camp/add">
                   <MenuItem>Add Camp</MenuItem>
                 </Link>
                 <Link href="/provider/add">

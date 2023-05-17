@@ -1,5 +1,5 @@
 import { z } from "zod";
-import cloudinary from 'cloudinary'
+import cloudinary, { Status } from 'cloudinary'
 
 import { providerSchema } from '../../../types/provider'
 import { router, publicProcedure, protectedProcedure } from "../trpc";
@@ -46,11 +46,15 @@ export const providerRouter = router({
       }
     })
   }),
-  update: protectedProcedure.input(providerSchema).mutation(({ input, ctx }) => {
+  updateProvider: protectedProcedure.input(providerSchema).mutation(({ input, ctx }) => {
     const { id } = input
 
     return ctx.prisma.camp.update({
       where: { id: id }, data: {
+        ...input,
+        status: input.status,
+        quadrant: input.quadrant as string[],
+        tags: input.tags as string[],
         title: input.title,
         lat: parseFloat(input.lat),
         lng: parseFloat(input.lng),

@@ -38,6 +38,19 @@ function ProviderForm({ isEdit, provider }: FormProps) {
   const { addAlert } = useAlert();
   const router = useRouter();
 
+  const { mutate: updateProviderMutation, isLoading } =
+    trpc.provider.updateProvider.useMutation({
+      onSuccess: () => {
+        addAlert({
+          status: "success",
+          title: "Success",
+          body: "New Provider added",
+          autoClose: false,
+        });
+        router.push(`/providerdetail/${provider?.id}`);
+      },
+    });
+
   const { mutate: addProviderMutation, status } =
     trpc.provider.addProvider.useMutation({
       onSuccess: (provider) => {
@@ -66,7 +79,9 @@ function ProviderForm({ isEdit, provider }: FormProps) {
 
   const submitForm = (form: any) => {
     console.log("form data", form);
-
+    if (isEdit) {
+      updateProviderMutation(form);
+    }
     if (!isEdit) {
       addProviderMutation(form);
     }
@@ -217,7 +232,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
                 {isPreview && (
                   <Button
                     type="submit"
-                    isLoading={status === "loading"}
+                    isLoading={status === "loading" || isLoading}
                     colorScheme="green"
                   >
                     Confirm

@@ -1,6 +1,8 @@
 import { prisma } from "../src/server/db/client";
 import tempData from "../src/temp-data.json"
 
+const fallBakImage = "https://res.cloudinary.com/dtqlulaog/image/upload/v1684295688/camp-image/p7x7zzkmnkhovlzeakvd.png"
+
 async function main() {
   for (const camp of tempData) {
     await prisma.camp.create({
@@ -10,11 +12,13 @@ async function main() {
         website: camp.website || "none",
         link: camp.link,
         facebook: camp.facebook,
-        description: camp.description,
+        description: camp.description.slice(0, 2500),
+        brief: camp.description.slice(0, 150),
         place_id: camp.place_id,
+        quadrant: camp.quadrant,
         image: {
           create: {
-            src: camp.images[0] || '/img-place-holder.png'
+            src: camp.images[0] || fallBakImage
           }
         },
         lat: camp.location.lat,

@@ -134,7 +134,7 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
                 rounded={"full"}
                 onClick={() => {
                   onSelect(id);
-                  router.push(`/camps/show/${details.id}`);
+                  router.push(`/camp/show/${details.id}`);
                   // showDetails();
                 }}
                 _focus={{
@@ -167,7 +167,7 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
           {isMobile && (
             <Button
               w="100%"
-              onClick={() => router.push(`/camps/show/${details.id}`)}
+              onClick={() => router.push(`/camp/show/${details.id}`)}
             >
               More Info
             </Button>

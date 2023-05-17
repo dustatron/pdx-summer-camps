@@ -10,7 +10,7 @@ export const providerSchema = z.object({
   instagram: z.string().max(150).optional().nullable(),
   brief: z.string().max(150, 'Brief message was too long').optional().nullable(),
   description: z.string().max(2500).optional().nullable(),
-  contact: z.string().max(250),
+  contact: z.string().max(250).optional().nullable(),
   contactName: z.string().max(150).optional().nullable(),
   lat: z.string(),
   lng: z.string(),
@@ -25,7 +25,7 @@ export const providerSchema = z.object({
   dateStart: z.string().max(150).optional().nullable(),
   dateEnd: z.string().max(150).optional().nullable(),
   userId: z.number().optional().nullable(),
-  status: z.enum(["OPEN", "FULL", "UNKNOWN"]).optional().nullable(),
+  status: z.enum(["OPEN", "FULL", "UNKNOWN"]).optional(),
   authorName: z.string().optional().nullable(),
   id: z.string().optional(),
 });

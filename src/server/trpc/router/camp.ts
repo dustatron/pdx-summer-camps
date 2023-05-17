@@ -28,7 +28,7 @@ export const campRouter = router({
             campName: input.title,
             userId: Number(id)
           }
-        }
+        },
       }
     })
   }),

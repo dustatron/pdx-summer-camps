@@ -174,7 +174,7 @@ function CardDetail({ onBack, campData }: Props) {
           {userData?.role === "ADMIN" && (
             <Button
               colorScheme="facebook"
-              onClick={() => router.push(`/detail/${id}`)}
+              onClick={() => router.push(`/camp/edit/${id}`)}
               w="100px"
             >
               Edit

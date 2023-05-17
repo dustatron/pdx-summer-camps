@@ -8,7 +8,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Form from "./Form";
 import { useAlert } from "../../context/AlertContext";
-import { format } from "path";
 
 const initialState: CampData = {
   lat: 0,
@@ -53,9 +52,10 @@ type Props = {
   campData?: CampData;
   isEdit?: boolean;
   campId?: string;
+  providerId?: string;
 };
 
-function CampEditForm({ campData, isEdit, campId }: Props) {
+function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
   const [formState, dispatch] = useReducer(reducer, campData || initialState);
   const { data: session } = useSession();
   const { addAlert } = useAlert();
@@ -71,10 +71,10 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
         body: "Camp was successfully deleted",
         autoClose: true,
       });
-      if (history === "/detail/[id]") {
+      if (history === `/camp/show/${campData?.id}`) {
         router.push("/");
       } else {
-        router.push("/your-camps");
+        router.push("/user/camps");
       }
     },
   });
@@ -105,7 +105,7 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
         body: "New camp added",
         autoClose: true,
       });
-      router.push("/your-camps");
+      router.push("/user/camps");
     },
     onError: () => {
       addAlert({
@@ -126,7 +126,7 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
           autoClose: true,
         });
 
-        router.push(`/show/${campData?.id}`);
+        router.push(`/camp/show/${campData?.id}`);
       },
       onError: () => {
         addAlert({
@@ -158,7 +158,7 @@ function CampEditForm({ campData, isEdit, campId }: Props) {
     if (isEdit && validate.success && campId) {
       updateCamp({ ...cleanFormData, id: campId });
     } else if (validate.success && session && session.user) {
-      addCamp(cleanFormData);
+      addCamp(providerId ? { ...cleanFormData, providerId } : cleanFormData);
     }
   };
 

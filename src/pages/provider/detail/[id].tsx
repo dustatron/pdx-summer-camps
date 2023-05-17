@@ -16,7 +16,6 @@ import {
   Spinner,
   Stack,
   Text,
-  useEditable,
 } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import { BiArrowBack } from "react-icons/bi";
@@ -165,7 +164,7 @@ const ProviderDetails = () => {
               </Button>
               <Button
                 colorScheme="facebook"
-                onClick={() => router.push(`/camps/add`)}
+                onClick={() => router.push(`/camp/add/${id}`)}
                 w="100px"
               >
                 Add Camp

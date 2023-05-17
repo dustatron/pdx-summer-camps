@@ -70,12 +70,12 @@ const getYourCamps = () => {
                 </Text>
               </Box>
               <Stack>
-                <Link href={`/detail/${camp.campId}`}>
+                <Link href={`/camp/edit/${camp.campId}`}>
                   <Button w="100%" colorScheme="blue">
                     Edit
                   </Button>
                 </Link>
-                <Link href={`/show/${camp.campId}`}>
+                <Link href={`/camp/show/${camp.campId}`}>
                   <Button colorScheme="facebook">Preview</Button>
                 </Link>
               </Stack>

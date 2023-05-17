@@ -26,6 +26,7 @@ export const campSchema = z.object({
   status: z.enum(["OPEN", "FULL", "UNKNOWN"]),
   authorName: z.string().optional(),
   id: z.string().optional(),
+  providerId: z.string().optional()
 });
 
 export const campImages = z.object({
