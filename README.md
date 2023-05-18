@@ -40,6 +40,10 @@ run prisma studio
 npx prisma studio
 ```
 
+```
+npx prisma generate
+```
+
 Update schema and make a migration
 ```
 npx prisma migrate dev --name add_camps

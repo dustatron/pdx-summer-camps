@@ -49,11 +49,9 @@ export const providerRouter = router({
   updateProvider: protectedProcedure.input(providerSchema).mutation(({ input, ctx }) => {
     const { id } = input
 
-    return ctx.prisma.camp.update({
+    return ctx.prisma.provider.update({
       where: { id: id }, data: {
         ...input,
-        status: input.status,
-        quadrant: input.quadrant as string[],
         tags: input.tags as string[],
         title: input.title,
         lat: parseFloat(input.lat),
@@ -61,6 +59,7 @@ export const providerRouter = router({
         website: input.website,
         ages: input?.agesObject?.map((age) => age.value),
         address: input.address,
+        contact: input.contact
       }
     })
   }),

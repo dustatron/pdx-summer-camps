@@ -60,26 +60,19 @@ function Details() {
               <Text color="red.500">{errors.ages.message}</Text>
             )}
           </FormControl>
-          <FormControl>
-            <FormLabel>Price range</FormLabel>
-            <Input {...register("price")} />
-            {errors.price?.message && (
-              <Text color="red.500">{errors.price.message}</Text>
-            )}
-          </FormControl>
         </Stack>
         {/* Right  */}
         <Stack spacing={10} w="50%">
           <FormControl>
             <FormLabel>Drop Off Times</FormLabel>
-            <Input {...register("dropOff")} />
+            <Input type="time" {...register("dropOff")} />
             {errors.dropOff?.message && (
               <Text color="red.500">{errors.dropOff.message}</Text>
             )}
           </FormControl>
           <FormControl>
             <FormLabel>Pick Up Times</FormLabel>
-            <Input {...register("pickUp")} />
+            <Input type="time" {...register("pickUp")} />
             {errors.pickUp?.message && (
               <Text color="red.500">{errors.pickUp.message}</Text>
             )}

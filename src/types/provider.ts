@@ -19,7 +19,6 @@ export const providerSchema = z.object({
   quadrantObject: z.array(z.object({ value: z.string(), label: z.string() })).optional().nullable(),
   ages: z.array(z.string()).optional().nullable(),
   agesObject: z.array(z.object({ value: z.string(), label: z.string() })).optional().nullable(),
-  price: z.string().max(150).optional().nullable(),
   pickUp: z.string().max(100).optional().nullable(),
   dropOff: z.string().max(100).optional().nullable(),
   dateStart: z.string().max(150).optional().nullable(),
