@@ -140,12 +140,6 @@ function Preview() {
           errorMessage={errorMap.get("instagram")?.message}
         />
         <DisplayBasicData
-          title={"price"}
-          value={String(valuesMap.get("price") || "-")}
-          hasError={errorMap.has("price")}
-          errorMessage={errorMap.get("price")?.message}
-        />
-        <DisplayBasicData
           title={"Drop Off"}
           value={String(valuesMap.get("dropOff") || "-")}
           hasError={errorMap.has("dropOff")}

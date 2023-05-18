@@ -47,7 +47,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
           body: "New Provider added",
           autoClose: false,
         });
-        router.push(`/providerdetail/${provider?.id}`);
+        router.push(`/provider/detail/${provider?.id}`);
       },
     });
 
@@ -60,7 +60,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
           body: "New Provider added",
           autoClose: false,
         });
-        router.push(`/providerdetail/${provider?.id}`);
+        router.push(`/provider/detail/${provider?.id}`);
       },
     });
 
@@ -78,7 +78,6 @@ function ProviderForm({ isEdit, provider }: FormProps) {
   });
 
   const submitForm = (form: any) => {
-    console.log("form data", form);
     if (isEdit) {
       updateProviderMutation(form);
     }
@@ -142,7 +141,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
                           fontWeight="bold"
                           fontSize="2xl"
                         >
-                          Camp Details
+                          Details
                         </Box>
                         <AccordionIcon />
                       </AccordionButton>
