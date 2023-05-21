@@ -79,6 +79,27 @@ function ProviderForm({ isEdit, provider }: FormProps) {
     },
   });
 
+  const { mutate: deleteProvider, isLoading: isDeleting } =
+    trpc.provider.delete.useMutation({
+      onSuccess: () => {
+        addAlert({
+          status: "success",
+          title: "Success",
+          body: "Deleted camp provider",
+          autoClose: false,
+        });
+        router.push(`${Routes.providerList}`);
+      },
+      onError: () => {
+        addAlert({
+          status: "error",
+          title: "Error",
+          body: "Could not delete provider",
+          autoClose: false,
+        });
+      },
+    });
+
   const submitForm = (form: any) => {
     if (isEdit) {
       updateProviderMutation(form);
@@ -220,14 +241,28 @@ function ProviderForm({ isEdit, provider }: FormProps) {
             )}
             {isPreview && <Preview />}
             <Stack direction="row" justifyContent="space-between" py="10">
-              <Button
-                onClick={() => {
-                  // methods.reset();
-                  setIsPreview(false);
-                }}
-              >
-                back
-              </Button>
+              <Stack direction="row">
+                <Button
+                  onClick={() => {
+                    // methods.reset();
+                    setIsPreview(false);
+                  }}
+                >
+                  back
+                </Button>
+                {provider && (
+                  <Button
+                    colorScheme="red"
+                    onClick={() => {
+                      deleteProvider({ providerId: provider.id });
+                    }}
+                    isLoading={isDeleting}
+                  >
+                    Delete
+                  </Button>
+                )}
+              </Stack>
+
               <Stack direction="row">
                 {!isPreview && (
                   <Button colorScheme="blue" onClick={() => setIsPreview(true)}>

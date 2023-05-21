@@ -63,8 +63,8 @@ export const providerRouter = router({
       }
     })
   }),
-  delete: publicProcedure.input(z.object({ providerId: z.string() })).mutation(({ input, ctx }) => {
-    return ctx.prisma.camp.delete({ where: { id: input.providerId } })
+  delete: protectedProcedure.input(z.object({ providerId: z.string() })).mutation(({ input, ctx }) => {
+    return ctx.prisma.provider.delete({ where: { id: input.providerId } })
   }),
   removeImage: publicProcedure.input(z.object({ imgId: z.string(), public_id: z.string().optional().nullable() })).mutation(({ input, ctx }) => {
     cloudinary.v2.config({

@@ -75,7 +75,7 @@ function DisplayMultiData({
 function Preview() {
   const {
     getValues,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useFormContext<ProviderSchema>();
 
   const values = Object.entries(getValues());
