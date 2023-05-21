@@ -6,7 +6,7 @@ import {
   Center,
   Image,
   useColorModeValue,
-  Flex,
+  Box,
   Text,
   Badge,
 } from "@chakra-ui/react";
@@ -15,6 +15,7 @@ import parse from "html-react-parser";
 import { useRouter } from "next/router";
 import removeHttp from "../../utils/http";
 import { CldImage } from "next-cloudinary";
+import { Routes } from "../../types/sharedTypes";
 
 export type CardDetails = {
   title: string;
@@ -41,6 +42,7 @@ type Props = {
 
 const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
   const { title, description, image, address, website, id, tags } = details;
+  const colorOption = useColorModeValue("gray.700", "gray.400");
   const router = useRouter();
 
   const isSelectedCamp = selectedCampId === id;
@@ -48,58 +50,45 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
   const parsedDescription = parse(description.slice(0, 150));
 
   return (
-    <Center py={2} id={id} w="100%">
-      <Stack
-        borderWidth="1px"
-        borderRadius="lg"
-        w="90%"
-        minHeight={{ sm: "476px", md: "20rem" }}
-        direction={{ base: "column", md: "row" }}
-        bg={useColorModeValue("white", "gray.900")}
-        boxShadow={"2xl"}
-        padding={4}
-        border={isSelectedCamp ? "2px" : "0"}
-        borderColor={isSelectedCamp ? "gray.600" : ""}
-      >
-        <Flex flex={1} bg="gray.50" rounded="md" overflow="hidden">
-          {image[0]?.public_id && (
-            <CldImage
-              alt={title}
-              height="250"
-              width="400"
-              crop="thumb"
-              gravity="faces"
-              src={image[0]?.public_id}
-            />
-          )}
-          {!image[0]?.public_id && image[0]?.src && (
-            <Link href={`/show/${details.id}`}>
-              <Image
-                objectFit="cover"
-                boxSize="100%"
-                src={(image[0] && image[0].src) || "/img-place-holder.png"}
-                alt="camp logo"
-              />
-            </Link>
-          )}
-        </Flex>
-        <Stack
-          flex={1}
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="start"
-          p={1}
-        >
+    <Stack
+      id={id}
+      borderWidth="1px"
+      borderRadius="lg"
+      w="99%"
+      h="100%"
+      maxHeight={{ sm: "450px", md: "20rem" }}
+      direction={{ base: "column", md: "row" }}
+      bg={useColorModeValue("white", "gray.900")}
+      boxShadow={"2xl"}
+      padding={4}
+      border={isSelectedCamp ? "2px" : "0"}
+      borderColor={isSelectedCamp ? "gray.600" : "gray.100"}
+    >
+      <Box flex={1} rounded="md" overflow="hidden">
+        {image[0]?.public_id && (
+          <CldImage
+            alt={title}
+            height="330"
+            width="450"
+            crop="fill"
+            src={image[0]?.public_id}
+          />
+        )}
+        {!image[0]?.public_id && image[0]?.src && (
+          <Image
+            objectFit="cover"
+            boxSize="100%"
+            src={(image[0] && image[0].src) || "/img-place-holder.png"}
+            alt="camp logo"
+          />
+        )}
+      </Box>
+      <Stack flex={1} p={1} h="100%" justifyContent="space-between">
+        <Stack>
           <Heading fontSize={"2xl"} fontFamily={"body"}>
             {title}
           </Heading>
 
-          <Text color={useColorModeValue("gray.700", "gray.400")} px={1}>
-            {parsedDescription} {description.length > 150 ? "..." : ""}
-          </Text>
-          <Text fontWeight={600} color={"gray.900"} size="sm" mb={1}>
-            {address.slice(0, 40)}
-          </Text>
           {website && (
             <a
               href={`https://${removeHttp(website)}`}
@@ -111,14 +100,26 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
               </Text>
             </a>
           )}
-          <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
+        </Stack>
+
+        {!isMobile && (
+          <Text color={colorOption} px={1}>
+            {parsedDescription} {description.length > 150 ? "..." : ""}
+          </Text>
+        )}
+
+        {/* <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
             {tags &&
               tags.map((tag: string) => (
                 <Badge key={tag} px={2} py={1} bg="gray.50" fontWeight={"400"}>
                   {tag}
                 </Badge>
               ))}
-          </Stack>
+          </Stack> */}
+        <Stack spacing={3}>
+          <Text fontWeight={600} color={"gray.900"} size="sm" mb={1}>
+            {address.slice(0, 40)}
+          </Text>
           {!isMobile && (
             <Stack
               width={"100%"}
@@ -134,7 +135,7 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
                 rounded={"full"}
                 onClick={() => {
                   onSelect(id);
-                  router.push(`/camp/show/${details.id}`);
+                  router.push(`${Routes.campDetail}${details.id}`);
                   // showDetails();
                 }}
                 _focus={{
@@ -167,14 +168,14 @@ const CampCard = ({ details, onSelect, selectedCampId, isMobile }: Props) => {
           {isMobile && (
             <Button
               w="100%"
-              onClick={() => router.push(`/camp/show/${details.id}`)}
+              onClick={() => router.push(`${Routes.campDetail}${details.id}`)}
             >
               More Info
             </Button>
           )}
         </Stack>
       </Stack>
-    </Center>
+    </Stack>
   );
 };
 

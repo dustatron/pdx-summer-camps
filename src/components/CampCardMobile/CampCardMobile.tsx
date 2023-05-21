@@ -4,6 +4,7 @@ import type { FilterState } from "../CampListWrapper/type";
 import { useRouter } from "next/router";
 import type { CampDetailFromAPI } from "../../types/camp";
 import parse from "html-react-parser";
+import { Routes } from "../../types/sharedTypes";
 
 type Props = {
   next: () => void;
@@ -47,7 +48,7 @@ const CampCardMobile = ({ next, prev, selectedCamp, filterState }: Props) => {
       <Flex
         w="100%"
         zIndex={1000}
-        onClick={() => router.push(`/show/${selectedCamp?.id}`)}
+        onClick={() => router.push(`${Routes.campDetail}${selectedCamp?.id}`)}
         border="1px"
         borderColor="gray.100"
       >
@@ -62,6 +63,7 @@ const CampCardMobile = ({ next, prev, selectedCamp, filterState }: Props) => {
           <Flex w="30%" justifyContent="center">
             {selectedCamp.image && selectedCamp.image[0] && (
               <Image
+                objectFit="cover"
                 src={selectedCamp.image[0].src}
                 fit="scale-down"
                 alt="camp logo"

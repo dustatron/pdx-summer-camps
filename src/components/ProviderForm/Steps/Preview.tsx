@@ -89,7 +89,16 @@ function Preview() {
   return (
     <>
       <Heading size="md">Preview</Heading>
-      {!isValid && <Text color="red.300">Errors need to be addressed</Text>}
+      {errors && (
+        <Box border="1px" borderColor="red.300" p="2" borderRadius="md" my="4">
+          {!isValid && <Text color="red.300">Errors need to be addressed</Text>}
+          {Object.entries(errors).map(([title, value]) => (
+            <Box key={title}>
+              {title}: {value.message}
+            </Box>
+          ))}
+        </Box>
+      )}
       <Stack spacing={5}>
         <DisplayBasicData
           title={"title"}

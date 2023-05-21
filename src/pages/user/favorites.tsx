@@ -4,13 +4,14 @@ import type { CardDetails } from "../../components/CampCard";
 import CampCard from "../../components/CampCard";
 import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
+import { Routes } from "../../types/sharedTypes";
 
 function Favorite() {
   const { data, isLoading } = trpc.favorites.getThisUsersFavorites.useQuery();
   const { push } = useRouter();
 
   const onSelect = (id: string) => {
-    return push(`/show/${id}`);
+    return push(`${Routes.campDetail}${id}`);
   };
   return (
     <Center w="100%" bg="white">

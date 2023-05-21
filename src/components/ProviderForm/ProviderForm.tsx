@@ -27,6 +27,7 @@ import { useRouter } from "next/router";
 import { providerSchema } from "../../types/provider";
 import AddImage from "./AddImage";
 import ProviderCamps from "./Steps/ProviderCamps";
+import { Routes } from "../../types/sharedTypes";
 
 interface FormProps {
   isEdit?: boolean;
@@ -47,7 +48,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
           body: "New Provider added",
           autoClose: false,
         });
-        router.push(`/provider/detail/${provider?.id}`);
+        router.push(`${Routes.providerDetail}${provider?.id}`);
       },
     });
 
@@ -60,7 +61,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
           body: "New Provider added",
           autoClose: false,
         });
-        router.push(`/provider/detail/${provider?.id}`);
+        router.push(`${Routes.providerDetail}${provider?.id}`);
       },
     });
 
@@ -109,7 +110,7 @@ function ProviderForm({ isEdit, provider }: FormProps) {
           spacing={5}
         >
           <form onSubmit={methods.handleSubmit((e) => submitForm(e))}>
-            {!isPreview && provider && (
+            {!isPreview && (
               <>
                 <Accordion defaultIndex={[0, 1, 2, 3]} allowMultiple>
                   <AccordionItem>
@@ -184,31 +185,35 @@ function ProviderForm({ isEdit, provider }: FormProps) {
                         <AccordionIcon />
                       </AccordionButton>
                     </Text>
-                    <AccordionPanel pb={4}>
-                      <AddImage providerId={provider.id} />
-                    </AccordionPanel>
+                    {provider && (
+                      <AccordionPanel pb={4}>
+                        <AddImage providerId={provider.id} />
+                      </AccordionPanel>
+                    )}
                   </AccordionItem>
-                  <AccordionItem>
-                    <Text as="h2" bg="gray.100">
-                      <AccordionButton>
-                        <Box
-                          as="span"
-                          flex="1"
-                          textAlign="left"
-                          fontWeight="bold"
-                          fontSize="2xl"
-                        >
-                          Camps
-                        </Box>
-                        <AccordionIcon />
-                      </AccordionButton>
-                    </Text>
-                    <AccordionPanel pb={4}>
-                      <ProviderCamps
-                        provider={provider as Provider & { camps: Camp[] }}
-                      />
-                    </AccordionPanel>
-                  </AccordionItem>
+                  {provider && (
+                    <AccordionItem>
+                      <Text as="h2" bg="gray.100">
+                        <AccordionButton>
+                          <Box
+                            as="span"
+                            flex="1"
+                            textAlign="left"
+                            fontWeight="bold"
+                            fontSize="2xl"
+                          >
+                            Camps
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </Text>
+                      <AccordionPanel pb={4}>
+                        <ProviderCamps
+                          provider={provider as Provider & { camps: Camp[] }}
+                        />
+                      </AccordionPanel>
+                    </AccordionItem>
+                  )}
                 </Accordion>
               </>
             )}
