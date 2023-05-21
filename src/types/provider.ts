@@ -14,7 +14,7 @@ export const providerSchema = z.object({
   contactName: z.string().max(150).optional().nullable(),
   lat: z.string(),
   lng: z.string(),
-  tags: z.string(z.string()).optional().nullable(),
+  tags: z.array(z.string()).optional().nullable(),
   quadrant: z.array(z.string()).optional().nullable(),
   quadrantObject: z.array(z.object({ value: z.string(), label: z.string() })).optional().nullable(),
   ages: z.array(z.string()).optional().nullable(),

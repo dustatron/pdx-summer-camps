@@ -14,7 +14,6 @@ import type { ProviderSchema } from "../../../types/provider";
 const ContactInfo = () => {
   const {
     register,
-    setValue,
     formState: { errors },
   } = useFormContext<ProviderSchema>();
   return (
@@ -84,7 +83,15 @@ const ContactInfo = () => {
             <Input
               type="text"
               placeholder="Comma separated list"
-              {...register("tags")}
+              {...register("tags", {
+                setValueAs: (value) => {
+                  console.log("value", value);
+                  if (typeof value === "string") {
+                    return value?.split(",");
+                  }
+                  return value;
+                },
+              })}
             />
           </FormControl>
         </Stack>

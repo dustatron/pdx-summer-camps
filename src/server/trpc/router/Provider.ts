@@ -52,7 +52,7 @@ export const providerRouter = router({
     return ctx.prisma.provider.update({
       where: { id: id }, data: {
         ...input,
-        tags: input.tags?.split(','),
+        tags: !!input.tags?.length ? input.tags : [],
         title: input.title,
         lat: parseFloat(input.lat),
         lng: parseFloat(input.lng),
