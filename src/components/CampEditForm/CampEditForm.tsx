@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Form from "./Form";
 import { useAlert } from "../../context/AlertContext";
+import { Routes } from "../../types/sharedTypes";
 
 const initialState: CampData = {
   lat: 0,
@@ -71,10 +72,10 @@ function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
         body: "Camp was successfully deleted",
         autoClose: true,
       });
-      if (history === `/camp/show/${campData?.id}`) {
-        router.push("/");
+      if (history === `${Routes.campDetail}${campData?.id}`) {
+        router.push(Routes.home);
       } else {
-        router.push("/user/camps");
+        router.push(Routes.userCamps);
       }
     },
   });
@@ -105,7 +106,7 @@ function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
         body: "New camp added",
         autoClose: true,
       });
-      router.push("/user/camps");
+      router.push(Routes.userCamps);
     },
     onError: () => {
       addAlert({
@@ -126,7 +127,7 @@ function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
           autoClose: true,
         });
 
-        router.push(`/camp/show/${campData?.id}`);
+        router.push(`${Routes.campDetail}${campData?.id}`);
       },
       onError: () => {
         addAlert({

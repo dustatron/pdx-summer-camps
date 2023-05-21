@@ -21,10 +21,11 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { Routes } from "../../types/sharedTypes";
 
 const Links = [
-  { title: "Providers", route: "/provider/list" },
   { title: "Camps", route: "/camp/list" },
+  { title: "Providers", route: "/provider/list" },
   { title: "About", route: "/about" },
 ];
 
@@ -77,9 +78,9 @@ export default function Navbar() {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={"center"}>
-          <Link href="/">
+          <Link href={Routes.home}>
             <Box fontWeight="black">Portland Kid Camps</Box>
-            {router.pathname === "/" && <Underline />}
+            {router.pathname === Routes.home && <Underline />}
           </Link>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
@@ -109,17 +110,17 @@ export default function Navbar() {
                 />
               </MenuButton>
               <MenuList>
-                <Link href="/user/camps">
+                <Link href={Routes.userFavorites}>
+                  <MenuItem>Favorites</MenuItem>
+                </Link>
+                <Link href={Routes.userCamps}>
                   <MenuItem>Your Camps</MenuItem>
                 </Link>
-                <Link href="/camp/add">
+                <Link href={Routes.campAdd}>
                   <MenuItem>Add Camp</MenuItem>
                 </Link>
-                <Link href="/provider/add">
+                <Link href={Routes.providerAdd}>
                   <MenuItem>Add Provider</MenuItem>
-                </Link>
-                <Link href="/user/favorites">
-                  <MenuItem>Favorites</MenuItem>
                 </Link>
                 <MenuDivider />
                 <MenuItem onClick={() => signOut()}>Sign Out</MenuItem>

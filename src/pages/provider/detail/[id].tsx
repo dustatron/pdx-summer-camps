@@ -27,6 +27,7 @@ import { useSession } from "next-auth/react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import type { CardDetails } from "../../../components/CampCard";
 import CampCard from "../../../components/CampCard";
+import { Routes } from "../../../types/sharedTypes";
 
 const getFormattedAges = (values: string[]): string[] => {
   if (values) {
@@ -98,7 +99,7 @@ const ProviderDetails = () => {
   if (data) {
     const {
       image,
-      tags,
+      // tags,
       address,
       ages,
       brief,
@@ -157,14 +158,16 @@ const ProviderDetails = () => {
             <Stack direction="row" spacing={5}>
               <Button
                 colorScheme="facebook"
-                onClick={() => router.push(`/provider/edit/${id}`)}
+                onClick={() => router.push(`${Routes.providerEdit}${id}`)}
                 w="100px"
               >
                 Edit
               </Button>
               <Button
                 colorScheme="facebook"
-                onClick={() => router.push(`/camp/add/${id}`)}
+                onClick={() =>
+                  router.push(`${Routes.campAddWithProvider}${id}`)
+                }
                 w="100px"
               >
                 Add Camp
@@ -197,7 +200,7 @@ const ProviderDetails = () => {
                 Favorited : {favorites.length}
               </Text>
             </Box>
-
+            {/* 
             <Box>
               {tags && (
                 <Text color="blue.600" cursor="pointer">
@@ -207,7 +210,7 @@ const ProviderDetails = () => {
                 </Text>
               )}
               {!tags && <Text>Not Provided</Text>}
-            </Box>
+            </Box> */}
             <Stack spacing={5}>
               <Stack direction={{ sm: "column", md: "column", lg: "row" }}>
                 <Box w={{ md: "100%", lg: "50%" }}>
@@ -355,22 +358,23 @@ const ProviderDetails = () => {
           <Text fontWeight="extrabold" fontSize="lg">
             Camps: {camps.length}
           </Text>
-          <Box>
+          <Flex w="100%" wrap="wrap">
             {!!camps?.length &&
               camps.map((camp) => (
-                <CampCard
-                  key={camp.id}
-                  details={camp as CardDetails}
-                  isMobile
-                  onSelect={() => {
-                    return "";
-                  }}
-                  showDetails={() => {
-                    return "";
-                  }}
-                />
+                <Box key={camp.id} w="50%">
+                  <CampCard
+                    details={camp as CardDetails}
+                    isMobile
+                    onSelect={() => {
+                      return "";
+                    }}
+                    showDetails={() => {
+                      return "";
+                    }}
+                  />
+                </Box>
               ))}
-          </Box>
+          </Flex>
         </Box>
       </Container>
     );

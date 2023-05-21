@@ -15,6 +15,7 @@ import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import removeHttp from "../../utils/http";
 import { CldImage } from "next-cloudinary";
+import { Routes } from "../../types/sharedTypes";
 
 const providers = () => {
   const { data, isLoading } = trpc.provider.getAllProviders.useQuery();
@@ -26,111 +27,81 @@ const providers = () => {
           <Spinner />
         </Center>
       )}
+
       {data && (
-        <>
+        <Stack spacing={5}>
           {data.map((provider) => (
             <Box key={provider.id}>
-              <Link href={`/provider/detail/${provider.id}`}>
-                <Center py={2} id={provider.id} w="100%">
+              <Link href={`${Routes.providerDetail}${provider.id}`}>
+                <Stack
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  w="100%"
+                  minHeight={{ sm: "476px", md: "15rem" }}
+                  direction={{ base: "column", md: "row" }}
+                  bg={useColorModeValue("white", "gray.900")}
+                  boxShadow={"2xl"}
+                  padding={4}
+                  border={false ? "2px" : "0"}
+                  borderColor={false ? "gray.600" : ""}
+                  spacing={5}
+                >
+                  <Box bg="gray.50" rounded="md" overflow="hidden">
+                    {provider && (
+                      <CldImage
+                        alt={provider.title}
+                        height="500"
+                        width="400"
+                        crop="fit"
+                        src={provider.image[0]?.public_id as string}
+                      />
+                    )}
+                  </Box>
                   <Stack
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    w="90%"
-                    minHeight={{ sm: "476px", md: "20rem" }}
-                    direction={{ base: "column", md: "row" }}
-                    bg={useColorModeValue("white", "gray.900")}
-                    boxShadow={"2xl"}
-                    padding={4}
-                    border={false ? "2px" : "0"}
-                    borderColor={false ? "gray.600" : ""}
+                    flex={1}
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="start"
+                    p={1}
+                    h="100%"
                   >
-                    <Flex
-                      flex={1}
-                      bg="gray.50"
-                      rounded="md"
-                      w="30%"
-                      overflow="hidden"
+                    <Heading fontSize={"2xl"} fontFamily={"body"}>
+                      {provider.title}
+                    </Heading>
+                    <Text
+                      color={useColorModeValue("gray.700", "gray.400")}
+                      px={1}
                     >
-                      {provider && (
-                        <CldImage
-                          alt={provider.title}
-                          height="250"
-                          width="700"
-                          crop="thumb"
-                          gravity="faces"
-                          src={provider.image[0]?.public_id as string}
-                        />
-                      )}
-                    </Flex>
-                    <Stack
-                      flex={1}
-                      flexDirection="column"
-                      justifyContent="center"
-                      alignItems="start"
-                      p={1}
-                    >
-                      <Heading fontSize={"2xl"} fontFamily={"body"}>
-                        {provider.title}
-                      </Heading>
-                      <Text
-                        color={useColorModeValue("gray.700", "gray.400")}
-                        px={1}
+                      {provider.brief}
+                      {provider.brief && provider?.brief?.length > 150
+                        ? "..."
+                        : ""}
+                    </Text>
+                    <Text fontWeight={600} color={"gray.900"} size="sm" mb={1}>
+                      {provider.address.slice(0, 40)}
+                    </Text>
+                    {provider.website && (
+                      <a
+                        href={`https://${removeHttp(provider.website)}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        {provider.brief}
-                        {provider.brief && provider?.brief?.length > 150
-                          ? "..."
-                          : ""}
-                      </Text>
-                      <Text
-                        fontWeight={600}
-                        color={"gray.900"}
-                        size="sm"
-                        mb={1}
-                      >
-                        {provider.address.slice(0, 40)}
-                      </Text>
-                      {provider.website && (
-                        <a
-                          href={`https://${removeHttp(provider.website)}`}
-                          target="_blank"
-                          rel="noreferrer"
+                        <Text
+                          fontWeight={600}
+                          color={"gray.500"}
+                          size="sm"
+                          mb={1}
                         >
-                          <Text
-                            fontWeight={600}
-                            color={"gray.500"}
-                            size="sm"
-                            mb={1}
-                          >
-                            Website
-                          </Text>
-                        </a>
-                      )}
-                      <Stack
-                        align={"center"}
-                        justify={"center"}
-                        direction={"row"}
-                        mt={6}
-                      >
-                        {provider.tags &&
-                          provider.tags.map((tag: string) => (
-                            <Badge
-                              key={tag}
-                              px={2}
-                              py={1}
-                              bg="gray.50"
-                              fontWeight={"400"}
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                      </Stack>
-                    </Stack>
+                          Website
+                        </Text>
+                      </a>
+                    )}
                   </Stack>
-                </Center>
+                </Stack>
               </Link>
             </Box>
           ))}
-        </>
+        </Stack>
       )}
     </Container>
   );

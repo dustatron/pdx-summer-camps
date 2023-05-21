@@ -4,11 +4,9 @@ import {
   FormLabel,
   Input,
   Text,
-  Heading,
   Stack,
   InputGroup,
   InputLeftAddon,
-  Box,
 } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 import type { ProviderSchema } from "../../../types/provider";
@@ -46,7 +44,7 @@ const ContactInfo = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>Contact Title *</FormLabel>
+            <FormLabel>Contact Title</FormLabel>
             <Input {...register("contact")} />
             {errors.contact?.message && (
               <Text color="red.500">{errors.contact.message}</Text>
@@ -85,7 +83,15 @@ const ContactInfo = () => {
             <Input
               type="text"
               placeholder="Comma separated list"
-              {...register("tags")}
+              {...register("tags", {
+                setValueAs: (value) => {
+                  console.log("value", value);
+                  if (typeof value === "string") {
+                    return value?.split(",");
+                  }
+                  return value;
+                },
+              })}
             />
           </FormControl>
         </Stack>

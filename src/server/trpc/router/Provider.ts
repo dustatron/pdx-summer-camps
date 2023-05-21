@@ -1,5 +1,5 @@
 import { z } from "zod";
-import cloudinary, { Status } from 'cloudinary'
+import cloudinary from 'cloudinary'
 
 import { providerSchema } from '../../../types/provider'
 import { router, publicProcedure, protectedProcedure } from "../trpc";
@@ -52,7 +52,7 @@ export const providerRouter = router({
     return ctx.prisma.provider.update({
       where: { id: id }, data: {
         ...input,
-        tags: input.tags as string[],
+        tags: !!input.tags?.length ? input.tags : [],
         title: input.title,
         lat: parseFloat(input.lat),
         lng: parseFloat(input.lng),

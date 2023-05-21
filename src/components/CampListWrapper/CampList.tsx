@@ -121,7 +121,7 @@ export default function CampList({
             />
           </Center>
         )}
-        <Flex flexWrap="wrap" h="100%" w="100%" overflow="scroll">
+        <Stack h="100%" w="100%" overflow="scroll" p="5" spacing={5}>
           {filteredCampList?.map((camp) => (
             <CampCard
               isMobile={isMobile}
@@ -134,7 +134,7 @@ export default function CampList({
               onSelect={selectCampFromList}
             />
           ))}
-        </Flex>
+        </Stack>
       </>
     </Stack>
   );

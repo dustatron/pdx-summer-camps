@@ -77,19 +77,23 @@ function Preview() {
     getValues,
     formState: { errors, isValid },
   } = useFormContext<ProviderSchema>();
-  console.log("errors", errors);
-  console.log("isValid", isValid);
 
   const values = Object.entries(getValues());
-  console.log("values", values);
 
   const errorMap = new Map(Object.entries(errors));
   const valuesMap = new Map(values);
+  console.log("errors", errorMap);
 
   return (
     <>
       <Heading size="md">Preview</Heading>
-      {!isValid && <Text color="red.300">Errors need to be addressed</Text>}
+      {errorMap.size !== 0 && (
+        <Box p="2" borderColor="red.100" border="1px" bg="red.50">
+          There are errors that need to bee addressed before you can complete
+          this form.
+        </Box>
+      )}
+
       <Stack spacing={5}>
         <DisplayBasicData
           title={"title"}
@@ -126,6 +130,12 @@ function Preview() {
           value={String(valuesMap.get("contactName") || "-")}
           hasError={errorMap.has("contactName")}
           errorMessage={errorMap.get("contactName")?.message}
+        />
+        <DisplayBasicData
+          title={"Tags"}
+          value={String(valuesMap.get("tags") || "-")}
+          hasError={errorMap.has("tags")}
+          errorMessage={errorMap.get("tags")?.message}
         />
         <DisplayBasicData
           title={"facebook"}

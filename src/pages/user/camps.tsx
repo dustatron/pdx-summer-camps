@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import { trpc } from "../../utils/trpc";
+import { Routes } from "../../types/sharedTypes";
 
 const getYourCamps = () => {
   const { data: campData, status } = trpc.camps?.getYourCamps.useQuery();
@@ -34,8 +35,7 @@ const getYourCamps = () => {
           </Center>
         )}
         {status === "success" &&
-          campData &&
-          campData.map((camp) => (
+          campData?.map((camp) => (
             <Stack
               direction="row"
               key={camp.id}
@@ -70,12 +70,12 @@ const getYourCamps = () => {
                 </Text>
               </Box>
               <Stack>
-                <Link href={`/camp/edit/${camp.campId}`}>
+                <Link href={`${Routes.campEdit}${camp.campId}`}>
                   <Button w="100%" colorScheme="blue">
                     Edit
                   </Button>
                 </Link>
-                <Link href={`/camp/show/${camp.campId}`}>
+                <Link href={`${Routes.campDetail}${camp.campId}`}>
                   <Button colorScheme="facebook">Preview</Button>
                 </Link>
               </Stack>

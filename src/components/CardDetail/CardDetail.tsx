@@ -27,6 +27,7 @@ import { useAlert } from "../../context/AlertContext";
 import removeHttp from "../../utils/http";
 import formatDate from "../../utils/formatDate";
 import { CldImage } from "next-cloudinary";
+import { Routes } from "../../types/sharedTypes";
 
 type Favorite = { campId: string; userId: number; id: string };
 
@@ -174,7 +175,7 @@ function CardDetail({ onBack, campData }: Props) {
           {userData?.role === "ADMIN" && (
             <Button
               colorScheme="facebook"
-              onClick={() => router.push(`/camp/edit/${id}`)}
+              onClick={() => router.push(`${Routes.campEdit}${id}`)}
               w="100px"
             >
               Edit
