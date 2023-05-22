@@ -20,7 +20,6 @@ import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import type { CampDetailFromAPI } from "../../types/camp";
 import { AgeValues, QuadrantValues } from "../../types/camp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAlert } from "../../context/AlertContext";
@@ -28,14 +27,23 @@ import removeHttp from "../../utils/http";
 import formatDate from "../../utils/formatDate";
 import { CldImage } from "next-cloudinary";
 import { Routes } from "../../types/sharedTypes";
-import { Provider } from "@prisma/client";
+import type {
+  Camp,
+  Provider,
+  CampAuthor,
+  CampImage,
+  Favorite,
+} from "@prisma/client";
 import Link from "next/link";
-
-type Favorite = { campId: string; userId: number; id: string };
 
 type Props = {
   onBack: () => void;
-  campData: CampDetailFromAPI & { provider: Provider };
+  campData: Camp & {
+    provider: Provider;
+    image: CampImage[];
+    author: CampAuthor[];
+    favorites: Favorite[];
+  };
 };
 
 function CardDetail({ onBack, campData }: Props) {
@@ -56,6 +64,7 @@ function CardDetail({ onBack, campData }: Props) {
   );
 
   const {
+    author,
     title,
     image,
     description,
@@ -71,7 +80,6 @@ function CardDetail({ onBack, campData }: Props) {
     phone,
     status,
     favorites,
-    authorName,
     brief,
     contactName,
     dateEnd,
@@ -324,7 +332,7 @@ function CardDetail({ onBack, campData }: Props) {
                   <Text fontWeight="extrabold" fontSize="lg">
                     Start Date
                   </Text>
-                  <Text>{formatDate(dateStart)}</Text>
+                  {dateStart && <Text>{formatDate(dateStart)}</Text>}
                   {!dateStart && <Text>Not Provided</Text>}
                 </Box>
                 <Divider orientation="vertical" />
@@ -332,7 +340,7 @@ function CardDetail({ onBack, campData }: Props) {
                   <Text fontWeight="extrabold" fontSize="lg">
                     End Date
                   </Text>
-                  <Text>{formatDate(dateEnd)}</Text>
+                  {dateEnd && <Text>{formatDate(dateEnd)}</Text>}
                   {!dateEnd && <Text>Not Provided</Text>}
                 </Box>
               </Stack>
@@ -445,7 +453,7 @@ function CardDetail({ onBack, campData }: Props) {
               This camp posting was created by:{" "}
             </Text>
             <Text>
-              {authorName ? authorName : "Portland Kid Camps site admin"}
+              {author ? author[0]?.authorName : "Portland Kid Camps site admin"}
             </Text>
           </Flex>
         </Stack>
