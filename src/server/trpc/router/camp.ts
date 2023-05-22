@@ -13,7 +13,7 @@ export const campRouter = router({
     return ctx.prisma.campAuthor.findMany({ where: { userId: Number(userId) }, include: { camp: { include: { image: true } } }, })
   }),
   getCamp: publicProcedure.input(z.object({ campId: z.string() })).query(({ input, ctx }) => {
-    return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true, author: true, favorites: true } })
+    return ctx.prisma.camp.findFirst({ where: { id: input.campId }, include: { image: true, author: true, favorites: true, provider: true } })
   }),
   addCamp: protectedProcedure.input(campSchema).mutation(({ input, ctx }) => {
     const { name, id } = ctx.session.user
