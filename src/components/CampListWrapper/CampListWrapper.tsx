@@ -14,7 +14,13 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
-import type { Camp } from "@prisma/client";
+import type {
+  Camp,
+  CampAuthor,
+  CampImage,
+  Favorite,
+  Provider,
+} from "@prisma/client";
 import type { CampDetailFromAPI, MultiSelectOption } from "../../types/camp";
 import { filterCampList } from "../../utils/filterCampList";
 import CampList from "./CampList";
@@ -223,7 +229,12 @@ function CampListWrapper() {
             <CardDetail
               onBack={() => dispatch({ type: "showingDetailsFalse" })}
               campData={
-                filterState.selectedCamp as unknown as CampDetailFromAPI
+                filterState.selectedCamp as unknown as Camp & {
+                  provider: Provider;
+                  image: CampImage[];
+                  author: CampAuthor[];
+                  favorites: Favorite[];
+                }
               }
             />
           </Flex>

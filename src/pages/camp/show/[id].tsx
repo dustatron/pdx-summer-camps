@@ -6,6 +6,13 @@ import { useSession } from "next-auth/react";
 import RenderTree from "../../../components/RenderTree";
 import CardDetail from "../../../components/CardDetail";
 import type { CampDetailFromAPI } from "../../../types/camp";
+import {
+  Camp,
+  CampAuthor,
+  CampImage,
+  Favorite,
+  Provider,
+} from "@prisma/client";
 
 const Show = () => {
   const router = useRouter();
@@ -29,7 +36,14 @@ const Show = () => {
       finalRender={
         <CardDetail
           onBack={() => router.back()}
-          campData={campData as unknown as CampDetailFromAPI}
+          campData={
+            campData as unknown as Camp & {
+              provider: Provider;
+              image: CampImage[];
+              author: CampAuthor[];
+              favorites: Favorite[];
+            }
+          }
         />
       }
     />
