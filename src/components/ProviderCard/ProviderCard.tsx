@@ -4,7 +4,14 @@ import type {
   Provider,
   ProviderImage,
 } from "@prisma/client";
-import { Heading, Box, useColorModeValue, Stack, Text } from "@chakra-ui/react";
+import {
+  Heading,
+  Box,
+  useColorModeValue,
+  Stack,
+  Text,
+  Image,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { Routes } from "../../types/sharedTypes";
@@ -35,15 +42,26 @@ const ProviderCard = ({ provider }: Props) => {
         borderColor={false ? "gray.600" : ""}
         spacing={5}
       >
-        <Box bg="gray.50" rounded="md" overflow="hidden">
+        <Box bg="gray.50" rounded="md" overflow="hidden" w="30%">
           <Link href={`${Routes.providerDetail}${provider.id}`}>
-            {provider && (
+            {provider && provider?.image[0]?.public_id && (
               <CldImage
                 alt={provider.title}
                 height="500"
                 width="400"
                 crop="fit"
                 src={provider.image[0]?.public_id as string}
+              />
+            )}
+            {provider && !provider?.image[0]?.public_id && (
+              <Image
+                objectFit="cover"
+                boxSize="100%"
+                src={
+                  (provider.image[0] && provider.image[0].src) ||
+                  "/img-place-holder.png"
+                }
+                alt="camp logo"
               />
             )}
           </Link>
@@ -56,9 +74,11 @@ const ProviderCard = ({ provider }: Props) => {
           p={1}
           h="100%"
         >
-          <Heading fontSize={"2xl"} fontFamily={"body"}>
-            {provider.title}
-          </Heading>
+          <Link href={`${Routes.providerDetail}${provider.id}`}>
+            <Heading fontSize={"2xl"} fontFamily={"body"}>
+              {provider.title}
+            </Heading>
+          </Link>
           <Text color={useColorModeValue("gray.700", "gray.400")} px={1}>
             {provider.brief}
             {provider.brief && provider?.brief?.length > 150 ? "..." : ""}

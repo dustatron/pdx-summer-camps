@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Container, Box, Heading } from "@chakra-ui/react";
+import { Container, Box, Heading, useToast } from "@chakra-ui/react";
 
 import { trpc } from "../../utils/trpc";
 import type { CampData } from "../../types/camp";
@@ -58,19 +58,19 @@ type Props = {
 
 function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
   const [formState, dispatch] = useReducer(reducer, campData || initialState);
+  const toast = useToast();
   const { data: session } = useSession();
-  const { addAlert } = useAlert();
 
   const router = useRouter();
 
   const { mutate: deleteCamp } = trpc.camps.delete.useMutation({
     onSuccess: () => {
       const history = window.history.state.url;
-      addAlert({
+      toast({
+        title: `Camp was successfully deleted`,
         status: "success",
-        title: "Success",
-        body: "Camp was successfully deleted",
-        autoClose: true,
+        isClosable: true,
+        position: "top",
       });
       if (history === `${Routes.campDetail}${campData?.id}`) {
         router.push(Routes.home);
@@ -81,38 +81,40 @@ function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
   });
   const { mutate: removeImage } = trpc.camps.removeImage.useMutation({
     onSuccess: () => {
-      addAlert({
+      toast({
+        title: `Removed Image`,
         status: "success",
-        title: "Success",
-        body: "Removed Image",
-        autoClose: true,
+        isClosable: true,
+        position: "top",
       });
     },
 
     onError: () => {
-      addAlert({
+      toast({
+        title: `Unable to delete image`,
         status: "error",
-        title: "Error",
-        body: "Unable to delete image",
+        isClosable: true,
+        position: "top",
       });
     },
   });
 
   const { mutate: addCamp, status } = trpc.camps.addCamp.useMutation({
     onSuccess: () => {
-      addAlert({
+      toast({
+        title: `New camp added`,
         status: "success",
-        title: "Success",
-        body: "New camp added",
-        autoClose: true,
+        isClosable: true,
+        position: "top",
       });
       router.push(Routes.userCamps);
     },
     onError: () => {
-      addAlert({
+      toast({
+        title: `Unable to save camp`,
         status: "error",
-        title: "Error",
-        body: "Unable to save camp",
+        isClosable: true,
+        position: "top",
       });
     },
   });
@@ -120,20 +122,21 @@ function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
   const { mutate: updateCamp, status: updateStatus } =
     trpc.camps.update.useMutation({
       onSuccess: () => {
-        addAlert({
+        toast({
+          title: `Successfully updated`,
           status: "success",
-          title: "Success",
-          body: "Camp details updated",
-          autoClose: true,
+          isClosable: true,
+          position: "top",
         });
 
         router.push(`${Routes.campDetail}${campData?.id}`);
       },
       onError: () => {
-        addAlert({
+        toast({
+          title: `Error: Unable so update camp`,
           status: "error",
-          title: "Error",
-          body: "Unable so update camp",
+          isClosable: true,
+          position: "top",
         });
       },
     });
@@ -149,10 +152,14 @@ function CampEditForm({ campData, isEdit, campId, providerId }: Props) {
 
     if (!validate.success) {
       const error = validate.error.issues[0];
-      addAlert({
+
+      toast({
+        title: `Error: ${
+          error?.message || "Form was not filled out correctly"
+        }`,
         status: "error",
-        title: String(error?.path[0]),
-        body: error?.message || "Form was not filled out correctly",
+        isClosable: true,
+        position: "top",
       });
     }
 

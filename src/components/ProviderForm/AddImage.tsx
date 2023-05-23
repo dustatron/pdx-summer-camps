@@ -14,6 +14,7 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  useToast,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import type { FileWithPath } from "react-dropzone";
@@ -31,7 +32,7 @@ const CLOUDINARY_UPLOAD_URL =
 
 export default function AddImage({ providerId }: Props) {
   const [urlImage, setUrlImage] = useState("");
-  const { addAlert } = useAlert();
+  const toast = useToast();
 
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     acceptedFiles.forEach((file) => {
@@ -69,30 +70,32 @@ export default function AddImage({ providerId }: Props) {
 
   const { mutate: removeImage } = trpc.provider.removeImage.useMutation({
     onSuccess: () => {
-      addAlert({
+      toast({
+        title: `Removed Image`,
         status: "success",
-        title: "Success",
-        body: "Removed Image",
-        autoClose: true,
+        isClosable: true,
+        position: "top",
       });
       refetch();
     },
 
     onError: () => {
-      addAlert({
+      toast({
+        title: `Unable to delete image`,
         status: "error",
-        title: "Error",
-        body: "Unable to delete image",
+        isClosable: true,
+        position: "top",
       });
     },
   });
 
   const { mutate, status } = trpc.provider.addImage.useMutation({
     onSuccess: () => {
-      addAlert({
-        title: "Success",
+      toast({
+        title: `Image was added successfully`,
         status: "success",
-        body: "Image was added successfully",
+        isClosable: true,
+        position: "top",
       });
       refetch();
     },

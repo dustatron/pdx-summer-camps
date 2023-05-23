@@ -11,6 +11,7 @@ import {
   Image,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import parse from "html-react-parser";
 import { BiArrowBack } from "react-icons/bi";
@@ -22,7 +23,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AgeValues, QuadrantValues } from "../../types/camp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useAlert } from "../../context/AlertContext";
 import removeHttp from "../../utils/http";
 import formatDate from "../../utils/formatDate";
 import { CldImage } from "next-cloudinary";
@@ -35,6 +35,7 @@ import type {
   Favorite,
 } from "@prisma/client";
 import Link from "next/link";
+import ConvertToProvider from "../ConvertToProvider";
 
 type Props = {
   onBack: () => void;
@@ -52,7 +53,7 @@ function CardDetail({ onBack, campData }: Props) {
   const [favorite, setFavorite] = useState<Favorite | undefined>();
   const router = useRouter();
   const { data: sessionData } = useSession();
-  const { addAlert } = useAlert();
+  const toast = useToast();
 
   const { data: userData } = trpc.auth.getUser.useQuery(
     {
@@ -132,11 +133,11 @@ function CardDetail({ onBack, campData }: Props) {
 
   const handleFavoriteClick = () => {
     if (!userData) {
-      return addAlert({
+      return toast({
+        title: `You must be logged in to favorite this camp`,
         status: "error",
-        title: "Error",
-        body: "You must be logged in to favorite this camp",
-        autoClose: true,
+        isClosable: true,
+        position: "top",
       });
     }
 
@@ -188,13 +189,18 @@ function CardDetail({ onBack, campData }: Props) {
             <BiArrowBack /> Back
           </Button>
           {userData?.role === "ADMIN" && (
-            <Button
-              colorScheme="facebook"
-              onClick={() => router.push(`${Routes.campEdit}${id}`)}
-              w="100px"
-            >
-              Edit
-            </Button>
+            <Stack direction="row">
+              <Button
+                colorScheme="facebook"
+                onClick={() => router.push(`${Routes.campEdit}${id}`)}
+                w="100px"
+              >
+                Edit
+              </Button>
+              {!campData.providerId && (
+                <ConvertToProvider campData={campData} />
+              )}
+            </Stack>
           )}
           <Button
             variant="ghost"
@@ -364,7 +370,7 @@ function CardDetail({ onBack, campData }: Props) {
             </Stack>
             <Box>
               <Text fontWeight="extrabold" fontSize="lg">
-                This camp is put on by:
+                Camp Provider:
               </Text>
               <Flex flexWrap="wrap" py="2">
                 {campData.providerId && (
