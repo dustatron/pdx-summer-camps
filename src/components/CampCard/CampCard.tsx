@@ -3,14 +3,11 @@ import {
   Button,
   Stack,
   Heading,
-  Center,
   Image,
   useColorModeValue,
   Box,
   Text,
-  Badge,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import parse from "html-react-parser";
 import { useRouter } from "next/router";
 import removeHttp from "../../utils/http";

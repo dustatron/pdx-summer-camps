@@ -12,11 +12,10 @@ import {
   InputRightElement,
   Heading,
   Divider,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 import type { ProviderSchema } from "../../../types/provider";
-import { useAlert } from "../../../context/AlertContext";
-
 export type Feature = {
   address?: string;
   center?: string[];
@@ -32,7 +31,8 @@ export type Feature = {
 };
 
 const Location = () => {
-  const { addAlert } = useAlert();
+  const toast = useToast();
+
   const [providedAddressToFind, setProvidedAddressToFind] = useState<string>();
   const [selectedAddress, setSelectedAddress] = useState<Feature>();
   const { data, refetch } = useMapboxAPI(providedAddressToFind);
@@ -67,10 +67,11 @@ const Location = () => {
       setValue("lat", item?.geometry?.coordinates[1]?.toString());
       setValue("lng", item?.geometry?.coordinates[0]?.toString());
     } else {
-      addAlert({
+      toast({
+        title: `Unable to set address`,
         status: "error",
-        title: "ERROR",
-        body: "unable to set address",
+        isClosable: true,
+        position: "top",
       });
     }
   };

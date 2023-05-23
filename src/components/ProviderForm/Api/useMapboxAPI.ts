@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useAlert } from "../../../context/AlertContext";
 const API_MAPBOX = `https://api.mapbox.com/geocoding/v5/mapbox.places/`;
@@ -20,7 +21,8 @@ export type Feature = {
 
 
 export const useMapboxAPI = (providedAddress?: string) => {
-  const { addAlert } = useAlert();
+  const toast = useToast()
+
 
   const fetcher = async () => {
     if (providedAddress) {
@@ -38,11 +40,13 @@ export const useMapboxAPI = (providedAddress?: string) => {
     enabled: false,
     queryFn: fetcher,
     onError: (err: Error) => {
-      addAlert({
+      toast({
+        title: `Unresolved address: ${err.message}`,
         status: "error",
-        title: "ERROR",
-        body: `Unresolved address: ${err.message}`,
-      })
+        isClosable: true,
+        position: "top",
+      });
+
     }
   });
 }

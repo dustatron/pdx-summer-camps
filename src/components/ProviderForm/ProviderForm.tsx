@@ -17,12 +17,12 @@ import {
   AccordionItem,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import ContactInfo from "./Steps/ContactInfo";
 import Location from "./Steps/Location";
 import Details from "./Steps/Details";
 import Preview from "./Steps/Preview";
-import { useAlert } from "../../context/AlertContext";
 import { useRouter } from "next/router";
 import { providerSchema } from "../../types/provider";
 import AddImage from "./AddImage";
@@ -36,18 +36,20 @@ interface FormProps {
 
 function ProviderForm({ isEdit, provider }: FormProps) {
   const [isPreview, setIsPreview] = useState(false);
-  const { addAlert } = useAlert();
+  const toast = useToast();
+
   const router = useRouter();
 
   const { mutate: updateProviderMutation, isLoading } =
     trpc.provider.updateProvider.useMutation({
       onSuccess: () => {
-        addAlert({
+        toast({
+          title: `Provider Updated`,
           status: "success",
-          title: "Success",
-          body: "New Provider added",
-          autoClose: false,
+          isClosable: true,
+          position: "top",
         });
+
         router.push(`${Routes.providerDetail}${provider?.id}`);
       },
     });
@@ -55,12 +57,13 @@ function ProviderForm({ isEdit, provider }: FormProps) {
   const { mutate: addProviderMutation, status } =
     trpc.provider.addProvider.useMutation({
       onSuccess: (provider) => {
-        addAlert({
+        toast({
+          title: `New Provider added`,
           status: "success",
-          title: "Success",
-          body: "New Provider added",
-          autoClose: false,
+          isClosable: true,
+          position: "top",
         });
+
         router.push(`${Routes.providerDetail}${provider?.id}`);
       },
     });
@@ -82,20 +85,21 @@ function ProviderForm({ isEdit, provider }: FormProps) {
   const { mutate: deleteProvider, isLoading: isDeleting } =
     trpc.provider.delete.useMutation({
       onSuccess: () => {
-        addAlert({
+        toast({
+          title: `Deleted camp provider`,
           status: "success",
-          title: "Success",
-          body: "Deleted camp provider",
-          autoClose: false,
+          isClosable: true,
+          position: "top",
         });
+
         router.push(`${Routes.providerList}`);
       },
       onError: () => {
-        addAlert({
+        toast({
+          title: `Could not delete provider`,
           status: "error",
-          title: "Error",
-          body: "Could not delete provider",
-          autoClose: false,
+          isClosable: true,
+          position: "top",
         });
       },
     });

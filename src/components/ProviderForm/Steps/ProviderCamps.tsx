@@ -15,7 +15,8 @@ import {
 import type { Camp, Provider } from "@prisma/client";
 import { trpc } from "../../../utils/trpc";
 import React from "react";
-import CampCard, { CardDetails } from "../../CampCard";
+import type { CardDetails } from "../../CampCard";
+import CampCard from "../../CampCard";
 
 type Props = {
   provider: Provider & {
@@ -30,10 +31,9 @@ const ProviderCamps = ({ provider }: Props) => {
       enabled: false,
     }
   );
-  const { data: campData, mutate: addCamp } =
+  const { mutate: addCamp, isLoading: isCampLoading } =
     trpc.provider.addCamp.useMutation();
 
-  console.log("campData", campData);
   const handleAddCamp = (campId: string) => {
     addCamp({ campId, providerId: provider.id });
     return "";
@@ -81,7 +81,10 @@ const ProviderCamps = ({ provider }: Props) => {
                   data.map((camp) => (
                     <Card key={camp.id} p="5">
                       <Heading size="sm">{camp.title}</Heading>
-                      <Button onClick={() => handleAddCamp(camp.id)}>
+                      <Button
+                        onClick={() => handleAddCamp(camp.id)}
+                        isLoading={isCampLoading}
+                      >
                         Add Camp
                       </Button>
                     </Card>
